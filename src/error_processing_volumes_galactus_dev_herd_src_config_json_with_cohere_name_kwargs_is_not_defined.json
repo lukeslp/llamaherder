@@ -1,0 +1,11 @@
+{
+  "provider": "cohere",
+  "api_keys": {
+    "xai": "xai-8zAk5VIaL3Vxpu3fO3r2aiWqqeVAZ173X04VK2R1m425uYpWOIOQJM3puq1Q38xJ2sHfbq3mX4PBxJXC",
+    "gemini": "AIzaSyB6YEhNp-Bt5I4vUbST0Q2cspvA95Oho4k"
+  },
+  "ollama_recent_models": [
+    "gemma3:4b"
+  ],
+  "ollama_model": "gemma3:4b"
+}

@@ -1,0 +1,200 @@
+[
+  {
+    "type": "rename",
+    "old": "/Volumes/Galactus/_DEV/herd/DEVELOPMENT.md",
+    "new": "/Volumes/Galactus/_DEV/herd/herd_ai_development_guide.md",
+    "timestamp": 1746135612.9156349
+  },
+  {
+    "type": "rename",
+    "old": "/Volumes/Galactus/_DEV/herd/requirements.txt",
+    "new": "/Volumes/Galactus/_DEV/herd/project_dependencies.txt",
+    "timestamp": 1746135613.322897
+  },
+  {
+    "type": "rename",
+    "old": "/Volumes/Galactus/_DEV/herd/PROJECT_PLAN.md",
+    "new": "/Volumes/Galactus/_DEV/herd/herd_ai_project_plan.md",
+    "timestamp": 1746135866.9370828
+  },
+  {
+    "type": "rename",
+    "old": "/Volumes/Galactus/_DEV/herd/run_herd.py",
+    "new": "/Volumes/Galactus/_DEV/herd/herd_ai_development_runner.py",
+    "timestamp": 1746135868.068248
+  },
+  {
+    "type": "rename",
+    "old": "/Volumes/Galactus/_DEV/herd/pyproject.toml",
+    "new": "/Volumes/Galactus/_DEV/herd/herd_ai_build_config.toml",
+    "timestamp": 1746135869.526838
+  },
+  {
+    "type": "rename",
+    "old": "/Volumes/Galactus/_DEV/herd/__init__.py",
+    "new": "/Volumes/Galactus/_DEV/herd/herd_ai_tools.py",
+    "timestamp": 1746135895.941393
+  },
+  {
+    "type": "rename",
+    "old": "/Volumes/Galactus/_DEV/herd/setup.py",
+    "new": "/Volumes/Galactus/_DEV/herd/herd_ai_setup.py",
+    "timestamp": 1746135898.105315
+  },
+  {
+    "type": "rename",
+    "old": "/Volumes/Galactus/_DEV/herd/herd_ai_tools.py",
+    "new": "/Volumes/Galactus/_DEV/herd/herd_ai_document_tools.py",
+    "timestamp": 1746136031.0442429
+  },
+  {
+    "type": "rename",
+    "old": "/Volumes/Galactus/_DEV/herd/herd_ai_document_tools.py",
+    "new": "/Volumes/Galactus/_DEV/herd/ai_document_tools.py",
+    "timestamp": 1746136056.551646
+  },
+  {
+    "type": "rename",
+    "old": "/Volumes/Galactus/_DEV/herd/PROJECT_PLAN.md",
+    "new": "/Volumes/Galactus/_DEV/herd/herd_ai_citation_enhancements.md",
+    "timestamp": 1746136251.208081
+  },
+  {
+    "type": "rename",
+    "old": "/Volumes/Galactus/_DEV/herd/DEVELOPMENT.md",
+    "new": "/Volumes/Galactus/_DEV/herd/filename_herd_ai_development_guide.md",
+    "timestamp": 1746423683.8299782
+  },
+  {
+    "type": "rename",
+    "old": "/Volumes/Galactus/_DEV/herd/alt_text_cache.json",
+    "new": "/Volumes/Galactus/_DEV/herd/filename_image_alt_text_error_log.json",
+    "timestamp": 1746423685.576077
+  },
+  {
+    "type": "rename",
+    "old": "/Volumes/Galactus/_DEV/herd/PROJECT_PLAN.md",
+    "new": "/Volumes/Galactus/_DEV/herd/filename_gui_launch_integration_plan.md",
+    "timestamp": 1746423686.354483
+  },
+  {
+    "type": "rename",
+    "old": "/Volumes/Galactus/_DEV/herd/herd_gui.py",
+    "new": "/Volumes/Galactus/_DEV/herd/filename_herd_ai_image_processor_gui.py",
+    "timestamp": 1746423687.2125819
+  },
+  {
+    "type": "rename",
+    "old": "/Volumes/Galactus/_DEV/herd/IMPLEMENTATION.md",
+    "new": "/Volumes/Galactus/_DEV/herd/error_processing_volumes_galactus_dev_herd_implementation_md_with_cohere_name_kwargs_is_not_defined.md",
+    "timestamp": 1746437159.122692
+  },
+  {
+    "type": "rename",
+    "old": "/Volumes/Galactus/_DEV/herd/PROJECT_PLAN.md",
+    "new": "/Volumes/Galactus/_DEV/herd/error_processing_volumes_galactus_dev_herd_project_plan_md_with_cohere_name_kwargs_is_not_defined.md",
+    "timestamp": 1746437159.1285172
+  },
+  {
+    "type": "rename",
+    "old": "/Volumes/Galactus/_DEV/herd/herd_gui.py",
+    "new": "/Volumes/Galactus/_DEV/herd/error_processing_volumes_galactus_dev_herd_herd_gui_py_with_cohere_name_kwargs_is_not_defined.py",
+    "timestamp": 1746437159.13447
+  },
+  {
+    "type": "rename",
+    "old": "/Volumes/Galactus/_DEV/herd/run_herd.py",
+    "new": "/Volumes/Galactus/_DEV/herd/error_processing_volumes_galactus_dev_herd_run_herd_py_with_cohere_name_kwargs_is_not_defined.py",
+    "timestamp": 1746437159.1393092
+  },
+  {
+    "type": "rename",
+    "old": "/Volumes/Galactus/_DEV/herd/pyproject.toml",
+    "new": "/Volumes/Galactus/_DEV/herd/error_processing_volumes_galactus_dev_herd_pyproject_toml_with_cohere_name_kwargs_is_not_defined.toml",
+    "timestamp": 1746437159.144038
+  },
+  {
+    "type": "rename",
+    "old": "/Volumes/Galactus/_DEV/herd/__init__.py",
+    "new": "/Volumes/Galactus/_DEV/herd/error_processing_volumes_galactus_dev_herd_init_py_with_cohere_name_kwargs_is_not_defined.py",
+    "timestamp": 1746437159.148897
+  },
+  {
+    "type": "rename",
+    "old": "/Volumes/Galactus/_DEV/herd/setup.py",
+    "new": "/Volumes/Galactus/_DEV/herd/error_processing_volumes_galactus_dev_herd_setup_py_with_cohere_name_kwargs_is_not_defined.py",
+    "timestamp": 1746437159.1533818
+  },
+  {
+    "type": "rename",
+    "old": "/Volumes/Galactus/_DEV/herd/README.md",
+    "new": "/Volumes/Galactus/_DEV/herd/error_processing_volumes_galactus_dev_herd_readme_md_with_cohere_name_kwargs_is_not_defined.md",
+    "timestamp": 1746437159.1580002
+  },
+  {
+    "type": "rename",
+    "old": "/Volumes/Galactus/_DEV/herd/_.py",
+    "new": "/Volumes/Galactus/_DEV/herd/error_processing_volumes_galactus_dev_herd_py_with_cohere_name_kwargs_is_not_defined.py",
+    "timestamp": 1746437159.163726
+  },
+  {
+    "type": "rename",
+    "old": "/Volumes/Galactus/_DEV/herd/__main__.py",
+    "new": "/Volumes/Galactus/_DEV/herd/error_processing_volumes_galactus_dev_herd_main_py_with_cohere_name_kwargs_is_not_defined.py",
+    "timestamp": 1746437159.168593
+  },
+  {
+    "type": "rename",
+    "old": "/Volumes/Galactus/_DEV/herd/tester/ae8kos34cx_v2_v2_v2_v2_v2_v2_v2.pdf",
+    "new": "/Volumes/Galactus/_DEV/herd/tester/ae8kos34cx_v2_v2_v2_v2_v2_v2_v2_v2.pdf",
+    "timestamp": 1746437159.559983
+  },
+  {
+    "type": "rename",
+    "old": "/Volumes/Galactus/_DEV/herd/tester/hd8lxii34w_v2_v2_v2_v2_v2_v2_v2.docx",
+    "new": "/Volumes/Galactus/_DEV/herd/tester/hd8lxii34w_v2_v2_v2_v2_v2_v2_v2_v2.docx",
+    "timestamp": 1746437159.6273122
+  },
+  {
+    "type": "rename",
+    "old": "/Volumes/Galactus/_DEV/herd/tester/buyz2y4rus_v2_v2_v2_v2.docx",
+    "new": "/Volumes/Galactus/_DEV/herd/tester/buyz2y4rus_v2_v2_v2_v2_v2.docx",
+    "timestamp": 1746437159.654957
+  },
+  {
+    "type": "rename",
+    "old": "/Volumes/Galactus/_DEV/herd/tester/iycb8wye5w_v2_v2_v2_v2_v2.txt",
+    "new": "/Volumes/Galactus/_DEV/herd/tester/iycb8wye5w_v2_v2_v2_v2_v2_v2.txt",
+    "timestamp": 1746437159.676916
+  },
+  {
+    "type": "rename",
+    "old": "/Volumes/Galactus/_DEV/herd/tester/7a3od7row5_v2_v2_v2_v2_v2_v2.pdf",
+    "new": "/Volumes/Galactus/_DEV/herd/tester/7a3od7row5_v2_v2_v2_v2_v2_v2_v2.pdf",
+    "timestamp": 1746437159.740132
+  },
+  {
+    "type": "rename",
+    "old": "/Volumes/Galactus/_DEV/herd/tester/dyfu4bdlyi_v2_v2_v2_v2_v2.txt",
+    "new": "/Volumes/Galactus/_DEV/herd/tester/dyfu4bdlyi_v2_v2_v2_v2_v2_v2.txt",
+    "timestamp": 1746437159.7481558
+  },
+  {
+    "type": "rename",
+    "old": "/Volumes/Galactus/_DEV/herd/src/config.json",
+    "new": "/Volumes/Galactus/_DEV/herd/src/error_processing_volumes_galactus_dev_herd_src_config_json_with_cohere_name_kwargs_is_not_defined.json",
+    "timestamp": 1746437159.787772
+  },
+  {
+    "type": "rename",
+    "old": "/Volumes/Galactus/_DEV/herd/src/herd_ai/cli.py",
+    "new": "/Volumes/Galactus/_DEV/herd/src/herd_ai/error_processing_volumes_galactus_dev_herd_src_herd_ai_cli_py_with_cohere_name_kwargs_is_not_defined.py",
+    "timestamp": 1746437160.037201
+  },
+  {
+    "type": "rename",
+    "old": "/Volumes/Galactus/_DEV/herd/src/herd_ai.egg-info/dependency_links.txt",
+    "new": "/Volumes/Galactus/_DEV/herd/src/herd_ai.egg-info/dependency_links_v2.txt",
+    "timestamp": 1746437160.068097
+  }
+]

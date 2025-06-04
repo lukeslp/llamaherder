@@ -1,0 +1,20 @@
+include LICENSE
+include README.md
+include PROJECT_PLAN.md
+include project_dependencies.txt
+include pyproject.toml
+include src/config.json
+
+recursive-include src/herd_ai *.py *.json *.yaml *.yml
+recursive-include docs *.md *.rst *.txt *.py
+recursive-include examples *.py *.md *.json *.yaml
+recursive-exclude * __pycache__
+recursive-exclude * *.py[cod]
+recursive-exclude * .DS_Store
+recursive-exclude src/herd_ai.egg-info *
+recursive-exclude build *
+recursive-exclude dist *
+recursive-exclude .git *
+recursive-exclude .github *
+recursive-exclude .herd *
+recursive-exclude |_ storage * 

@@ -1,0 +1,61 @@
+---
+description: For highly complex web interaction tasks
+globs: 
+alwaysApply: false
+---
+The Puppeteer MCP tools provide a powerful interface for automating browser interactions, testing web applications, and extracting data from websites. These tools operate through a headless Chrome instance, allowing for programmatic control of web pages.
+
+Available Tools
+puppeteer_navigate: Load a URL in the browser
+puppeteer_screenshot: Capture the current page state
+puppeteer_click: Interact with clickable elements
+puppeteer_fill: Enter text into form fields
+puppeteer_select: Choose options from dropdown menus
+puppeteer_hover: Trigger hover states on elements
+puppeteer_evaluate: Execute custom JavaScript in the page context
+
+Start with navigation
+For data extraction or complex logic that can't be achieved with basic interactions.
+
+Common Use Cases
+
+1. Form Submission and Validation
+Complete forms with puppeteer_fill and puppeteer_select
+Submit with puppeteer_click
+Validate success/error messages using puppeteer_evaluate
+Document with puppeteer_screenshot
+
+1. Data Extraction
+Navigate to data source
+Use puppeteer_evaluate with DOM selectors to extract structured data
+For paginated content, use puppeteer_click to navigate through pages
+Combine with memory tools to store extracted information
+
+1. UI Testing
+Create test sequences that mirror user journeys
+Capture screenshots at each step for visual regression testing
+Use puppeteer_evaluate for assertions and state verification
+Document failures with detailed screenshots
+
+Best Practices
+
+Use Precise Selectors
+Prefer IDs (#element-id) when available
+Use specific CSS selectors that won't break with minor UI changes
+Avoid selectors based solely on position or index
+
+Handle Dynamic Content
+Use puppeteer_evaluate to check if elements exist before interacting
+Implement appropriate waits for dynamic content to load
+
+Error Recovery
+Take screenshots when errors occur to capture the state
+Use puppeteer_evaluate to check page state before proceeding
+
+Security and Privacy
+Don't hardcode sensitive credentials; use environment variables or secure storage
+Be mindful of the data you capture in screenshots
+
+Performance
+Batch operations where possible
+Limit screenshot size and frequency for better performance

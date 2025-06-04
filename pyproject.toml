@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "herd-ai"
+version = "0.2.0"
+description = "A comprehensive AI-powered tools suite for file management, citation extraction, content idealization, and document generation."
+readme = "README.md"
+authors = [
+    {name = "Lucas \"Luke\" Steuber", email = "lucas@gearherd.com"}
+]
+license = {file = "LICENSE"}
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Text Processing :: Markup",
+    "Topic :: Utilities",
+]
+keywords = ["ai", "file-management", "citations", "document-generation", "idealization"]
+requires-python = ">=3.8"
+dependencies = [
+    "rich>=10.0.0",
+    "requests>=2.25.0",
+    "Pillow>=8.0.0",
+    "pyyaml>=5.4.0",
+    "pyperclip>=1.8.0",
+    "bibtexparser>=1.2.0",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/yourusername/herd"
+"Bug Tracker" = "https://github.com/yourusername/herd/issues"
+
+[project.scripts]
+herd = "herd_ai.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+packages = ["herd_ai", "herd_ai.utils"]
+
+[tool.setuptools.package-data]
+"herd_ai" = ["*.json", "*.yml", "*.yaml"]
+
+[tool.black]
+line-length = 88
+target-version = ["py38", "py39", "py310", "py311", "py312"] 

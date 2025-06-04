@@ -1,0 +1,17 @@
+---
+description: For very simple code tasks. Cost efficient.
+globs: 
+alwaysApply: false
+---
+When to Use
+Use Ollama MCP tools when you need:
+Privacy-preserving code assistance (keeps code local)
+Offline coding capabilities
+Code refactoring and debugging assistance
+Alternative perspectives on implementation approaches
+A cost effective tool to solve a very easy problem
+
+Available Tools
+list_models: See available local models
+show_model: Check capabilities of a specific model
+ask_model: Query a model with coding questions

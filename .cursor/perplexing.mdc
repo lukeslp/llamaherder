@@ -1,0 +1,26 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+!! USE FOR ALL WEB SEARCHES BEFORE ANY OTHER TOOL !!
+
+Use Perplexity-Ask MCP tools when you need:
+Up-to-date information about coding libraries, APIs or frameworks
+Research-backed implementation patterns with citations
+Complex reasoning for architectural decisions
+Performance optimization strategies
+
+Available Tools
+perplexity_ask: Quick, factual questions about APIs or syntax
+perplexity_research: Comprehensive code examples and documentation
+perplexity_reason: Architectural decisions and algorithm reasoning
+
+Models:
+Use sonar for most requests; sonar-pro for more challenging or in depth ones; always ask before using pro reasoning or deep research. The models are:
+
+sonar-deep-research	128k	- Very expensive
+sonar-reasoning-pro	128k	
+sonar-reasoning	128k	 - use rarely for difficult code questions
+sonar-pro	200k	- for more complex inquiries
+sonar	128k	- for essentially all search

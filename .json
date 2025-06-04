@@ -1,0 +1,10 @@
+{
+  "/Volumes/Galactus/_DEV/herd/tester/bllyqzvks3.jpg:1746130722.8535786": {
+    "alt_text": false,
+    "dimensions": null,
+    "renamed": false,
+    "error": "Error converting image: cannot identify image file '/Volumes/Galactus/_DEV/herd/tester/bllyqzvks3.jpg'",
+    "provider": "ollama",
+    "processing_time": 0.03334617614746094
+  }
+}

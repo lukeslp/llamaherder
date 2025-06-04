@@ -1,0 +1,105 @@
+{
+  "tester/n2e637fggt.heic:1746130722.7127814": {
+    "alt_text": false,
+    "dimensions": null,
+    "renamed": false,
+    "error": "Error converting image: cannot identify image file 'tester/n2e637fggt.heic'",
+    "provider": "xai",
+    "processing_time": 0.6959681510925293
+  },
+  "tester/california_record_snowfall_2022_2023_map_1.jpeg:1746201873.966512": {
+    "alt_text": true,
+    "dimensions": [
+      3500,
+      4970
+    ],
+    "renamed": true,
+    "error": null,
+    "provider": "xai",
+    "processing_time": 11.522549152374268
+  },
+  "tester/image_image_etg2nvsqof.png:1746201707.6424334": {
+    "alt_text": true,
+    "dimensions": [
+      1,
+      1
+    ],
+    "renamed": true,
+    "error": null,
+    "provider": "xai",
+    "processing_time": 1.0818061828613281
+  },
+  "tester/ygzus7pzud.jpg:1746130722.8535783": {
+    "alt_text": false,
+    "dimensions": null,
+    "renamed": false,
+    "error": "Error converting image: cannot identify image file 'tester/ygzus7pzud.jpg'",
+    "provider": "xai",
+    "processing_time": 0.2487468719482422
+  },
+  "tester/6a9guy4qes.heic:1746130722.5101342": {
+    "alt_text": false,
+    "dimensions": null,
+    "renamed": false,
+    "error": "Error converting image: cannot identify image file 'tester/6a9guy4qes.heic'",
+    "provider": "xai",
+    "processing_time": 0.0895841121673584
+  },
+  "tester/d4hu9cc4l3.jpg:1746130721.6585114": {
+    "alt_text": false,
+    "dimensions": null,
+    "renamed": false,
+    "error": "Error converting image: cannot identify image file 'tester/d4hu9cc4l3.jpg'",
+    "provider": "xai",
+    "processing_time": 0.2577791213989258
+  },
+  "tester/fvzfomzzy7.jpg:1746194898.3899252": {
+    "alt_text": false,
+    "dimensions": null,
+    "renamed": false,
+    "error": "Error converting image: cannot identify image file 'tester/fvzfomzzy7.jpg'",
+    "provider": "xai",
+    "processing_time": 0.11895489692687988
+  },
+  "tester/historical_map_of_china_times_atlas_detailed.png:1746201706.9635577": {
+    "alt_text": true,
+    "dimensions": [
+      907,
+      1337
+    ],
+    "renamed": true,
+    "error": null,
+    "provider": "xai",
+    "processing_time": 7.862796068191528
+  },
+  "tester/kmrhrgkr1v.gif:1746130722.8536906": {
+    "alt_text": true,
+    "dimensions": [
+      1,
+      1
+    ],
+    "renamed": true,
+    "error": null,
+    "provider": "xai",
+    "processing_time": 0.6589329242706299
+  },
+  "tester/image_image_w1yi2kcqis.png:1746201810.0418212": {
+    "alt_text": true,
+    "dimensions": [
+      1,
+      1
+    ],
+    "renamed": true,
+    "error": null,
+    "provider": "xai",
+    "processing_time": 1.2464599609375
+  },
+  "tester/9g0wktznh9.jpg:1746130722.6818287": {
+    "alt_text": false,
+    "dimensions": null,
+    "renamed": false,
+    "error": "Error converting image: cannot identify image file 'tester/9g0wktznh9.jpg'",
+    "provider": "xai",
+    "processing_time": 0.11104607582092285
+  }
+}

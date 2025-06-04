@@ -1,0 +1,65 @@
+---
+description: When prior functionality is lost, breaking changes are made, or past working code needs to be referenced
+globs: 
+alwaysApply: false
+---
+When your code breaks and you need to recover a working implementation, use this structured approach with the Git MCP tools to efficiently identify and restore functioning code:
+
+## Immediate Assessment
+
+1. **Check what changed** 
+   ```
+   mcp_git_git_status <repo_path>
+   ```
+   Identify which files have been modified or what new files might be causing issues.
+
+2. **View your changes**
+   ```
+   mcp_git_git_diff_unstaged <repo_path>
+   ```
+   See exactly what you changed that broke the functionality.
+
+## Finding Working Implementations
+
+3. **Review commit history**
+   ```
+   mcp_git_git_log <repo_path> <max_count>
+   ```
+   Look for commits with messages related to the feature that's now broken. Focus on commits when you know the feature was working.
+
+4. **Examine specific commits**
+   ```
+   mcp_git_git_show <repo_path> <revision>
+   ```
+   After identifying promising commits from the log, examine them individually to locate the working implementation.
+
+## Recovery Options
+
+5. **Option A: Checkout specific file version**
+   ```
+   mcp_git_git_checkout <repo_path> <previous_commit> -- <path/to/broken/file>
+   ```
+   This restores just the specified file from a previous commit while keeping other changes intact.
+
+6. **Option B: Create a rescue branch**
+   ```
+   mcp_git_git_create_branch <repo_path> <rescue_branch> <working_commit>
+   ```
+   Create a new branch based on a commit where everything worked, then cherry-pick or manually apply your newer changes.
+
+7. **Option C: Save good changes before resetting**
+   ```
+   mcp_git_git_add <repo_path> <files_to_keep>
+   mcp_git_git_commit <repo_path> "Save working changes before reset"
+   mcp_git_git_reset <repo_path> --hard <working_commit>
+   ```
+   If you have some good changes mixed with broken code, save the good parts first.
+
+## Prevention Strategy
+
+To avoid future breakage:
+- Make smaller, atomic commits
+- Write clear commit messages describing what changed and why
+- Commit working milestones frequently
+- Create feature branches for experimental changes
+- Add automated tests for critical functionality

@@ -1,0 +1,6 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+Always use the memory tools from the MCP server (create_entities, create_relations, add_observations, delete_entities, delete_observations, delete_relations, read_graph, search_nodes, open_nodes) to store and retrieve key project objectives, plans, credentials, API endpoints, and implementation details (such as working streaming chat code) as they arise. When new project goals, architectural decisions, or reusable technical solutions are discussed, create or update relevant entities and relations in the knowledge graph. Regularly reference this memory to ensure alignment with project objectives and to avoid redundant work.
