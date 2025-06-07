@@ -1,36 +1,60 @@
-# Code Snippets from src/herd_ai/__main__.py
+# Code Snippets from toollama/moe/archive/old_tools/web/__main__.py
 
-File: `src/herd_ai/__main__.py`  
+File: `toollama/moe/archive/old_tools/web/__main__.py`  
 Language: Python  
-Extracted: 2025-06-07 05:09:32  
+Extracted: 2025-06-07 05:12:20  
 
 ## Snippet 1
-Lines 3-10
+Lines 1-11
 
 ```Python
-Entry point for running Herd AI as a module with: python -m herd_ai
+"""
+MoE System Web Interface
+Run this module to start the web interface.
 """
 
-import sys
-import os
+import argparse
+import logging
 from pathlib import Path
-import warnings
+
+from .server import start_server
 ```
 
 ## Snippet 2
-Lines 19-30
+Lines 12-23
 
 ```Python
-if is_legacy_mode:
-        warnings.warn(
-            "The 'llamacleaner' command is deprecated and will be removed in a future version. "
-            "Please use 'herd' instead.",
-            DeprecationWarning,
-            stacklevel=2
-        )
+def main():
+    """Start the MoE System web interface."""
+    # Configure argument parser
+    parser = argparse.ArgumentParser(description="Start the MoE System web interface")
+    parser.add_argument("--host", default="0.0.0.0", help="Host to bind to")
+    parser.add_argument("--port", type=int, default=8000, help="Port to listen on")
+    parser.add_argument("--debug", action="store_true", help="Enable debug logging")
 
-    # Import and run the CLI
-    from herd_ai.cli import main
-    main()
+    # Parse arguments
+    args = parser.parse_args()
+
+    # Configure logging
+```
+
+## Snippet 3
+Lines 24-38
+
+```Python
+log_level = logging.DEBUG if args.debug else logging.INFO
+    logging.basicConfig(
+        level=log_level,
+        format="%(asctime)s [%(levelname)s] %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S"
+    )
+
+    # Ensure static directory exists
+    static_dir = Path(__file__).parent / "static"
+    static_dir.mkdir(parents=True, exist_ok=True)
+
+    # Start server
+    logging.info(f"Starting MoE System web interface on {args.host}:{args.port}")
+    start_server(host=args.host, port=args.port)
 ```
 

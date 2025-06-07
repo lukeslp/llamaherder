@@ -1,162 +1,256 @@
-# Code Snippets from build/lib/herd_ai/utils/perplexity.py
+# Code Snippets from toollama/API/api-tools/tools/Untitled/perplexity.py
 
-File: `build/lib/herd_ai/utils/perplexity.py`  
+File: `toollama/API/api-tools/tools/Untitled/perplexity.py`  
 Language: Python  
-Extracted: 2025-06-07 05:09:12  
+Extracted: 2025-06-07 05:20:01  
 
 ## Snippet 1
-Lines 19-42
+Lines 1-18
 
 ```Python
-#   - system_prompt (Optional[str]): Optional system prompt for model guidance.
-#
-# Returns:
-#   - For chat: Optional[str] (model's response or None on error)
-#   - For research: Optional[Dict[str, Any]] (structured research result or None)
-###############################################################################
+"""
+title: Perplexity Manifold Pipe
+author: nikolaskn, justinh-rahb, moblangeois
+author_url: https://github.com/open-webui
+funding_url: https://github.com/open-webui
+version: 0.2.1
+license: MIT
+"""
 
-import logging
-from typing import Optional, Dict, Any, List
+from pydantic import BaseModel, Field
+from typing import Optional, Union, Generator, Iterator
+from open_webui.utils.misc import get_last_user_message
+from open_webui.utils.misc import pop_system_message
 
-logger = logging.getLogger(__name__)
-
-###############################################################################
-# send_prompt_to_perplexity
-#
-# Sends a chat prompt to the Perplexity API via MCP and returns the assistant's
-# reply as a string. Handles different response formats and logs errors.
-#
-# Arguments:
-#   prompt (str): The user message to send.
-#   model (str): The Perplexity model to use (default: "sonar").
-#   system_prompt (Optional[str]): Optional system prompt to guide the model.
-#
-# Returns:
+import os
+import json
+import time
+import requests
 ```
 
 ## Snippet 2
-Lines 48-60
+Lines 22-28
 
 ```Python
-def send_prompt_to_perplexity(
-    prompt: str,
-    model: str = "sonar",
-    system_prompt: Optional[str] = None
-) -> Optional[str]:
-    try:
-        try:
-            from functions import mcp_perplexity_ask_perplexity_ask
-        except ImportError:
-            logger.warning("Perplexity API tools not available - MCP integration required")
-            return None
-
-        messages = []
+class Valves(BaseModel):
+        NAME_PREFIX: str = Field(
+            default="Perplexity/",
+            description="The prefix applied before the model names.",
+        )
+        PERPLEXITY_API_BASE_URL: str = Field(
+            default="https://api.perplexity.ai",
 ```
 
 ## Snippet 3
-Lines 61-64
+Lines 30-35
 
 ```Python
-if system_prompt:
-            messages.append({"role": "system", "content": system_prompt})
-        messages.append({"role": "user", "content": prompt})
+)
+        PERPLEXITY_API_KEY: str = Field(
+            default="",
+            description="Required API key to access Perplexity services.",
+        )
 ```
 
 ## Snippet 4
-Lines 68-71
+Lines 36-39
 
 ```Python
-if not result:
-            logger.warning("Empty response from Perplexity API")
-            return None
+def __init__(self):
+        self.type = "manifold"
+        self.valves = self.Valves()
 ```
 
 ## Snippet 5
-Lines 73-76
+Lines 40-71
 
 ```Python
-if "answer" in result:
-                answer = result["answer"]
-                logger.debug(f"Received answer from Perplexity API: {answer[:100]}...")
-                return answer
+def pipes(self):
+        return [
+            {
+                "id": "llama-3.1-sonar-small-128k-online",
+                "name": f"{self.valves.NAME_PREFIX}Llama 3.1 Sonar Small 128k Online",
+            },
+            {
+                "id": "llama-3.1-sonar-large-128k-online",
+                "name": f"{self.valves.NAME_PREFIX}Llama 3.1 Sonar Large 128k Online",
+            },
+            {
+                "id": "llama-3.1-sonar-huge-128k-online",
+                "name": f"{self.valves.NAME_PREFIX}Llama 3.1 Sonar Huge 128k Online",
+            },
+            {
+                "id": "llama-3.1-sonar-small-128k-chat",
+                "name": f"{self.valves.NAME_PREFIX}Llama 3.1 Sonar Small 128k Chat",
+            },
+            {
+                "id": "llama-3.1-sonar-large-128k-chat",
+                "name": f"{self.valves.NAME_PREFIX}Llama 3.1 Sonar Large 128k Chat",
+            },
+            {
+                "id": "llama-3.1-8b-instruct",
+                "name": f"{self.valves.NAME_PREFIX}Llama 3.1 8B Instruct",
+            },
+            {
+                "id": "llama-3.1-70b-instruct",
+                "name": f"{self.valves.NAME_PREFIX}Llama 3.1 70B Instruct",
+            },
+        ]
 ```
 
 ## Snippet 6
-Lines 79-81
+Lines 75-85
 
 ```Python
-if content:
-                    logger.debug(f"Received content from Perplexity API: {content[:100]}...")
-                    return content
+if not self.valves.PERPLEXITY_API_KEY:
+            raise Exception("PERPLEXITY_API_KEY not provided in the valves.")
+
+        headers = {
+            "Authorization": f"Bearer {self.valves.PERPLEXITY_API_KEY}",
+            "Content-Type": "application/json",
+            "accept": "application/json",
+        }
+
+        system_message, messages = pop_system_message(body.get("messages", []))
+        system_prompt = "You are a helpful assistant."
 ```
 
 ## Snippet 7
-Lines 83-86
+Lines 86-89
 
 ```Python
-else:
-            logger.warning(f"Unexpected response format from Perplexity API: {type(result)}")
+if system_message is not None:
+            system_prompt = system_message["content"]
 
-        return None
+        model_id = body["model"]
 ```
 
 ## Snippet 8
-Lines 87-90
+Lines 92-105
 
 ```Python
-except Exception as e:
-        logger.error(f"Perplexity API error: {e}")
-        return None
+if model_id.startswith("perplexity."):
+            model_id = model_id[len("perplexity.") :]
+
+        payload = {
+            "model": model_id,
+            "messages": [{"role": "system", "content": system_prompt}, *messages],
+            "stream": body.get("stream", True),
+            "return_citations": True,
+            "return_images": True,
+        }
+
+        url = f"{self.valves.PERPLEXITY_API_BASE_URL}/chat/completions"
+
+        try:
 ```
 
 ## Snippet 9
-Lines 108-119
+Lines 106-109
 
 ```Python
-def send_research_to_perplexity(
-    prompt: str,
-    system_prompt: Optional[str] = None
-) -> Optional[Dict[str, Any]]:
-    try:
-        try:
-            from functions import mcp_perplexity_ask_perplexity_research
-        except ImportError:
-            logger.warning("Perplexity Research API tools not available - MCP integration required")
-            return None
-
-        messages = []
+if body.get("stream", False):
+                return self.stream_response(url, headers, payload)
+            else:
+                return self.non_stream_response(url, headers, payload)
 ```
 
 ## Snippet 10
-Lines 120-126
+Lines 110-116
 
 ```Python
-if system_prompt:
-            messages.append({"role": "system", "content": system_prompt})
-        messages.append({"role": "user", "content": prompt})
-
-        logger.debug("Sending research prompt to Perplexity API")
-        result = mcp_perplexity_ask_perplexity_research({"messages": messages})
+except requests.exceptions.RequestException as e:
+            print(f"Request failed: {e}")
+            return f"Error: Request failed: {e}"
+        except Exception as e:
+            print(f"Error in pipe method: {e}")
+            return f"Error: {e}"
 ```
 
 ## Snippet 11
-Lines 127-132
+Lines 117-121
 
 ```Python
-if result and isinstance(result, dict):
-            logger.debug("Received research response from Perplexity API")
-            return result
-
-        logger.warning(f"Invalid research response from Perplexity API: {result}")
-        return None
+def stream_response(self, url, headers, payload):
+        try:
+            with requests.post(
+                url, headers=headers, json=payload, stream=True, timeout=(3.05, 60)
+            ) as response:
 ```
 
 ## Snippet 12
-Lines 133-135
+Lines 122-128
 
 ```Python
-except Exception as e:
-        logger.error(f"Perplexity Research API error: {e}")
-        return None
+if response.status_code != 200:
+                    raise Exception(
+                        f"HTTP Error {response.status_code}: {response.text}"
+                    )
+
+                data = None
+```
+
+## Snippet 13
+Lines 132-145
+
+```Python
+if line.startswith("data: "):
+                            try:
+                                data = json.loads(line[6:])
+                                yield data["choices"][0]["delta"]["content"]
+
+                                time.sleep(
+                                    0.01
+                                )  # Delay to avoid overwhelming the client
+
+                            except json.JSONDecodeError:
+                                print(f"Failed to parse JSON: {line}")
+                            except KeyError as e:
+                                print(f"Unexpected data structure: {e}")
+                                print(f"Full data: {data}")
+```
+
+## Snippet 14
+Lines 151-157
+
+```Python
+except requests.exceptions.RequestException as e:
+            print(f"Request failed: {e}")
+            yield f"Error: Request failed: {e}"
+        except Exception as e:
+            print(f"General error in stream_response method: {e}")
+            yield f"Error: {e}"
+```
+
+## Snippet 15
+Lines 158-162
+
+```Python
+def non_stream_response(self, url, headers, payload):
+        try:
+            response = requests.post(
+                url, headers=headers, json=payload, timeout=(3.05, 60)
+            )
+```
+
+## Snippet 16
+Lines 163-168
+
+```Python
+if response.status_code != 200:
+                raise Exception(f"HTTP Error {response.status_code}: {response.text}")
+
+            res = response.json()
+            citations = res.get("citations", [])
+            citations_string = "\n".join(
+```
+
+## Snippet 17
+Lines 172-174
+
+```Python
+except requests.exceptions.RequestException as e:
+            print(f"Failed non-stream request: {e}")
+            return f"Error: {e}"
 ```
 

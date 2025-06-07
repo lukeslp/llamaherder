@@ -1,0 +1,430 @@
+# Code Snippets from toollama/storage/BACKLOG.html
+
+File: `toollama/storage/BACKLOG.html`  
+Language: HTML  
+Extracted: 2025-06-07 05:11:16  
+
+## Snippet 1
+Lines 1-69
+
+```HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Backlog</title>
+    <style>
+        :root {
+            --color-bg: rgb(13, 17, 23);
+            --color-bg-secondary: rgb(22, 27, 34);
+            --color-text: rgb(230, 237, 243);
+            --color-text-secondary: rgb(139, 148, 158);
+            --color-primary: #58a6ff;
+            --color-critical: #ff0000;
+            --color-success: #198754;
+            --color-warning: #ffc107;
+            --color-border: rgb(48, 54, 61);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 2rem;
+        }
+
+        h1 {
+            color: var(--color-primary);
+            font-size: 2rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--color-border);
+        }
+
+        h2 {
+            color: var(--color-text);
+            font-size: 1.5rem;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 1.5rem;
+        }
+
+        li {
+            margin: 0.5rem 0;
+            position: relative;
+        }
+
+        li::before {
+            content: "•";
+            color: var(--color-text-secondary);
+            position: absolute;
+            left: -1.2rem;
+        }
+
+        li li::before {
+            content: "◦";
+        }
+
+        li li li::before {
+            content: "▪";
+        }
+```
+
+## Snippet 2
+Lines 70-75
+
+```HTML
+/* Checkmark for completed items */
+        li:has(> span.completed)::before {
+            content: "✓";
+            color: var(--color-success);
+        }
+```
+
+## Snippet 3
+Lines 76-81
+
+```HTML
+/* Critical items */
+        li:has(> span.critical) {
+            color: var(--color-critical);
+            font-weight: 600;
+        }
+```
+
+## Snippet 4
+Lines 82-96
+
+```HTML
+/* Status indicators */
+        .completed {
+            color: var(--color-success);
+            font-weight: 500;
+        }
+
+        .critical {
+            color: var(--color-critical);
+            font-weight: 600;
+        }
+
+        .pending {
+            color: var(--color-warning);
+        }
+```
+
+## Snippet 5
+Lines 97-106
+
+```HTML
+/* Container for better readability */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+            background: var(--color-bg-secondary);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+```
+
+## Snippet 6
+Lines 107-115
+
+```HTML
+/* Section styling */
+        .section {
+            margin: 2rem 0;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 6px;
+            border: 1px solid var(--color-border);
+        }
+```
+
+## Snippet 7
+Lines 116-123
+
+```HTML
+/* Category headers */
+        .category-header {
+            font-size: 1.2rem;
+            color: var(--color-primary);
+            margin: 1rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--color-border);
+        }
+```
+
+## Snippet 8
+Lines 125-383
+
+```HTML
+</head>
+<body>
+    <div class="container">
+        <div class="section">
+            <h2>Tool Integration</h2>
+            <ul>
+                <li>Tool Development
+                    <ul>
+                        <li><span class="completed">✓</span> arxiv - Research paper search</li>
+                        <li><span class="completed">✓</span> scrape - Web content extraction</li>
+                        <li><span class="completed">✓</span> wayback - Historical web archives</li>
+                        <li><span class="completed">✓</span> infinite - Internet search</li>
+                        <li><span class="completed">✓</span> code - Code execution</li>
+                        <li><span class="completed">✓</span> finance - Stock/Crypto analysis</li>
+                        <li><span class="completed">✓</span> Data Processing Suite:
+                            <ul>
+                                <li><span class="completed">✓</span> JSON converter</li>
+                                <li><span class="completed">✓</span> OCR processor</li>
+                                <li><span class="completed">✓</span> Audio transcription</li>
+                            </ul>
+                        </li>
+                        <li><span class="completed">✓</span> Time & Calculation Suite:
+                            <ul>
+                                <li><span class="completed">✓</span> Time manipulation</li>
+                                <li><span class="completed">✓</span> Calculator functions</li>
+                            </ul>
+                        </li>
+                        <li><span class="completed">✓</span> Knowledge Base Suite:
+                            <ul>
+                                <li><span class="completed">✓</span> Wolfram Alpha integration</li>
+                                <li><span class="completed">✓</span> Wikidata queries</li>
+                                <li><span class="completed">✓</span> Wikipedia API</li>
+                            </ul>
+                        </li>
+                        <li><span class="completed">✓</span> Document Management:
+                            <ul>
+                                <li><span class="completed">✓</span> Paperless integration</li>
+                                <li><span class="completed">✓</span> File system operations</li>
+                            </ul>
+                        </li>
+                        <li class="pending">Pending Services:
+                            <ul>
+                                <li>Reddit integration</li>
+                                <li>Email handling</li>
+                                <li>OpenStreetMap</li>
+                                <li>Tree of thought</li>
+                                <li>Social hunter</li>
+                            </ul>
+                        </li>
+                        <li class="pending">Accessibility Features:
+                            <ul>
+                                <li>Tool keyboard navigation</li>
+                                <li>Screen reader descriptions</li>
+                                <li>Status announcements</li>
+                                <li>Progress indicators</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h1>Next Steps</h1>
+            <ul>
+                <li class="critical">Authentication & Access Control
+                    <ul>
+                        <li>Complete Gumroad integration</li>
+                        <li>Implement Patreon OAuth</li>
+                        <li>Set up subscription management</li>
+                        <li>Secure token storage</li>
+                    </ul>
+                </li>
+                <li>Remote Access Completion
+                    <ul>
+                        <li>Finalize ngrok tunnel setup</li>
+                        <li>Complete access control implementation</li>
+                        <li>Comprehensive documentation</li>
+                        <li>Network testing and validation</li>
+                    </ul>
+                </li>
+                <li>Settings Implementation
+                    <ul>
+                        <li>Theme and font controls</li>
+                        <li>Accessibility preferences</li>
+                        <li>Input enhancements</li>
+                        <li>Keyboard shortcuts</li>
+                    </ul>
+                </li>
+                <li>Additional Services Integration
+                    <ul>
+                        <li>Reddit API setup</li>
+                        <li>Email processing system</li>
+                        <li>OpenStreetMap integration</li>
+                        <li>Tree of thought implementation</li>
+                        <li>Social hunter development</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h1>Technical Debt</h1>
+            <ul>
+                <li>Code Migration
+                    <ul>
+                        <li>Import functionality from snippets</li>
+                        <li>Consolidate other project features</li>
+                    </ul>
+                </li>
+                <li>Schema tool exploration</li>
+                <li>scripts.json refactoring</li>
+                <li>Model configuration system implementation</li>
+                <li>Accessibility Audit System
+                    <ul>
+                        <li>WCAG 2.1 compliance checking</li>
+                        <li>Automated accessibility testing</li>
+                        <li>Screen reader testing protocol</li>
+                        <li>Keyboard navigation testing</li>
+                    </ul>
+                </li>
+                <li>Font System Implementation
+                    <ul>
+                        <li>Font loading optimization</li>
+                        <li>Font fallback system</li>
+                        <li>Variable font support</li>
+                        <li>User font preferences storage</li>
+                    </ul>
+                </li>
+                <li>UI Improvements
+                    <ul>
+                        <li>Remove border between search and selected model in dropdown</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h1>API Integration Plan</h1>
+            <ul>
+                <li>Authentication & Verification
+                    <ul>
+                        <li class="critical">Gumroad Integration [CRITICAL]
+                            <ul>
+                                <li>License verification system</li>
+                                <li>Key validation endpoints</li>
+                                <li>JSON response handling</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>Academic & Research
+                    <ul>
+                        <li>Semantic Scholar integration</li>
+                        <li>Crossref journal search</li>
+                        <li>Unpaywall access</li>
+                        <li>NYT article search</li>
+                    </ul>
+                </li>
+
+                <li>Location & Mapping
+                    <ul>
+                        <li>US Census geocoding</li>
+                        <li>Maps geocoding service</li>
+                        <li>IP geolocation (IPAPI)</li>
+                        <li>Windy webcams integration</li>
+                    </ul>
+                </li>
+
+                <li>Content & Media
+                    <ul>
+                        <li>Telegraph publishing</li>
+                        <li>News aggregation:
+                            <ul>
+                                <li>Keymate news</li>
+                                <li>Newspilot integration</li>
+                            </ul>
+                        </li>
+                        <li>Image services:
+                            <ul>
+                                <li>Cat API</li>
+                                <li>Dog API</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>Data Enrichment
+                    <ul>
+                        <li>Email validation (Disify)</li>
+                        <li>Demographic analysis:
+                            <ul>
+                                <li>Nationalize</li>
+                                <li>Genderize</li>
+                                <li>Agify</li>
+                            </ul>
+                        </li>
+                        <li>Dictionary & language:
+                            <ul>
+                                <li>Free Dictionary API</li>
+                                <li>Urban Dictionary</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>Entertainment & Misc
+                    <ul>
+                        <li>Game elements:
+                            <ul>
+                                <li>Deck of Cards API</li>
+                                <li>Open Trivia DB</li>
+                            </ul>
+                        </li>
+                        <li>Fun content:
+                            <ul>
+                                <li>XKCD comics</li>
+                                <li>Dad jokes</li>
+                                <li>Random advice</li>
+                                <li>Quotes (Forismatic)</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h1>Integration Priorities</h1>
+            <ul>
+                <li class="critical">Phase 1 [CRITICAL]
+                    <ul>
+                        <li>Gumroad license verification</li>
+                        <li>Semantic Scholar academic search</li>
+                        <li>Maps & geocoding services</li>
+                        <li>News aggregation (Keymate/Newspilot)</li>
+                    </ul>
+                </li>
+                <li>Phase 2
+                    <ul>
+                        <li>Email validation</li>
+                        <li>Dictionary services</li>
+                        <li>Demographic analysis tools</li>
+                        <li>Content publishing (Telegraph)</li>
+                    </ul>
+                </li>
+                <li>Phase 3
+                    <ul>
+                        <li>Entertainment APIs</li>
+                        <li>Image services</li>
+                        <li>Miscellaneous content</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
+```
+

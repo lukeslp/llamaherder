@@ -1,8 +1,8 @@
-# Code Snippets from build/lib/herd_ai/utils/cache.py
+# Code Snippets from src/herd_ai/utils/cache.py
 
-File: `build/lib/herd_ai/utils/cache.py`  
+File: `src/herd_ai/utils/cache.py`  
 Language: Python  
-Extracted: 2025-06-07 05:09:14  
+Extracted: 2025-06-07 05:10:03  
 
 ## Snippet 1
 Lines 10-16

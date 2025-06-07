@@ -1,8 +1,8 @@
-# Code Snippets from build/lib/herd_ai/utils/dedupe.py
+# Code Snippets from src/herd_ai/utils/dedupe.py
 
-File: `build/lib/herd_ai/utils/dedupe.py`  
+File: `src/herd_ai/utils/dedupe.py`  
 Language: Python  
-Extracted: 2025-06-07 05:09:15  
+Extracted: 2025-06-07 05:10:05  
 
 ## Snippet 1
 Lines 1-6

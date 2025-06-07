@@ -1,378 +1,282 @@
-# Code Snippets from build/lib/herd_ai/utils/xai.py
+# Code Snippets from toollama/API/--storage/processed-cli/xai.py
 
-File: `build/lib/herd_ai/utils/xai.py`  
+File: `toollama/API/--storage/processed-cli/xai.py`  
 Language: Python  
-Extracted: 2025-06-07 05:09:17  
+Extracted: 2025-06-07 05:17:41  
 
 ## Snippet 1
-Lines 16-30
+Lines 1-18
 
 ```Python
-#   - IMAGE_ALT_TEXT_TEMPLATE: Default prompt for image alt text
-# =============================================================================
+"""
+X.AI API Chat Implementation
+This module provides an interface to the X.AI API with support for:
+- Interactive model selection
+- Response streaming
+- Multimodal inputs (text + images)
+"""
 
-import json
-import logging
-import time
-import base64
-import gc
-from typing import Optional, Dict, Any, Union
-import requests
 import os
-
-# =============================================================================
-# Configuration Import Logic
-# Attempts to import X.AI credentials and settings from various locations.
+import sys
+from openai import OpenAI
+from typing import Generator, List, Dict, Optional
+from datetime import datetime
+from base64 import b64encode
+from PIL import Image
+import io
+import requests
 ```
 
 ## Snippet 2
-Lines 31-59
+Lines 20-32
 
 ```Python
-# Falls back to defaults if not found.
-# =============================================================================
-try:
-    try:
-        from herd_ai.config import XAI_API_KEY, XAI_API_URL, XAI_TEXT_MODEL, XAI_IMAGE_MODEL, INSTRUCTION_TEMPLATE, IMAGE_ALT_TEXT_TEMPLATE
-    except ImportError:
-        try:
-            from llamacleaner.config import XAI_API_KEY, XAI_API_URL, XAI_TEXT_MODEL, XAI_IMAGE_MODEL, INSTRUCTION_TEMPLATE, IMAGE_ALT_TEXT_TEMPLATE
-        except ImportError:
-            from config import XAI_API_KEY, XAI_API_URL, XAI_TEXT_MODEL, XAI_IMAGE_MODEL, INSTRUCTION_TEMPLATE, IMAGE_ALT_TEXT_TEMPLATE
-except Exception as e:
-    print(f"Error importing modules in utils/xai.py: {e}")
-    print("Make sure you're running from the project directory or the package is installed.")
-    XAI_API_KEY = ""
-    XAI_API_URL = "https://api.x.ai/v1"
-    XAI_TEXT_MODEL = "grok-3-mini"
-    XAI_IMAGE_MODEL = "grok-2-vision-latest"
-    INSTRUCTION_TEMPLATE = "You are a helpful assistant."
-    IMAGE_ALT_TEXT_TEMPLATE = "Describe this image in detail."
-
-try:
-    from herd_ai.utils import config as herd_config
-except ImportError:
-    herd_config = None
-
-logger = logging.getLogger(__name__)
-
-# =============================================================================
-# get_xai_api_key
+def __init__(self, api_key: str):
+        """Initialize the X.AI client with the provided API key."""
+        self.client = OpenAI(
+            api_key=api_key,
+            base_url="https://api.x.ai/v1"
+        )
+        self.conversation_history = [
+            {
+                "role": "system",
+                "content": "You are Grok, a chatbot inspired by the Hitchhiker's Guide to the Galaxy."
+            }
+        ]
 ```
 
 ## Snippet 3
-Lines 84-94
+Lines 33-36
 
 ```Python
-def encode_image(image_path: str) -> Optional[str]:
-    try:
-        with open(image_path, "rb") as image_file:
-            image_bytes = image_file.read()
-            return base64.b64encode(image_bytes).decode('utf-8')
-    except Exception as e:
-        logger.error(f"Error encoding image {image_path}: {e}")
-        return None
-
-# =============================================================================
-# send_prompt_to_xai
+def clear_conversation(self):
+        """Clear the conversation history, keeping only the system message."""
+        self.conversation_history = [self.conversation_history[0]]
 ```
 
 ## Snippet 4
-Lines 111-118
+Lines 37-49
 
 ```Python
-def send_prompt_to_xai(
-    description: str,
-    model: str = XAI_TEXT_MODEL,
-    system_prompt: str = INSTRUCTION_TEMPLATE,
-    max_retries: int = 2,
-    timeout: int = 60
-) -> Optional[str]:
-    api_key = get_xai_api_key()
+def list_models(self) -> List[Dict]:
+        """
+        Retrieve available X.AI models dynamically.
+
+        Returns:
+            List[Dict]: List of available models with their details
+        """
+        try:
+            # Fetch models from the X.AI API
+            response = self.client.models.list()
+
+            # Process and format the models
+            models = []
 ```
 
 ## Snippet 5
-Lines 119-122
+Lines 50-52
 
 ```Python
-if not api_key:
-        logger.error("X.AI API key not set. Please set the XAI_API_KEY environment variable or use the login command.")
-        return None
+for model in response.data:
+                # Extract capabilities from model metadata
+                capabilities = []
 ```
 
 ## Snippet 6
-Lines 123-153
+Lines 53-60
 
 ```Python
-for attempt in range(max_retries + 1):
-        try:
-            headers = {
-                "Content-Type": "application/json",
-                "Authorization": f"Bearer {api_key}"
-            }
-            payload = {
-                "model": model,
-                "messages": [
-                    {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": description}
-                ],
-                "temperature": 0.01,
-                "response_format": {"type": "text"}
-            }
-            logger.info(f"Sending request to X.AI API: {XAI_API_URL}/chat/completions")
-            logger.info(f"Using model: {model}")
-            logger.debug(f"Content length: {len(description)}")
-            start_time = time.time()
-            try:
-                resp = requests.post(
-                    f"{XAI_API_URL}/chat/completions",
-                    headers=headers,
-                    json=payload,
-                    timeout=timeout
-                )
-                logger.debug(f"Response status code: {resp.status_code}")
-            except requests.exceptions.ConnectionError as e:
-                logger.error(f"Connection error - Is the X.AI API accessible? Error: {e}")
-                raise
+if "vision" in model.id or "image" in model.id:
+                    capabilities.append("images")
+                capabilities.extend(["text", "code"])  # All models support text and code
+
+                models.append({
+                    "id": model.id,
+                    "name": model.id.replace("-", " ").title(),
+                    "capabilities": capabilities,
 ```
 
 ## Snippet 7
-Lines 164-171
+Lines 69-77
 
 ```Python
-try:
-                data = resp.json()
-            except Exception as e:
-                logger.error(f"Failed to parse X.AI response as JSON: {e}")
-                logger.error(f"Raw response: {resp.text}")
-                return None
-
-            suggestion = data.get("choices", [{}])[0].get("message", {}).get("content", "")
+# Fallback to basic Grok model if API fails
+            return [{
+                "id": "grok-2-latest",
+                "name": "Grok 2 Latest",
+                "capabilities": ["text", "code", "images"],
+                "context_window": 8192,
+                "created_at": "2024-02-01"
+            }]
 ```
 
 ## Snippet 8
-Lines 172-177
+Lines 78-86
 
 ```Python
-if not suggestion:
-                logger.warning("Empty or unexpected response from X.AI API.")
-                logger.error(f"Full response: {json.dumps(data)[:500]}")
-                return None
-
-            text = suggestion.strip()
+def create_test_image(self) -> str:
+        """Create a simple test image and return its base64 encoding."""
+        # Create a 100x100 red square image
+        img = Image.new('RGB', (100, 100), color='red')
+        img_byte_arr = io.BytesIO()
+        img.save(img_byte_arr, format='PNG')
+        img_byte_arr = img_byte_arr.getvalue()
+        return b64encode(img_byte_arr).decode('utf-8')
 ```
 
 ## Snippet 9
-Lines 194-197
+Lines 87-103
 
 ```Python
-except Exception as e:
-            logger.error(f"Unexpected error calling X.AI: {e}")
-            return None
+def stream_chat_response(
+        self,
+        prompt: str,
+        model: str,
+        image: Optional[str] = None
+    ) -> Generator[str, None, None]:
+        """
+        Stream a chat response from X.AI.
+
+        Args:
+            prompt (str): The user's input message
+            model (str): The X.AI model to use
+            image (Optional[str]): Base64 encoded image data
+
+        Yields:
+            str: Chunks of the response text as they arrive
+        """
 ```
 
 ## Snippet 10
-Lines 216-223
+Lines 105-131
 
 ```Python
-def send_image_to_xai(
-    image_path: str,
-    model: str = XAI_IMAGE_MODEL,
-    prompt: str = IMAGE_ALT_TEXT_TEMPLATE,
-    max_retries: int = 2,
-    timeout: int = 90
-) -> Optional[Dict]:
-    api_key = get_xai_api_key()
+if image:
+            message_content = [
+                {"type": "text", "text": prompt},
+                {
+                    "type": "image_url",
+                    "image_url": {
+                        "url": f"data:image/png;base64,{image}"
+                    }
+                }
+            ]
+        else:
+            message_content = prompt
+
+        # Add user message to conversation history
+        self.conversation_history.append({
+            "role": "user",
+            "content": message_content
+        })
+
+        try:
+            stream = self.client.chat.completions.create(
+                model=model,
+                messages=self.conversation_history,
+                stream=True
+            )
+
+            response_text = ""
 ```
 
 ## Snippet 11
-Lines 224-229
+Lines 133-137
 
 ```Python
-if not api_key:
-        logger.error("X.AI API key not set. Please set the XAI_API_KEY environment variable or use the login command.")
-        return None
-
-    MAX_FILE_SIZE_MB = 20
-    file_size_mb = os.path.getsize(image_path) / (1024 * 1024)
+if chunk.choices[0].delta.content:
+                    text = chunk.choices[0].delta.content
+                    response_text += text
+                    yield text
 ```
 
 ## Snippet 12
-Lines 234-236
+Lines 138-143
 
 ```Python
-for attempt in range(max_retries + 1):
-        try:
-            base64_image = encode_image(image_path)
+# Add assistant's response to conversation history
+            self.conversation_history.append({
+                "role": "assistant",
+                "content": response_text
+            })
 ```
 
 ## Snippet 13
-Lines 237-270
+Lines 147-150
 
 ```Python
-if not base64_image:
-                logger.error(f"Failed to encode image: {image_path}")
-                return None
-
-            headers = {
-                "Content-Type": "application/json",
-                "Authorization": f"Bearer {api_key}"
-            }
-            messages = [
-                {
-                    "role": "user",
-                    "content": [
-                        {
-                            "type": "image_url",
-                            "image_url": {
-                                "url": f"data:image/jpeg;base64,{base64_image}",
-                                "detail": "high"
-                            }
-                        },
-                        {
-                            "type": "text",
-                            "text": prompt
-                        }
-                    ]
-                }
-            ]
-            payload = {
-                "model": model,
-                "messages": messages,
-                "temperature": 0.01,
-                "response_format": {"type": "json_object"}
-            }
-            logger.info(f"Sending image request to X.AI API: {XAI_API_URL}/chat/completions")
-            logger.info(f"Using model: {model}")
+def display_models(models: List[Dict]) -> None:
+    """Display available models in a formatted way."""
+    print("\nAvailable X.AI Models:")
+    print("-" * 50)
 ```
 
 ## Snippet 14
-Lines 271-284
+Lines 162-165
 
 ```Python
-logger.info(f"Image size: {file_size_mb:.2f} MB, Base64 length: {len(base64_image[:20])}...{len(base64_image)} chars")
-            start_time = time.time()
-            try:
-                resp = requests.post(
-                    f"{XAI_API_URL}/chat/completions",
-                    headers=headers,
-                    json=payload,
-                    timeout=timeout
-                )
-                logger.info(f"Response status code: {resp.status_code}")
-            except requests.exceptions.ConnectionError as e:
-                logger.error(f"Connection error - Is the X.AI API accessible? Error: {e}")
-                raise
+else:
+        prompt = f"{prompt}: "
+
+    response = input(prompt).strip()
 ```
 
 ## Snippet 15
-Lines 289-291
+Lines 168-172
 
 ```Python
-if resp.status_code == 400 and "multimodal data" in error_text.lower():
-                    logger.warning("Got a multimodal data error. Returning dummy result to avoid blocking workflow.")
-                    return {
+def main():
+    """Main CLI interface."""
+    # Initialize with API key
+    api_key = os.getenv("XAI_API_KEY") or "xai-8zAk5VIaL3Vxpu3fO3r2aiWqqeVAZ173X04VK2R1m425uYpWOIOQJM3puq1Q38xJ2sHfbq3mX4PBxJXC"
 ```
 
 ## Snippet 16
-Lines 305-312
+Lines 173-183
 
 ```Python
-try:
-                data = resp.json()
-            except Exception as e:
-                logger.error(f"Failed to parse X.AI response as JSON: {e}")
-                logger.error(f"Raw response: {resp.text}")
-                return None
+if not api_key:
+        print("Error: XAI_API_KEY environment variable not set")
+        sys.exit(1)
 
-            generated_text = data.get("choices", [{}])[0].get("message", {}).get("content", "")
+    chat = XAIChat(api_key)
+
+    # Fetch and display available models
+    models = chat.list_models()
+    display_models(models)
+
+    # Get model selection
 ```
 
 ## Snippet 17
-Lines 313-318
+Lines 184-186
 
 ```Python
-if not generated_text:
-                logger.warning("Empty or unexpected response from X.AI API.")
-                return None
-
-            try:
-                result = json.loads(generated_text)
+while True:
+        try:
+            selection = int(get_user_input("Select a model number", "1")) - 1
 ```
 
 ## Snippet 18
-Lines 320-322
+Lines 201-206
 
 ```Python
-logger.info(f"X.AI image response length: {len(generated_text)} chars")
-                logger.info(f"X.AI image response has keys: {', '.join(result.keys())}")
-                return result
+default_prompt = "What do you see in this image?" if include_image else "Tell me a joke about AI"
+        prompt = get_user_input("Enter your prompt", default_prompt)
+
+        # Stream response
+        print("\nStreaming response:")
+        print("-" * 50)
 ```
 
 ## Snippet 19
-Lines 323-327
+Lines 212-217
 
 ```Python
-except json.JSONDecodeError as e:
-                logger.error(f"Error parsing JSON response: {e}")
-                logger.error(f"Raw response: {generated_text[:200]}...")
-                import re
-                json_match = re.search(r'{[\s\S]*}', generated_text)
-```
-
-## Snippet 20
-Lines 328-335
-
-```Python
-if json_match:
-                    try:
-                        result = json.loads(json_match.group(0))
-                        return result
-                    except:
-                        pass
-                return None
-```
-
-## Snippet 21
-Lines 344-349
-
-```Python
-except Exception as e:
-            logger.error(f"Unexpected error processing image with X.AI: {e}")
-            return None
-        finally:
-            gc.collect()
-```
-
-## Snippet 22
-Lines 361-368
-
-```Python
-def validate_xai_api_key(api_key: str) -> bool:
-    url = f"{XAI_API_URL}/models"
-    headers = {
-        "Authorization": f"Bearer {api_key}",
-        "Content-Type": "application/json"
-    }
-    try:
-        resp = requests.get(url, headers=headers, timeout=10)
-```
-
-## Snippet 23
-Lines 369-371
-
-```Python
-if resp.status_code == 200:
-            return True
-        else:
-```
-
-## Snippet 24
-Lines 374-376
-
-```Python
-except Exception as e:
-        logger.error(f"Error validating X.AI API key: {e}")
-        return False
+if get_user_input("\nContinue conversation? (y/n)", "y").lower() != 'y':
+            print("\nClearing conversation history and exiting...")
+            chat.clear_conversation()
+            break
+        print("\nContinuing conversation...\n")
 ```
 
