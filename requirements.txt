@@ -496,7 +496,7 @@ sphinxcontrib-serializinghtml==2.0.0
 SQLAlchemy==2.0.23
 sqlalchemy2-stubs==0.0.2a35
 sqlmodel==0.0.8
-srsly==2.5.0
+srsly==2.5.1
 sse-starlette==1.6.5
 stack-data==0.6.3
 starlette==0.41.3
