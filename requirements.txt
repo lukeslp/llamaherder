@@ -589,7 +589,7 @@ xlrd==2.0.1
 XlsxWriter==3.1.9
 xxhash==3.5.0
 yarl==1.18.3
-yaspin==3.0.1
+yaspin==3.1.0
 yfinance==0.2.57
 zipp==3.17.0
 zope.event==5.0
