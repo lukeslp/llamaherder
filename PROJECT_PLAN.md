@@ -33,6 +33,11 @@
   - This provides a more secure and convenient way to manage API credentials
   - Users no longer need to set environment variables manually before running the application
 
+### Documentation Updates
+
+ - Added `.github/FUNDING.yml` for project sponsorship links
+ - Documented API usage in `snippets/api_interactions.md` and referenced from README
+
 ### Enhanced GUI Launch Integration
 
 - Improved GUI launch capabilities with comprehensive integration:

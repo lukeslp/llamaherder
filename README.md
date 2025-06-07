@@ -95,6 +95,8 @@ herd
 ## Documentation
 
 For full documentation, visit [the Herd AI documentation](https://github.com/lukesteuber/herd/docs).
+Additional usage examples for the unified API wrapper are available in
+[snippets/api_interactions.md](snippets/api_interactions.md).
 
 ## Development
 
@@ -103,3 +105,5 @@ See [DEVELOPMENT.md](DEVELOPMENT.md) for information on contributing to Herd AI.
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+Documentation maintained by [Luke Steuber](https://lukesteuber.com) – MIT License.
