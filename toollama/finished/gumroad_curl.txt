@@ -1,0 +1,4 @@
+curl https://api.gumroad.com/v2/licenses/verify \
+  -d "product_id=KYlUI-weZ2hMVE8mEHioAw==" \
+  -d "license_key=924F9163-07094733-A9913AF1-812EC50E" \
+  -X POST

@@ -1,0 +1,247 @@
+FROM llama:3.2-3b
+
+# System prompt for Research Drummer
+SYSTEM """You are a Research Drummer in the MoE system, specialized in academic and scientific research tasks.
+Your role is to execute specific research-oriented tasks using various tools and APIs to gather detailed academic information and analyze research papers.
+
+Key responsibilities:
+1. Academic Search
+   - Query academic databases
+   - Filter relevant papers
+   - Extract key information
+   - Track citations
+
+2. Paper Analysis
+   - Read abstracts
+   - Extract methodologies
+   - Identify findings
+   - Note limitations
+
+3. Trend Analysis
+   - Track research trends
+   - Identify emerging topics
+   - Monitor citations
+   - Map relationships
+
+4. Citation Management
+   - Format citations
+   - Build bibliographies
+   - Track references
+   - Verify sources
+
+Available Tools:
+- Arxiv API: Academic paper search
+- Knowledge Base: Information verification
+- Citation Manager: Reference handling
+- Trend Analyzer: Research patterns
+
+When executing tasks:
+1. Validate search parameters
+2. Select appropriate tools
+3. Execute queries
+4. Process results
+5. Extract key information
+6. Format citations
+7. Organize findings
+8. Return structured data
+
+Remember:
+- Follow citation standards
+- Check paper relevance
+- Note methodology
+- Track limitations
+- Format consistently
+"""
+
+# Parameter definitions
+PARAMETER task {
+    type: object
+    description: "Research task"
+    properties: {
+        query: {
+            type: string
+            description: "Research query or keywords"
+        }
+        filters: {
+            type: object
+            properties: {
+                date_range: {
+                    type: object
+                    properties: {
+                        start: "string"
+                        end: "string"
+                    }
+                }
+                categories: {
+                    type: array
+                    items: "string"
+                }
+                authors: {
+                    type: array
+                    items: "string"
+                }
+                min_citations: "number"
+            }
+        }
+        citation_style: {
+            type: string
+            enum: ["apa", "mla", "chicago", "ieee"]
+            default: "apa"
+        }
+    }
+    required: ["query"]
+}
+
+# Tool definitions
+TOOLS {
+    arxiv: {
+        type: "api"
+        capabilities: [
+            "paper_search",
+            "abstract_retrieval",
+            "category_filtering",
+            "author_search"
+        ]
+        parameters: {
+            base_url: "string"
+            timeout: "number"
+            max_results: "number"
+        }
+    }
+    knowledge_base: {
+        type: "api"
+        capabilities: [
+            "fact_verification",
+            "source_validation",
+            "content_analysis",
+            "relationship_mapping"
+        ]
+        parameters: {
+            api_key: "string"
+            base_url: "string"
+            timeout: "number"
+        }
+    }
+    citation_manager: {
+        type: "tool"
+        capabilities: [
+            "citation_formatting",
+            "bibliography_creation",
+            "reference_tracking",
+            "style_application"
+        ]
+        parameters: {
+            style: "string"
+            format: "string"
+        }
+    }
+}
+
+# Response format
+RESPONSE_FORMAT {
+    type: object
+    properties: {
+        task_info: {
+            type: object
+            properties: {
+                query: "string"
+                filters: "object"
+                citation_style: "string"
+                timestamp: "string"
+            }
+        }
+        papers: {
+            type: array
+            items: {
+                type: object
+                properties: {
+                    id: "string"
+                    title: "string"
+                    authors: {
+                        type: array
+                        items: "string"
+                    }
+                    abstract: "string"
+                    publication_date: "string"
+                    categories: {
+                        type: array
+                        items: "string"
+                    }
+                    citations: "number"
+                    url: "string"
+                    pdf_url: "string"
+                }
+            }
+        }
+        analysis: {
+            type: object
+            properties: {
+                methodology: {
+                    type: array
+                    items: "string"
+                }
+                findings: {
+                    type: array
+                    items: "string"
+                }
+                limitations: {
+                    type: array
+                    items: "string"
+                }
+                future_work: {
+                    type: array
+                    items: "string"
+                }
+            }
+        }
+        trends: {
+            type: object
+            properties: {
+                emerging_topics: {
+                    type: array
+                    items: "string"
+                }
+                citation_patterns: "object"
+                research_gaps: {
+                    type: array
+                    items: "string"
+                }
+            }
+        }
+        citations: {
+            type: object
+            properties: {
+                formatted_citations: {
+                    type: array
+                    items: "string"
+                }
+                bibliography: {
+                    type: array
+                    items: "string"
+                }
+            }
+        }
+        metadata: {
+            type: object
+            properties: {
+                total_results: "number"
+                processed_papers: "number"
+                date_range: {
+                    type: object
+                    properties: {
+                        start: "string"
+                        end: "string"
+                    }
+                }
+                categories_covered: {
+                    type: array
+                    items: "string"
+                }
+            }
+        }
+        error: {
+            type: string
+            description: "Error message if any"
+        }
+    }
+} 

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoE System</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .component-progress {
+            transition: width 0.3s ease-in-out;
+        }
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-4xl font-bold mb-8">MoE System</h1>
+        
+        <!-- Task Input -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="command">
+                    Command
+                </label>
+                <select id="command" class="w-full px-3 py-2 border rounded-lg">
+                    <option value="camina">Camina (Primary Agent)</option>
+                    <option value="belter">Belter (Domain Specialist)</option>
+                    <option value="drummer">Drummer (Task Executor)</option>
+                </select>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="message">
+                    Message
+                </label>
+                <textarea id="message" class="w-full px-3 py-2 border rounded-lg" rows="4"></textarea>
+            </div>
+            <button id="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
+                Submit
+            </button>
+        </div>
+        
+        <!-- Task Progress -->
+        <div id="progress-container" class="hidden bg-white rounded-lg shadow-md p-6 mb-8">
+            <h2 class="text-2xl font-bold mb-4">Task Progress</h2>
+            <div class="mb-4">
+                <div class="flex justify-between mb-1">
+                    <span class="text-gray-700">Overall Progress</span>
+                    <span id="overall-progress" class="text-gray-700">0%</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                    <div id="overall-progress-bar" class="bg-blue-600 h-2.5 rounded-full component-progress" style="width: 0%"></div>
+                </div>
+            </div>
+            <div id="components" class="space-y-4">
+                <!-- Component progress bars will be added here -->
+            </div>
+        </div>
+        
+        <!-- Task Events -->
+        <div id="events-container" class="hidden bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-2xl font-bold mb-4">Task Events</h2>
+            <div id="events" class="space-y-2">
+                <!-- Events will be added here -->
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let currentTaskId = null;
+        let ws = null;
+        let wsConnected = false;
+        let pendingTask = null;
+        
+        // Connect to WebSocket for a task
+        function connectWebSocket(taskId) {
+            if (ws) {
+                ws.close();
+            }
+            
+            ws = new WebSocket(`ws://${window.location.host}/ws/task/${taskId}`);
+            
+            ws.onopen = () => {
+                console.log('WebSocket connected');
+                wsConnected = true;
+                if (pendingTask) {
+                    submitTask(pendingTask.command, pendingTask.message);
+                    pendingTask = null;
+                }
+            };
+            
+            ws.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                updateProgress(data);
+                addEvent(data);
+            };
+            
+            ws.onerror = (error) => {
+                console.error('WebSocket error:', error);
+                wsConnected = false;
+            };
+            
+            ws.onclose = () => {
+                console.log('WebSocket connection closed');
+                wsConnected = false;
+            };
+            
+            return new Promise((resolve, reject) => {
+                const timeout = setTimeout(() => {
+                    reject(new Error('WebSocket connection timeout'));
+                }, 5000);
+                
+                ws.addEventListener('open', () => {
+                    clearTimeout(timeout);
+                    resolve();
+                }, { once: true });
+                
+                ws.addEventListener('error', () => {
+                    clearTimeout(timeout);
+                    reject(new Error('WebSocket connection failed'));
+                }, { once: true });
+            });
+        }
+        
+        // Submit task
+        async function submitTask(command, message) {
+            try {
+                // First create the task
+                const response = await fetch('/api/task', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        command,
+                        message
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+                
+                currentTaskId = data.task_id;
+                
+                // Connect WebSocket first
+                await connectWebSocket(currentTaskId);
+                
+                // Now execute the task
+                const executeResponse = await fetch(`/api/task/${currentTaskId}/execute`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        command,
+                        message
+                    })
+                });
+                
+                const executeData = await executeResponse.json();
+                
+                if (executeData.error) {
+                    throw new Error(executeData.error);
+                }
+                
+            } catch (error) {
+                console.error('Error submitting task:', error);
+                alert(`Error: ${error.message}`);
+            }
+        }
+        
+        // Handle form submission
+        document.getElementById('submit').addEventListener('click', async () => {
+            const command = document.getElementById('command').value;
+            const message = document.getElementById('message').value;
+            
+            if (!message.trim()) {
+                alert('Please enter a message');
+                return;
+            }
+            
+            // Disable submit button while processing
+            const submitButton = document.getElementById('submit');
+            submitButton.disabled = true;
+            submitButton.classList.add('opacity-50', 'cursor-not-allowed');
+            
+            try {
+                await submitTask(command, message);
+            } finally {
+                // Re-enable submit button
+                submitButton.disabled = false;
+                submitButton.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+        });
+        
+        // Update progress display
+        function updateProgress(data) {
+            const container = document.getElementById('progress-container');
+            const components = document.getElementById('components');
+            const overallProgress = document.getElementById('overall-progress');
+            const overallProgressBar = document.getElementById('overall-progress-bar');
+            
+            container.classList.remove('hidden');
+            
+            // If this is a progress event
+            if (data.overall_progress !== undefined) {
+                // Update overall progress
+                const progress = Math.round(data.overall_progress * 100);
+                overallProgress.textContent = `${progress}%`;
+                overallProgressBar.style.width = `${progress}%`;
+                
+                // Update component progress if available
+                if (data.components) {
+                    Object.entries(data.components).forEach(([name, info]) => {
+                        let componentEl = document.getElementById(`component-${name}`);
+                        if (!componentEl) {
+                            componentEl = document.createElement('div');
+                            componentEl.id = `component-${name}`;
+                            componentEl.classList.add('fade-in');
+                            componentEl.innerHTML = `
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-gray-700">${name}</span>
+                                    <span class="component-progress-text text-gray-700">0%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                    <div class="component-progress-bar bg-green-600 h-2.5 rounded-full component-progress" style="width: 0%"></div>
+                                </div>
+                            `;
+                            components.appendChild(componentEl);
+                        }
+                        
+                        const componentProgress = Math.round(info.progress * 100);
+                        componentEl.querySelector('.component-progress-text').textContent = `${componentProgress}%`;
+                        componentEl.querySelector('.component-progress-bar').style.width = `${componentProgress}%`;
+                    });
+                }
+            }
+            // If this is an event with progress
+            else if (data.progress !== undefined) {
+                // Update overall progress
+                const progress = Math.round(data.progress * 100);
+                overallProgress.textContent = `${progress}%`;
+                overallProgressBar.style.width = `${progress}%`;
+                
+                // Update component progress
+                let componentEl = document.getElementById(`component-${data.component}`);
+                if (!componentEl) {
+                    componentEl = document.createElement('div');
+                    componentEl.id = `component-${data.component}`;
+                    componentEl.classList.add('fade-in');
+                    componentEl.innerHTML = `
+                        <div class="flex justify-between mb-1">
+                            <span class="text-gray-700">${data.component}</span>
+                            <span class="component-progress-text text-gray-700">0%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                            <div class="component-progress-bar bg-green-600 h-2.5 rounded-full component-progress" style="width: 0%"></div>
+                        </div>
+                    `;
+                    components.appendChild(componentEl);
+                }
+                
+                componentEl.querySelector('.component-progress-text').textContent = `${progress}%`;
+                componentEl.querySelector('.component-progress-bar').style.width = `${progress}%`;
+            }
+        }
+        
+        // Add event to the events list
+        function addEvent(event) {
+            // Only process if this is an event with event_type
+            if (!event.event_type) {
+                return;
+            }
+            
+            const container = document.getElementById('events-container');
+            const events = document.getElementById('events');
+            
+            container.classList.remove('hidden');
+            
+            const eventEl = document.createElement('div');
+            eventEl.classList.add('p-4', 'bg-gray-50', 'rounded-lg', 'fade-in');
+            
+            let statusColor = 'text-gray-600';
+            if (event.event_type.includes('completed')) statusColor = 'text-green-600';
+            if (event.event_type.includes('failed')) statusColor = 'text-red-600';
+            if (event.event_type.includes('warning')) statusColor = 'text-yellow-600';
+            
+            const timestamp = event.timestamp ? new Date(event.timestamp).toLocaleTimeString() : new Date().toLocaleTimeString();
+            
+            eventEl.innerHTML = `
+                <div class="flex justify-between">
+                    <span class="font-semibold ${statusColor}">${event.event_type}</span>
+                    <span class="text-gray-500 text-sm">${timestamp}</span>
+                </div>
+                <p class="text-gray-700 mt-1">${event.message}</p>
+            `;
+            
+            events.insertBefore(eventEl, events.firstChild);
+            
+            // Also update progress if the event contains progress information
+            if (event.progress !== undefined) {
+                updateProgress(event);
+            }
+        }
+    </script>
+</body>
+</html> 

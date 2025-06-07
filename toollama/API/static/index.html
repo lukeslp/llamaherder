@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Image Generator</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI Image Generator</h1>
+            <p>Create images with OpenAI, X.AI, or Google Gemini</p>
+            <div class="server-status">
+                <span id="status-indicator" class="status-unknown"></span>
+                <span id="status-text">Checking API connection...</span>
+            </div>
+        </header>
+
+        <main>
+            <section class="input-section">
+                <form id="image-form">
+                    <div class="form-group">
+                        <label for="provider">Select Provider:</label>
+                        <select id="provider" name="provider" required>
+                            <option value="openai">OpenAI (DALL-E)</option>
+                            <option value="xai">X.AI (Grok)</option>
+                            <option value="gemini">Google Gemini</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group provider-options openai-options">
+                        <label for="model-select">Model:</label>
+                        <select id="model-select" name="model" class="form-control">
+                            <!-- Options populated via JavaScript -->
+                        </select>
+                        <p class="help-text">Select the model version to use for image generation</p>
+                    </div>
+
+                    <div class="form-group provider-options openai-options">
+                        <label for="quality">Quality:</label>
+                        <select id="quality" name="quality">
+                            <option value="standard">Standard</option>
+                            <option value="hd">HD</option>
+                        </select>
+                        <p class="help-text">HD quality is only available for DALL-E 3</p>
+                    </div>
+
+                    <div class="form-group provider-options openai-options">
+                        <label for="style">Style:</label>
+                        <select id="style" name="style">
+                            <option value="vivid">Vivid</option>
+                            <option value="natural">Natural</option>
+                        </select>
+                        <p class="help-text">Style preference is only available for DALL-E 3</p>
+                    </div>
+
+                    <div class="form-group provider-options openai-options">
+                        <label for="size">Size:</label>
+                        <select id="size" name="size">
+                            <option value="1024x1024">1024x1024 (Square)</option>
+                            <option value="1792x1024">1792x1024 (Landscape)</option>
+                            <option value="1024x1792">1024x1792 (Portrait)</option>
+                        </select>
+                        <p class="help-text">Size options vary by model. DALL-E 2 only supports square format.</p>
+                    </div>
+
+                    <div class="form-group provider-options openai-options">
+                        <label for="response_format">Response Format:</label>
+                        <select id="response_format" name="response_format">
+                            <option value="url">URL</option>
+                            <option value="b64_json">Base64</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group provider-options openai-options">
+                        <label for="n">Number of Images:</label>
+                        <select id="n" name="n">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                        <p class="help-text">DALL-E 3 is limited to 1 image per request</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prompt">Prompt:</label>
+                        <textarea 
+                            id="prompt" 
+                            name="prompt" 
+                            rows="4" 
+                            placeholder="Describe the image you want to generate..." 
+                            required
+                        ></textarea>
+                        <div class="prompt-controls">
+                            <span id="prompt-counter">0/1000</span>
+                            <button type="button" id="clear-prompt" class="text-button">Clear</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group provider-options xai-options">
+                        <label for="seed">Seed (Optional):</label>
+                        <input type="number" id="seed" name="seed" min="0" max="999999999" placeholder="Random seed for reproducibility">
+                        <p class="help-text">Set a specific seed to generate consistent results</p>
+                    </div>
+
+                    <div class="form-group provider-options xai-options" style="display: none;">
+                        <label for="hdr">HDR:</label>
+                        <select id="hdr" name="hdr">
+                            <option value="false">Off</option>
+                            <option value="true">On</option>
+                        </select>
+                        <p class="help-text">Enable HDR for higher dynamic range in the output image</p>
+                    </div>
+
+                    <div class="form-group provider-options xai-options">
+                        <label for="response_format">Response Format:</label>
+                        <select id="response_format" name="response_format">
+                            <option value="url">URL</option>
+                            <option value="b64_json">Base64</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group provider-options gemini-options">
+                        <label for="response_format">Response Format:</label>
+                        <select id="response_format" name="response_format">
+                            <option value="url">URL</option>
+                            <option value="b64_json">Base64</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group provider-options gemini-options">
+                        <label for="temperature">Temperature:</label>
+                        <div class="range-container">
+                            <input type="range" id="temperature" name="temperature" min="0" max="1" step="0.1" value="0.7">
+                            <span id="temperature-value">0.7</span>
+                        </div>
+                        <p class="help-text">Controls randomness in image generation (0 = deterministic, 1 = maximum variation)</p>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" id="generate-btn" class="primary-button">
+                            <i class="fas fa-wand-magic-sparkles"></i> Generate Image
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <section class="result-section" id="result-section">
+                <h2>Generated Image</h2>
+                <div class="image-container">
+                    <div id="loading-indicator" class="hidden">
+                        <div class="spinner"></div>
+                        <p>Generating image...</p>
+                    </div>
+                    <div id="result-container" class="hidden">
+                        <img id="result-image" src="" alt="Generated image will appear here">
+                    </div>
+                    <div id="placeholder" class="placeholder">
+                        <i class="fas fa-image"></i>
+                        <p>Your generated image will appear here</p>
+                    </div>
+                    <div id="error-display" class="error-display hidden">
+                        <i class="fas fa-triangle-exclamation"></i>
+                        <p id="error-message"></p>
+                    </div>
+                </div>
+                <div class="result-controls hidden" id="result-controls">
+                    <button id="download-btn" class="action-button">
+                        <i class="fas fa-download"></i> Download
+                    </button>
+                    <button id="retry-btn" class="action-button">
+                        <i class="fas fa-rotate"></i> Regenerate
+                    </button>
+                    <button id="new-prompt-btn" class="action-button">
+                        <i class="fas fa-plus"></i> New Prompt
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Powered by OpenAI, X.AI, and Google Gemini APIs</p>
+            <p>Uses API endpoints from <code>/v2/generate</code></p>
+            <div id="local-dev-instructions" class="hidden">
+                <p class="dev-note">
+                    <i class="fas fa-info-circle"></i>
+                    For local development, start the API server with: <code>python -m flask run</code> in the API directory.
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html> 

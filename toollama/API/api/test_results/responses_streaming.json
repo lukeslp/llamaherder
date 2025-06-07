@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>502 BAD GATEWAY</title>
+	<link href="https://fonts.googleapis.com/css?family=Nunito:700,900" rel="stylesheet">
+</head>
+	<style>
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+body {
+  padding: 0;
+  margin: 0;
+}
+#error {
+  position: relative;
+  height: 100vh;
+  background-image: linear-gradient(#0b1326 50%, #0e1931 90%);
+}
+#error .error {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+.error {
+  max-width: 767px;
+  width: 100%;
+  line-height: 1.4;
+  text-align: center;
+}
+.error .error-msg {
+  position: relative;
+  margin-bottom: 20px;
+  z-index: -1;
+}
+.error .error-msg h1 {
+  font-family: 'Nunito', sans-serif;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50% , -50%);
+      -ms-transform: translate(-50% , -50%);
+          transform: translate(-50% , -50%);
+  font-size: 224px;
+  font-weight: 900;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  margin-left: -12px;
+  color: #E23E57;
+text-shadow: 3px 3px #ffffff;
+  text-transform: uppercase;
+  letter-spacing: -20px;
+}
+.error .error-msg h2 {
+  font-family: 'Nunito', sans-serif;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 110px;
+  font-size: 42px;
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+  text-shadow: 0px 2px 0px #8400ff;
+  letter-spacing: 13px;
+  margin: 0;
+}
+@media only screen and (max-width: 767px) {
+    .notfound .notfound-404 h2 {
+        font-size: 24px;
+    }
+}
+@media only screen and (max-width: 480px) {
+  .notfound .notfound-404 h1 {
+      font-size: 182px;
+  }
+}
+</style>
+<body>
+	<div id="error">
+		<div class="error">
+			<div class="error-msg">
+				<h1>503</h1>
+				<h2>YOUR LOCAL ADDRESS IS UNREACHABLE</h2>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>502 BAD GATEWAY</title>
+	<link href="https://fonts.googleapis.com/css?family=Nunito:700,900" rel="stylesheet">
+</head>
+	<style>
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+body {
+  padding: 0;
+  margin: 0;
+}
+#error {
+  position: relative;
+  height: 100vh;
+  background-image: linear-gradient(#0b1326 50%, #0e1931 90%);
+}
+#error .error {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+.error {
+  max-width: 767px;
+  width: 100%;
+  line-height: 1.4;
+  text-align: center;
+}
+.error .error-msg {
+  position: relative;
+  margin-bottom: 20px;
+  z-index: -1;
+}
+.error .error-msg h1 {
+  font-family: 'Nunito', sans-serif;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50% , -50%);
+      -ms-transform: translate(-50% , -50%);
+          transform: translate(-50% , -50%);
+  font-size: 224px;
+  font-weight: 900;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  margin-left: -12px;
+  color: #E23E57;
+text-shadow: 3px 3px #ffffff;
+  text-transform: uppercase;
+  letter-spacing: -20px;
+}
+.error .error-msg h2 {
+  font-family: 'Nunito', sans-serif;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 110px;
+  font-size: 42px;
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+  text-shadow: 0px 2px 0px #8400ff;
+  letter-spacing: 13px;
+  margin: 0;
+}
+@media only screen and (max-width: 767px) {
+    .notfound .notfound-404 h2 {
+        font-size: 24px;
+    }
+}
+@media only screen and (max-width: 480px) {
+  .notfound .notfound-404 h1 {
+      font-size: 182px;
+  }
+}
+</style>
+<body>
+	<div id="error">
+		<div class="error">
+			<div class="error-msg">
+				<h1>503</h1>
+				<h2>YOUR LOCAL ADDRESS IS UNREACHABLE</h2>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

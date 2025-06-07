@@ -1,0 +1,322 @@
+FROM mistral:7b
+
+# System prompt for Knowledge & Research Belter
+SYSTEM """You are the Knowledge & Research Belter, a specialized middle manager in the MoE system responsible for coordinating comprehensive knowledge gathering, research, and analysis tasks.
+
+Key responsibilities:
+1. Task Decomposition
+   - Parse research requests
+   - Identify knowledge domains
+   - Create search strategies
+   - Plan verification steps
+
+2. Drummer Coordination
+   - Dispatch Research Drummers
+   - Monitor search progress
+   - Handle failures
+   - Aggregate findings
+
+3. Knowledge Integration
+   - Combine sources
+   - Verify information
+   - Build knowledge graphs
+   - Generate insights
+
+4. Quality Assurance
+   - Verify source credibility
+   - Check completeness
+   - Ensure accuracy
+   - Validate citations
+
+Available Drummers:
+- Research Drummers: Academic and scientific research
+- Search Drummers: Web and archive search
+- Knowledge Drummers: Fact verification and analysis
+- Citation Drummers: Reference management
+
+Research Capabilities:
+1. Academic Research
+   - Scientific papers
+   - Academic databases
+   - Conference proceedings
+   - Research trends
+
+2. Web Research
+   - Web search
+   - Archive access
+   - News sources
+   - Expert content
+
+3. Knowledge Analysis
+   - Fact verification
+   - Source credibility
+   - Information synthesis
+   - Pattern recognition
+
+4. Citation Management
+   - Reference tracking
+   - Citation formatting
+   - Source organization
+   - Bibliography creation
+
+When processing requests:
+1. Analyze research query
+2. Identify required sources
+3. Create search strategy
+4. Dispatch appropriate Drummers
+5. Monitor progress
+6. Verify findings
+7. Synthesize results
+8. Format response
+
+Remember:
+- Verify source credibility
+- Cross-reference information
+- Track citations properly
+- Consider biases
+- Document limitations
+- Note confidence levels
+"""
+
+# Parameter definitions
+PARAMETER request {
+    type: object
+    description: "Research request"
+    properties: {
+        query: {
+            type: string
+            description: "Research query or topic"
+        }
+        depth: {
+            type: string
+            enum: ["basic", "detailed", "comprehensive"]
+            description: "Level of research depth required"
+        }
+        domains: {
+            type: array
+            items: {
+                type: string
+                enum: [
+                    "academic",
+                    "web",
+                    "news",
+                    "archive",
+                    "all"
+                ]
+            }
+            description: "Research domains to include"
+        }
+        format: {
+            type: string
+            enum: ["text", "json", "markdown", "html"]
+            description: "Response format"
+            default: "json"
+        }
+    }
+    required: ["query"]
+}
+
+# Drummer definitions
+DRUMMERS {
+    research: {
+        type: "research"
+        capabilities: [
+            "academic_search",
+            "paper_analysis",
+            "trend_analysis",
+            "citation_management"
+        ]
+        tools: [
+            "knowledge_arxiv",
+            "knowledge_base"
+        ]
+    }
+    search: {
+        type: "search"
+        capabilities: [
+            "web_search",
+            "archive_search",
+            "news_search",
+            "expert_search"
+        ]
+        tools: [
+            "knowledge_webscrape",
+            "knowledge_search",
+            "knowledge_wayback"
+        ]
+    }
+    knowledge: {
+        type: "knowledge"
+        capabilities: [
+            "fact_verification",
+            "source_analysis",
+            "credibility_check",
+            "bias_detection"
+        ]
+        tools: [
+            "knowledge_base",
+            "knowledge_verify"
+        ]
+    }
+    citation: {
+        type: "citation"
+        capabilities: [
+            "reference_tracking",
+            "citation_formatting",
+            "bibliography_creation",
+            "source_organization"
+        ]
+        tools: [
+            "citation_manager",
+            "reference_formatter"
+        ]
+    }
+}
+
+# Response format
+RESPONSE_FORMAT {
+    type: object
+    properties: {
+        request_info: {
+            type: object
+            properties: {
+                query: "string"
+                depth: "string"
+                domains: {
+                    type: array
+                    items: "string"
+                }
+                timestamp: "string"
+            }
+        }
+        academic_data: {
+            type: object
+            properties: {
+                papers: {
+                    type: array
+                    items: {
+                        type: object
+                        properties: {
+                            title: "string"
+                            authors: {
+                                type: array
+                                items: "string"
+                            }
+                            publication: "string"
+                            year: "number"
+                            abstract: "string"
+                            url: "string"
+                            citations: "number"
+                        }
+                    }
+                }
+                trends: {
+                    type: object
+                }
+                key_findings: {
+                    type: array
+                    items: "string"
+                }
+            }
+        }
+        web_data: {
+            type: object
+            properties: {
+                sources: {
+                    type: array
+                    items: {
+                        type: object
+                        properties: {
+                            url: "string"
+                            title: "string"
+                            summary: "string"
+                            credibility: "number"
+                            last_updated: "string"
+                        }
+                    }
+                }
+                archive_data: {
+                    type: object
+                }
+                news_coverage: {
+                    type: array
+                    items: "object"
+                }
+            }
+        }
+        knowledge_graph: {
+            type: object
+            properties: {
+                concepts: {
+                    type: array
+                    items: "object"
+                }
+                relationships: {
+                    type: array
+                    items: "object"
+                }
+                confidence_scores: {
+                    type: object
+                }
+            }
+        }
+        citations: {
+            type: object
+            properties: {
+                bibliography: {
+                    type: array
+                    items: "string"
+                }
+                in_text_citations: {
+                    type: array
+                    items: "string"
+                }
+                citation_style: "string"
+            }
+        }
+        analysis: {
+            type: object
+            properties: {
+                summary: "string"
+                key_points: {
+                    type: array
+                    items: "string"
+                }
+                confidence: {
+                    type: object
+                    properties: {
+                        overall: "number"
+                        by_domain: "object"
+                    }
+                }
+                limitations: {
+                    type: array
+                    items: "string"
+                }
+            }
+        }
+        metadata: {
+            type: object
+            properties: {
+                sources: {
+                    type: array
+                    items: "string"
+                }
+                last_updated: "string"
+                coverage: {
+                    type: object
+                    properties: {
+                        academic: "number"
+                        web: "number"
+                        news: "number"
+                        archive: "number"
+                    }
+                }
+            }
+        }
+        error: {
+            type: string
+            description: "Error message if any"
+        }
+    }
+} 

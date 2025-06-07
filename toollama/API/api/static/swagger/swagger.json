@@ -1,0 +1,3486 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Camina Chat API",
+    "description": "Multi-provider API for interacting with various AI models and tools.\n\n## Features:\n- Multi-provider support: OpenAI, Anthropic, Mistral, Cohere, X.AI, Perplexity, MLX, Gemini, and more\n- Streaming support\n- Chat and instruction completion\n- Document processing with the OpenAI Responses API\n- Image generation\n- Web search capabilities\n- Academic research tools\n- Tool/function calling\n\n## Available Providers\n\nThe API supports the following providers:\n- `anthropic`: Anthropic Claude models\n- `mistral`: Mistral AI models\n- `ollama`: Local models running through Ollama\n- `openai`: OpenAI GPT models\n- `cohere`: Cohere Command models\n- `xai`: X.AI (Grok) models\n- `coze`: Coze platform bots\n- `perplexity`: Perplexity AI models\n- `gemini`: Google Gemini models\n- `mlx`: Apple MLX models (local on Apple Silicon)\n\n## CURL Examples\n\n### Chat Example (Claude)\n```bash\ncurl -X POST https://api.assisted.space/v2/chat/anthropic \\\n  -H \"Content-Type: application/json\" \\\n  -H \"X-API-Key: your_api_key\" \\\n  -d '{\n    \"model\": \"claude-3-sonnet-20240229\",\n    \"prompt\": \"Hello, how are you today?\",\n    \"max_tokens\": 1024,\n    \"stream\": false\n  }'\n```\n\n### Alt Text Example (OpenAI)\n```bash\ncurl -X POST https://api.assisted.space/v2/alt/openai \\\n  -H \"X-API-Key: your_api_key\" \\\n  -F \"model=gpt-4o\" \\\n  -F \"prompt=Generate detailed alt text for this image suitable for visually impaired users\" \\\n  -F \"image=@/path/to/your/image.jpg\"\n```\n\n### Tools Example (Mistral)\n```bash\ncurl -X POST https://api.assisted.space/v2/tools/mistral \\\n  -H \"Content-Type: application/json\" \\\n  -H \"X-API-Key: your_api_key\" \\\n  -d '{\n    \"model\": \"mistral-large-2\",\n    \"prompt\": \"What is the weather in Seattle?\",\n    \"stream\": false,\n    \"max_tokens\": 500,\n    \"temperature\": 0.7,\n    \"tools\": [{\n      \"name\": \"get_weather\",\n      \"description\": \"Get the current weather in a given location\",\n      \"parameters\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"location\": {\n            \"type\": \"string\",\n            \"description\": \"The city and state, e.g. San Francisco, CA\"\n          },\n          \"unit\": {\n            \"type\": \"string\",\n            \"enum\": [\"celsius\", \"fahrenheit\"]\n          }\n        },\n        \"required\": [\"location\"]\n      }\n    }]\n  }'\n```\n\n### Gemini Example\n```bash\ncurl -X POST https://api.assisted.space/v2/chat/gemini \\\n  -H \"Content-Type: application/json\" \\\n  -H \"X-API-Key: your_api_key\" \\\n  -d '{\n    \"model\": \"gemini-2.0-flash\",\n    \"prompt\": \"Write a short poem about AI\",\n    \"max_tokens\": 1024,\n    \"stream\": true\n  }'\n```\n",
+    "version": "2.0.0",
+    "contact": {
+      "name": "API Support",
+      "email": "api@assisted.space"
+    },
+    "license": {
+      "name": "MIT License",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.assisted.space/v2",
+      "description": "Production API Server"
+    },
+    {
+      "url": "http://localhost:8435/v2",
+      "description": "Local Development Server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Info",
+      "description": "Information about the API"
+    },
+    {
+      "name": "Chat",
+      "description": "Chat endpoints for interacting with language models"
+    },
+    {
+      "name": "Alt Text",
+      "description": "Generate alt text for images using vision-capable models"
+    },
+    {
+      "name": "Documents",
+      "description": "Process documents (PDFs, text files, etc.) using OpenAI's Responses API"
+    },
+    {
+      "name": "Images",
+      "description": "Generate, edit, and create variations of images using OpenAI's DALL-E models"
+    },
+    {
+      "name": "Tools",
+      "description": "Tool calling endpoints for function invocation"
+    },
+    {
+      "name": "Models",
+      "description": "List available models from different providers"
+    },
+    {
+      "name": "Files",
+      "description": "File management endpoints"
+    },
+    {
+      "name": "Dreamwalker",
+      "description": "Advanced multi-step AI workflows (coming soon)"
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "tags": [
+          "Info"
+        ],
+        "summary": "API Information",
+        "description": "Get information about the API, including available providers and endpoints",
+        "operationId": "getApiInfo",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiInfo"
+                },
+                "example": {
+                  "status": "ok",
+                  "version": "v2",
+                  "providers": {
+                    "anthropic": true,
+                    "openai": true,
+                    "ollama": true,
+                    "perplexity": true,
+                    "mistral": true,
+                    "cohere": true,
+                    "xai": true,
+                    "coze": true,
+                    "mlx": false,
+                    "lmstudio": false
+                  },
+                  "endpoints": [
+                    "https://api.assisted.space/v2/chat/{provider}",
+                    "https://api.assisted.space/v2/alt/{provider}",
+                    "https://api.assisted.space/v2/tools/{provider}",
+                    "https://api.assisted.space/v2/models/{provider}",
+                    "https://api.assisted.space/v2/docs"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "tags": [
+          "Info"
+        ],
+        "summary": "Health Check",
+        "description": "Check the health status of the API and its supported providers.\n## CURL Example ```bash curl -X GET https://api.assisted.space/v2/health \\\n  -H \"X-API-Key: your_api_key\"\n```\n",
+        "operationId": "getHealthCheck",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthCheck"
+                },
+                "example": {
+                  "status": "ok",
+                  "timestamp": 1708838400,
+                  "providers": {
+                    "anthropic": true,
+                    "openai": true,
+                    "ollama": true,
+                    "perplexity": true,
+                    "mistral": true,
+                    "cohere": true,
+                    "xai": true,
+                    "coze": true,
+                    "mlx": false,
+                    "lmstudio": false
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/models/{provider}": {
+      "get": {
+        "tags": [
+          "Models"
+        ],
+        "summary": "List Models",
+        "description": "List all available models for a specific provider.\n## Usage Examples\n- `/v2/models/anthropic`: List all Anthropic Claude models - `/v2/models/openai`: List all OpenAI GPT models - `/v2/models/ollama`: List all available models in your Ollama instance - `/v2/models/mistral`: List all Mistral AI models - `/v2/models/cohere`: List all Cohere models - `/v2/models/xai`: List all X.AI models - `/v2/models/coze`: List Coze bots with their IDs - `/v2/models/perplexity`: List all Perplexity AI models - `/v2/models/gemini`: List all Google Gemini models - `/v2/models/mlx`: List all installed Apple MLX models\n## CURL Example ```bash curl -X GET https://api.assisted.space/v2/models/anthropic \\\n  -H \"X-API-Key: your_api_key\"\n```\n",
+        "operationId": "listModels",
+        "parameters": [
+          {
+            "name": "provider",
+            "in": "path",
+            "description": "The provider to get models from",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "anthropic",
+                "mistral",
+                "ollama",
+                "openai",
+                "cohere",
+                "xai",
+                "coze",
+                "perplexity",
+                "gemini",
+                "mlx",
+                "lmstudio"
+              ]
+            }
+          },
+          {
+            "name": "sort_by",
+            "in": "query",
+            "description": "Field to sort by",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "created",
+                "id",
+                "capabilities"
+              ],
+              "default": "created"
+            }
+          },
+          {
+            "name": "capability",
+            "in": "query",
+            "description": "Filter models by capability",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "vision",
+                "text",
+                "function",
+                "embedding"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Model"
+                  }
+                },
+                "example": [
+                  {
+                    "id": "claude-3-opus-20240229",
+                    "name": "Claude 3 Opus",
+                    "description": "Claude 3 Opus",
+                    "capabilities": [
+                      "text",
+                      "vision",
+                      "code",
+                      "analysis"
+                    ],
+                    "capability_count": 4,
+                    "created": "2024-02-29",
+                    "created_at": "February 29, 2024",
+                    "owned_by": "anthropic",
+                    "provider": "anthropic"
+                  },
+                  {
+                    "id": "claude-3-sonnet-20240229",
+                    "name": "Claude 3 Sonnet",
+                    "description": "Claude 3 Sonnet",
+                    "capabilities": [
+                      "text",
+                      "vision",
+                      "code"
+                    ],
+                    "capability_count": 3,
+                    "created": "2024-02-29",
+                    "created_at": "February 29, 2024",
+                    "owned_by": "anthropic",
+                    "provider": "anthropic"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/chat/{provider}": {
+      "post": {
+        "tags": [
+          "Chat"
+        ],
+        "summary": "Chat with AI Model",
+        "description": "Send a message to an AI model and get a response.\n\n## Usage Examples\n\n- `/v2/chat/anthropic`: Chat with Anthropic Claude\n- `/v2/chat/openai`: Chat with OpenAI GPT models\n- `/v2/chat/ollama`: Chat with local Ollama models\n- `/v2/chat/mistral`: Chat with Mistral AI models\n- `/v2/chat/cohere`: Chat with Cohere Command models\n- `/v2/chat/xai`: Chat with X.AI Grok models\n- `/v2/chat/coze`: Chat with Coze platform bots\n- `/v2/chat/perplexity`: Chat with Perplexity AI models\n- `/v2/chat/mlx`: Chat with Apple MLX models\n- `/v2/chat/lmstudio`: Chat with LM Studio models\n",
+        "operationId": "chatWithModel",
+        "parameters": [
+          {
+            "name": "provider",
+            "in": "path",
+            "description": "The provider to use for the chat request",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "anthropic",
+                "mistral",
+                "ollama",
+                "openai",
+                "cohere",
+                "xai",
+                "coze",
+                "mlx",
+                "lmstudio"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatRequest"
+              },
+              "examples": {
+                "anthropic": {
+                  "summary": "Anthropic Claude Request",
+                  "value": {
+                    "model": "claude-3-haiku-20240307",
+                    "prompt": "Hello, how are you today?",
+                    "max_tokens": 1024,
+                    "stream": false
+                  }
+                },
+                "openai": {
+                  "summary": "OpenAI GPT Request",
+                  "value": {
+                    "model": "gpt-4o",
+                    "prompt": "Hello, how are you today?",
+                    "max_tokens": 1024,
+                    "stream": false
+                  }
+                },
+                "ollama": {
+                  "summary": "Ollama Request",
+                  "value": {
+                    "model": "llama3",
+                    "prompt": "Hello, how are you today?",
+                    "max_tokens": 1024,
+                    "stream": false
+                  }
+                },
+                "mistral": {
+                  "summary": "Mistral Request",
+                  "value": {
+                    "model": "mistral-small",
+                    "prompt": "Hello, how are you today?",
+                    "max_tokens": 1024,
+                    "stream": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChatResponse"
+                },
+                "example": {
+                  "content": "I'm doing well, thank you for asking! I'm Claude, an AI assistant created by Anthropic. I'm here to help with a wide range of tasks through conversation. How can I assist you today?",
+                  "model": "claude-3-haiku-20240307",
+                  "provider": "anthropic"
+                }
+              },
+              "text/event-stream": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "data: {\"content\": \"I'm \", \"model\": \"claude-3-haiku-20240307\", \"provider\": \"anthropic\"}\ndata: {\"content\": \"doing \", \"model\": \"claude-3-haiku-20240307\", \"provider\": \"anthropic\"}\ndata: {\"content\": \"well, \", \"model\": \"claude-3-haiku-20240307\", \"provider\": \"anthropic\"}\n"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/chat/{provider}/clear": {
+      "post": {
+        "tags": [
+          "Chat"
+        ],
+        "summary": "Clear Conversation",
+        "description": "Clear the conversation history for a provider.\n\n## Usage Examples\n\n- `/v2/chat/anthropic/clear`: Clear conversation history for Anthropic Claude\n- `/v2/chat/openai/clear`: Clear conversation history for OpenAI\n- `/v2/chat/ollama/clear`: Clear conversation history for Ollama\n- `/v2/chat/mistral/clear`: Clear conversation history for Mistral AI\n- `/v2/chat/cohere/clear`: Clear conversation history for Cohere\n- `/v2/chat/xai/clear`: Clear conversation history for X.AI (Grok)\n- `/v2/chat/coze/clear`: Clear conversation history for Coze\n",
+        "operationId": "clearConversation",
+        "parameters": [
+          {
+            "name": "provider",
+            "in": "path",
+            "description": "The provider to clear conversation history for",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "anthropic",
+                "mistral",
+                "ollama",
+                "openai",
+                "cohere",
+                "xai",
+                "coze",
+                "mlx",
+                "lmstudio"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse"
+                },
+                "example": {
+                  "status": "success",
+                  "message": "Conversation cleared"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/alt/{provider}": {
+      "post": {
+        "tags": [
+          "Alt Text"
+        ],
+        "summary": "Generate Alt Text",
+        "description": "Generate descriptive alt text for an image.\n## Usage Examples\n- `/v2/alt/anthropic`: Generate alt text using Anthropic Claude - `/v2/alt/openai`: Generate alt text using OpenAI GPT-4 Vision - `/v2/alt/ollama`: Generate alt text using Ollama with vision models - `/v2/alt/mistral`: Generate alt text using Mistral Pixtral - `/v2/alt/xai`: Generate alt text using X.AI Grok Vision - `/v2/alt/coze`: Generate alt text using Coze Alt Text Generator Bot (ID: 7462296933429346310)\n## CURL Examples\n### OpenAI Alt Text Generation ```bash curl -X POST https://api.assisted.space/v2/alt/openai \\\n  -H \"X-API-Key: your_api_key\" \\\n  -F \"model=gpt-4o\" \\\n  -F \"prompt=Generate detailed alt text for this image suitable for visually impaired users\" \\\n  -F \"image=@/path/to/your/image.jpg\"\n```\n### Anthropic Alt Text Generation ```bash curl -X POST https://api.assisted.space/v2/alt/anthropic \\\n  -H \"X-API-Key: your_api_key\" \\\n  -F \"model=claude-3-opus-20240229\" \\\n  -F \"prompt=Describe this image in detail\" \\\n  -F \"image=@/path/to/your/image.jpg\"\n```\n",
+        "operationId": "generateAltText",
+        "parameters": [
+          {
+            "name": "provider",
+            "in": "path",
+            "description": "The provider to use for alt text generation",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "anthropic",
+                "mistral",
+                "ollama",
+                "openai",
+                "xai",
+                "coze",
+                "mlx",
+                "lmstudio"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "image": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "The image file to generate alt text for"
+                  },
+                  "prompt": {
+                    "type": "string",
+                    "description": "Custom prompt for alt text generation",
+                    "default": "Generate descriptive alt text for this image"
+                  },
+                  "model": {
+                    "type": "string",
+                    "description": "The model ID to use"
+                  },
+                  "stream": {
+                    "type": "boolean",
+                    "description": "Whether to stream the response",
+                    "default": false
+                  }
+                },
+                "required": [
+                  "image",
+                  "model"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AltTextResponse"
+                },
+                "example": {
+                  "alt_text": "A simple test image with a red square on the left side and a blue circle on the right side. Below these shapes is the text 'Test Image' in black.",
+                  "model": "claude-3-haiku-20240307",
+                  "provider": "anthropic"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tools/{provider}": {
+      "post": {
+        "tags": [
+          "Tools"
+        ],
+        "summary": "Tool Calling",
+        "description": "Use AI models to call tools based on a prompt.\n## Usage Examples\n- `/v2/tools/anthropic`: Call tools using Anthropic Claude - `/v2/tools/openai`: Call tools using OpenAI GPT models - `/v2/tools/ollama`: Call tools using Ollama (limited support) - `/v2/tools/mistral`: Call tools using Mistral AI models - `/v2/tools/cohere`: Call tools using Cohere models (limited support, requires command-r-plus models) - `/v2/tools/xai`: Call tools using X.AI Grok models - `/v2/tools/coze`: Call tools using Coze platform bots (extracts tool calls from JSON blocks in responses) - `/v2/tools/perplexity`: Call tools using Perplexity AI models (sonar-reasoning models recommended) - `/v2/tools/mlx`: Call tools using Apple MLX models (limited support)\n## CURL Examples\n### Weather Query Tool ```bash curl -X POST https://api.assisted.space/v2/tools/mistral \\\n  -H \"Content-Type: application/json\" \\\n  -H \"X-API-Key: your_api_key\" \\\n  -d '{\n  \"model\": \"mistral-large-2\",\n  \"prompt\": \"What is the weather in Seattle?\",\n  \"stream\": false,\n  \"max_tokens\": 500,\n  \"temperature\": 0.7,\n  \"tools\": [{\n    \"name\": \"get_weather\",\n    \"description\": \"Get the current weather in a given location\",\n    \"parameters\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"location\": {\n          \"type\": \"string\",\n          \"description\": \"The city and state, e.g. San Francisco, CA\"\n        },\n        \"unit\": {\n          \"type\": \"string\",\n          \"enum\": [\"celsius\", \"fahrenheit\"]\n        }\n      },\n      \"required\": [\"location\"]\n    }\n  }]\n}' ```\n",
+        "operationId": "callTools",
+        "parameters": [
+          {
+            "name": "provider",
+            "in": "path",
+            "description": "The provider to use for tool calling",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "anthropic",
+                "mistral",
+                "ollama",
+                "openai",
+                "cohere",
+                "xai",
+                "coze",
+                "mlx",
+                "lmstudio"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ToolCallRequest"
+              },
+              "examples": {
+                "anthropic": {
+                  "summary": "Anthropic Claude Tool Request",
+                  "value": {
+                    "model": "claude-3-opus-20240229",
+                    "prompt": "What is the weather in Seattle?",
+                    "tools": [
+                      {
+                        "type": "function",
+                        "function": {
+                          "name": "get_weather",
+                          "description": "Get the current weather in a location",
+                          "parameters": {
+                            "type": "object",
+                            "properties": {
+                              "location": {
+                                "type": "string",
+                                "description": "The city and state, e.g. San Francisco, CA"
+                              },
+                              "unit": {
+                                "type": "string",
+                                "enum": [
+                                  "celsius",
+                                  "fahrenheit"
+                                ],
+                                "description": "The unit of temperature to use"
+                              }
+                            },
+                            "required": [
+                              "location"
+                            ]
+                          }
+                        }
+                      }
+                    ],
+                    "max_tokens": 200
+                  }
+                },
+                "openai": {
+                  "summary": "OpenAI GPT Tool Request",
+                  "value": {
+                    "model": "gpt-4-0613",
+                    "prompt": "What is the weather in Seattle?",
+                    "tools": [
+                      {
+                        "type": "function",
+                        "function": {
+                          "name": "get_weather",
+                          "description": "Get the current weather in a location",
+                          "parameters": {
+                            "type": "object",
+                            "properties": {
+                              "location": {
+                                "type": "string",
+                                "description": "The city and state, e.g. San Francisco, CA"
+                              },
+                              "unit": {
+                                "type": "string",
+                                "enum": [
+                                  "celsius",
+                                  "fahrenheit"
+                                ],
+                                "description": "The unit of temperature to use"
+                              }
+                            },
+                            "required": [
+                              "location"
+                            ]
+                          }
+                        }
+                      }
+                    ],
+                    "max_tokens": 200
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ToolCallResponse"
+                },
+                "example": {
+                  "content": "I need to check the weather in Seattle for you.",
+                  "tool_calls": [
+                    {
+                      "id": "call_123456789",
+                      "type": "function",
+                      "function": {
+                        "name": "get_weather",
+                        "arguments": "{\"location\":\"Seattle, WA\",\"unit\":\"fahrenheit\"}"
+                      }
+                    }
+                  ],
+                  "model": "claude-3-opus-20240229",
+                  "provider": "anthropic"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tools/capabilities": {
+      "get": {
+        "tags": [
+          "Tools"
+        ],
+        "summary": "Tool Capabilities",
+        "description": "Get available tool capabilities for each provider",
+        "operationId": "getToolCapabilities",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "anthropic": [
+                    "function",
+                    "search",
+                    "weather",
+                    "calculator"
+                  ],
+                  "openai": [
+                    "function",
+                    "search",
+                    "weather",
+                    "calculator",
+                    "code_interpreter"
+                  ],
+                  "mistral": [
+                    "function",
+                    "search",
+                    "weather"
+                  ],
+                  "ollama": [
+                    "function",
+                    "calculator"
+                  ],
+                  "cohere": [
+                    "function"
+                  ],
+                  "xai": [
+                    "function",
+                    "search"
+                  ],
+                  "coze": [
+                    "function",
+                    "search",
+                    "weather"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/dreamwalker/swarm": {
+      "post": {
+        "tags": [
+          "Dreamwalker"
+        ],
+        "summary": "Dreamwalker Swarm",
+        "description": "Execute query expansion and parallel search (coming soon)",
+        "operationId": "dreamwalkerSwarm",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DreamwalkerSwarmRequest"
+              },
+              "example": {
+                "query": "Impact of climate change on agriculture",
+                "search_count": 15,
+                "max_results_per_query": 5,
+                "max_tokens": 2000,
+                "expansion_model": "deepseek-r1-32b",
+                "summarization_model": "mistral-small"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "text/event-stream": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "data: {\"status\":\"expanding\",\"message\":\"Generating expanded queries\",\"progress\":0.1,\"expanded_queries\":[]}\ndata: {\"status\":\"searching\",\"message\":\"Searching for 'impact of rising temperatures on crop yields'\",\"progress\":0.3,\"expanded_queries\":[\"impact of rising temperatures on crop yields\",\"...\"],\"completed_searches\":1,\"total_searches\":15}\ndata: {\"status\":\"summarizing\",\"message\":\"Aggregating search results and generating summary\",\"progress\":0.8,\"completed_searches\":15,\"total_searches\":15}\ndata: {\"status\":\"complete\",\"message\":\"Summary generation complete\",\"progress\":1.0,\"summary\":\"Climate change poses significant challenges to agriculture worldwide...\",\"sources\":[{\"title\":\"Climate Change Impacts on Global Agriculture\",\"url\":\"https://example.com/...\"},{\"title\":\"Rising Temperatures and Crop Yields: A Meta-Analysis\",\"url\":\"https://example.org/...\"}]}\n"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/responses": {
+      "post": {
+        "tags": [
+          "Documents"
+        ],
+        "summary": "Process Documents with OpenAI Responses API",
+        "description": "Process documents (PDF, text files, etc.) using the OpenAI Responses API. This endpoint allows you to analyze documents and generate responses based on their content.\n## Features - Support for multiple file formats (PDF, TXT, DOCX, etc.) - Web search capability for retrieving current information - File search integration for document question answering - Tool calling for enhanced functionality - Streaming mode for real-time responses\n## CURL Example ```bash curl -X POST https://api.assisted.space/v2/responses \\\n  -H \"X-API-Key: your_api_key\" \\\n  -F \"model=gpt-4o\" \\\n  -F \"prompt=Please analyze this document and provide a detailed summary\" \\\n  -F \"file=@/path/to/your/document.pdf\" \\\n  -F \"stream=false\"\n```\n## Streaming Example ```bash curl -X POST https://api.assisted.space/v2/responses \\\n  -H \"X-API-Key: your_api_key\" \\\n  -F \"model=gpt-4o\" \\\n  -F \"prompt=Please analyze this document and provide a detailed summary\" \\\n  -F \"file=@/path/to/your/document.pdf\" \\\n  -F \"stream=true\"\n```\n",
+        "operationId": "processDocuments",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "model",
+                  "prompt"
+                ],
+                "properties": {
+                  "model": {
+                    "type": "string",
+                    "description": "The OpenAI model to use (e.g., gpt-4o, gpt-4o-2024-11-20)",
+                    "example": "gpt-4o"
+                  },
+                  "prompt": {
+                    "type": "string",
+                    "description": "Instruction for the AI model about how to process the document",
+                    "example": "Please analyze this document and provide a detailed summary"
+                  },
+                  "file": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    },
+                    "description": "File(s) to process (PDF, TXT, DOCX, etc.)"
+                  },
+                  "stream": {
+                    "type": "boolean",
+                    "description": "Whether to stream the response",
+                    "default": false
+                  },
+                  "temperature": {
+                    "type": "number",
+                    "description": "Sampling temperature between 0 and 1",
+                    "minimum": 0,
+                    "maximum": 1,
+                    "default": 0.7
+                  },
+                  "tools": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    },
+                    "description": "Tools to make available to the model"
+                  },
+                  "web_search": {
+                    "type": "boolean",
+                    "description": "Whether to enable web search capability",
+                    "default": false
+                  },
+                  "file_search": {
+                    "type": "boolean",
+                    "description": "Whether to enable file search for document Q&A",
+                    "default": false
+                  },
+                  "computer_use": {
+                    "type": "boolean",
+                    "description": "Whether to enable computer use tools",
+                    "default": false
+                  },
+                  "debug_mode": {
+                    "type": "boolean",
+                    "description": "Whether to enable debug mode for detailed processing info",
+                    "default": false
+                  },
+                  "tool_choice": {
+                    "type": "string",
+                    "description": "How the model should choose to use tools",
+                    "default": "auto",
+                    "enum": [
+                      "auto",
+                      "required",
+                      "none"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "response_id": {
+                      "type": "string",
+                      "description": "The ID of the response, used to retrieve the result",
+                      "example": "resp_abc123def456"
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "The status of the request (completed, processing, error)",
+                      "example": "processing"
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "The content of the response (if completed immediately)"
+                    },
+                    "model": {
+                      "type": "string",
+                      "description": "The model used to process the document",
+                      "example": "gpt-4o"
+                    },
+                    "provider": {
+                      "type": "string",
+                      "description": "The provider used to process the document",
+                      "example": "openai"
+                    }
+                  }
+                }
+              },
+              "text/event-stream": {
+                "schema": {
+                  "type": "string",
+                  "description": "Server-sent events stream with response chunks"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message",
+                      "example": "Model parameter is required"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message",
+                      "example": "Failed to process document"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/responses/{response_id}": {
+      "get": {
+        "tags": [
+          "Documents"
+        ],
+        "summary": "Retrieve Document Processing Result",
+        "description": "Retrieve the result of a document processing request.\n## CURL Example ```bash curl -X GET https://api.assisted.space/v2/responses/resp_abc123def456 \\\n  -H \"X-API-Key: your_api_key\"\n```\n",
+        "operationId": "retrieveDocumentProcessingResult",
+        "parameters": [
+          {
+            "name": "response_id",
+            "in": "path",
+            "description": "The ID of the response to retrieve",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "response_id": {
+                      "type": "string",
+                      "description": "The ID of the response",
+                      "example": "resp_abc123def456"
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "The status of the request (completed, processing, error)",
+                      "example": "completed"
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "The content of the response",
+                      "example": "This document is a research paper on climate change that discusses..."
+                    },
+                    "model": {
+                      "type": "string",
+                      "description": "The model used to process the document",
+                      "example": "gpt-4o"
+                    },
+                    "provider": {
+                      "type": "string",
+                      "description": "The provider used to process the document",
+                      "example": "openai"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "When the response was created",
+                      "example": "2024-04-03T12:34:56Z"
+                    },
+                    "completed_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "When the response was completed",
+                      "example": "2024-04-03T12:35:26Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Response not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message",
+                      "example": "Response not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message",
+                      "example": "Failed to retrieve response"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/images/generate": {
+      "post": {
+        "tags": [
+          "Images"
+        ],
+        "summary": "Generate images with OpenAI DALL-E",
+        "description": "Generate images using OpenAI's DALL-E models via the Images API.\n## CURL Example ```bash curl -X POST https://api.assisted.space/v2/images/generate \\\n  -H \"Content-Type: application/json\" \\\n  -H \"X-API-Key: your_api_key\" \\\n  -d '{\n    \"prompt\": \"A surreal painting of a floating island with waterfalls\",\n    \"model\": \"dall-e-3\",\n    \"n\": 1,\n    \"size\": \"1024x1024\",\n    \"quality\": \"standard\",\n    \"style\": \"vivid\"\n  }'\n```\n",
+        "operationId": "generateImage",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "prompt": {
+                    "type": "string",
+                    "description": "A text description of the desired image(s)"
+                  },
+                  "model": {
+                    "type": "string",
+                    "description": "The model to use for image generation",
+                    "enum": [
+                      "dall-e-2",
+                      "dall-e-3"
+                    ],
+                    "default": "dall-e-3"
+                  },
+                  "n": {
+                    "type": "integer",
+                    "description": "The number of images to generate (1-4 for DALL-E 3, 1-10 for DALL-E 2)",
+                    "default": 1,
+                    "minimum": 1,
+                    "maximum": 10
+                  },
+                  "size": {
+                    "type": "string",
+                    "description": "The size of the generated images",
+                    "enum": [
+                      "256x256",
+                      "512x512",
+                      "1024x1024",
+                      "1792x1024",
+                      "1024x1792"
+                    ],
+                    "default": "1024x1024"
+                  },
+                  "quality": {
+                    "type": "string",
+                    "description": "The quality of the image (DALL-E 3 only)",
+                    "enum": [
+                      "standard",
+                      "hd"
+                    ],
+                    "default": "standard"
+                  },
+                  "style": {
+                    "type": "string",
+                    "description": "The style of the generated image (DALL-E 3 only)",
+                    "enum": [
+                      "vivid",
+                      "natural"
+                    ],
+                    "default": "vivid"
+                  }
+                },
+                "required": [
+                  "prompt"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response with generated image(s)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ImagesGenerationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request or invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/images/edit": {
+      "post": {
+        "tags": [
+          "Images"
+        ],
+        "summary": "Edit images with OpenAI DALL-E",
+        "description": "Edit existing images using OpenAI's DALL-E models. Provide an image and a mask to specify which areas to edit along with a prompt describing the desired changes.\n## CURL Example ```bash curl -X POST https://api.assisted.space/v2/images/edit \\\n  -H \"X-API-Key: your_api_key\" \\\n  -F \"image=@/path/to/your/image.png\" \\\n  -F \"mask=@/path/to/your/mask.png\" \\\n  -F \"prompt=Add a cute cat sitting in the foreground\" \\\n  -F \"model=dall-e-2\" \\\n  -F \"n=1\" \\\n  -F \"size=1024x1024\"\n```\n",
+        "operationId": "editImage",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "image": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "The image to edit (must be a valid PNG file with transparency)"
+                  },
+                  "mask": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "An optional mask image showing which areas to edit (must be a valid PNG file with transparency). If not provided, regions with transparency in the image will be used as the mask.\n"
+                  },
+                  "prompt": {
+                    "type": "string",
+                    "description": "A text description of the desired changes"
+                  },
+                  "model": {
+                    "type": "string",
+                    "description": "The model to use for image editing",
+                    "enum": [
+                      "dall-e-2"
+                    ],
+                    "default": "dall-e-2"
+                  },
+                  "n": {
+                    "type": "integer",
+                    "description": "The number of images to generate",
+                    "default": 1,
+                    "minimum": 1,
+                    "maximum": 10
+                  },
+                  "size": {
+                    "type": "string",
+                    "description": "The size of the generated images",
+                    "enum": [
+                      "256x256",
+                      "512x512",
+                      "1024x1024"
+                    ],
+                    "default": "1024x1024"
+                  }
+                },
+                "required": [
+                  "image",
+                  "prompt"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response with edited image(s)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ImagesGenerationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request or invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/images/variations": {
+      "post": {
+        "tags": [
+          "Images"
+        ],
+        "summary": "Create image variations with OpenAI DALL-E",
+        "description": "Create variations of an existing image using OpenAI's DALL-E models.\n## CURL Example ```bash curl -X POST https://api.assisted.space/v2/images/variations \\\n  -H \"X-API-Key: your_api_key\" \\\n  -F \"image=@/path/to/your/image.png\" \\\n  -F \"model=dall-e-2\" \\\n  -F \"n=3\" \\\n  -F \"size=1024x1024\"\n```\n",
+        "operationId": "createImageVariations",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "image": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "The image to use as the basis for variations (must be a valid PNG or JPEG file)"
+                  },
+                  "model": {
+                    "type": "string",
+                    "description": "The model to use for image variations",
+                    "enum": [
+                      "dall-e-2"
+                    ],
+                    "default": "dall-e-2"
+                  },
+                  "n": {
+                    "type": "integer",
+                    "description": "The number of variations to generate",
+                    "default": 1,
+                    "minimum": 1,
+                    "maximum": 10
+                  },
+                  "size": {
+                    "type": "string",
+                    "description": "The size of the generated variations",
+                    "enum": [
+                      "256x256",
+                      "512x512",
+                      "1024x1024"
+                    ],
+                    "default": "1024x1024"
+                  }
+                },
+                "required": [
+                  "image"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response with image variations",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ImagesGenerationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request or invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/generate": {
+      "post": {
+        "tags": [
+          "Images"
+        ],
+        "summary": "Generate images (multi-provider)",
+        "description": "Generate images using various supported providers. This endpoint will redirect to the appropriate provider-specific endpoint based on the provider parameter.\n## Supported Providers - OpenAI (DALL-E models) - Gemini (experimental image generation) - X.AI (Grok models)\n## CURL Example ```bash curl -X POST https://api.assisted.space/v2/generate \\\n  -H \"Content-Type: application/json\" \\\n  -H \"X-API-Key: your_api_key\" \\\n  -d '{\n    \"provider\": \"openai\",\n    \"prompt\": \"A surreal painting of a floating island with waterfalls\",\n    \"model\": \"dall-e-3\",\n    \"n\": 1,\n    \"size\": \"1024x1024\",\n    \"quality\": \"standard\",\n    \"style\": \"vivid\"\n  }'\n```\n",
+        "operationId": "generateImageMultiProvider",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "provider": {
+                    "type": "string",
+                    "description": "The provider to use for image generation",
+                    "enum": [
+                      "openai",
+                      "gemini",
+                      "xai"
+                    ],
+                    "default": "gemini"
+                  },
+                  "prompt": {
+                    "type": "string",
+                    "description": "A text description of the desired image(s)"
+                  },
+                  "model": {
+                    "type": "string",
+                    "description": "The model to use for image generation (provider-specific)"
+                  },
+                  "n": {
+                    "type": "integer",
+                    "description": "The number of images to generate (provider-specific limitations apply)",
+                    "default": 1,
+                    "minimum": 1
+                  },
+                  "size": {
+                    "type": "string",
+                    "description": "The size of the generated images (provider-specific options apply)",
+                    "default": "1024x1024"
+                  },
+                  "quality": {
+                    "type": "string",
+                    "description": "The quality of the image (provider-specific options apply)",
+                    "default": "standard"
+                  },
+                  "style": {
+                    "type": "string",
+                    "description": "The style of the generated image (provider-specific options apply)",
+                    "default": "vivid"
+                  },
+                  "response_format": {
+                    "type": "string",
+                    "description": "Format of the response",
+                    "enum": [
+                      "url",
+                      "b64_json"
+                    ],
+                    "default": "url"
+                  }
+                },
+                "required": [
+                  "prompt"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response with generated image(s)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ImagesGenerationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request or invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service unavailable (provider error)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/generate/openai": {
+      "post": {
+        "tags": [
+          "Images"
+        ],
+        "summary": "Generate images with OpenAI",
+        "description": "Generate images using OpenAI's DALL-E models.\n## CURL Example ```bash curl -X POST https://api.assisted.space/v2/generate/openai \\\n  -H \"Content-Type: application/json\" \\\n  -H \"X-API-Key: your_api_key\" \\\n  -d '{\n    \"prompt\": \"A surreal painting of a floating island with waterfalls\",\n    \"model\": \"dall-e-3\",\n    \"n\": 1,\n    \"size\": \"1024x1024\",\n    \"quality\": \"standard\",\n    \"style\": \"vivid\"\n  }'\n```\n",
+        "operationId": "generateImageOpenAI",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "prompt": {
+                    "type": "string",
+                    "description": "A text description of the desired image(s)"
+                  },
+                  "model": {
+                    "type": "string",
+                    "description": "The model to use for image generation",
+                    "enum": [
+                      "dall-e-2",
+                      "dall-e-3"
+                    ],
+                    "default": "dall-e-3"
+                  },
+                  "n": {
+                    "type": "integer",
+                    "description": "The number of images to generate (1-4 for DALL-E 3, 1-10 for DALL-E 2)",
+                    "default": 1,
+                    "minimum": 1,
+                    "maximum": 10
+                  },
+                  "size": {
+                    "type": "string",
+                    "description": "The size of the generated images",
+                    "enum": [
+                      "256x256",
+                      "512x512",
+                      "1024x1024",
+                      "1792x1024",
+                      "1024x1792"
+                    ],
+                    "default": "1024x1024"
+                  },
+                  "quality": {
+                    "type": "string",
+                    "description": "The quality of the image (DALL-E 3 only)",
+                    "enum": [
+                      "standard",
+                      "hd"
+                    ],
+                    "default": "standard"
+                  },
+                  "style": {
+                    "type": "string",
+                    "description": "The style of the generated image (DALL-E 3 only)",
+                    "enum": [
+                      "vivid",
+                      "natural"
+                    ],
+                    "default": "vivid"
+                  },
+                  "response_format": {
+                    "type": "string",
+                    "description": "Format of the response",
+                    "enum": [
+                      "url",
+                      "b64_json"
+                    ],
+                    "default": "url"
+                  }
+                },
+                "required": [
+                  "prompt"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response with generated image(s)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ImagesGenerationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request or invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/generate/gemini": {
+      "post": {
+        "tags": [
+          "Images"
+        ],
+        "summary": "Generate images with Gemini",
+        "description": "Generate images using Google's Gemini experimental image generation capability.\n## CURL Example ```bash curl -X POST https://api.assisted.space/v2/generate/gemini \\\n  -H \"Content-Type: application/json\" \\\n  -H \"X-API-Key: your_api_key\" \\\n  -d '{\n    \"prompt\": \"A futuristic cityscape with flying cars and neon lights\",\n    \"model\": \"gemini-2.0-flash-exp-image-generation\",\n    \"n\": 1,\n    \"size\": \"1024x1024\"\n  }'\n```\n",
+        "operationId": "generateImageGemini",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "prompt": {
+                    "type": "string",
+                    "description": "A text description of the desired image(s)"
+                  },
+                  "model": {
+                    "type": "string",
+                    "description": "The model to use for image generation",
+                    "default": "gemini-2.0-flash-exp-image-generation"
+                  },
+                  "n": {
+                    "type": "integer",
+                    "description": "The number of images to generate",
+                    "default": 1,
+                    "minimum": 1
+                  },
+                  "size": {
+                    "type": "string",
+                    "description": "The size of the generated images (currently only 1024x1024 supported)",
+                    "default": "1024x1024"
+                  },
+                  "response_format": {
+                    "type": "string",
+                    "description": "Format of the response",
+                    "enum": [
+                      "url",
+                      "b64_json"
+                    ],
+                    "default": "url"
+                  }
+                },
+                "required": [
+                  "prompt"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response with generated image(s)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ImagesGenerationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request or invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/generate/xai": {
+      "post": {
+        "tags": [
+          "Images"
+        ],
+        "summary": "Generate images with X.AI",
+        "description": "Generate images using X.AI (Grok) image generation capabilities.\n## CURL Example ```bash curl -X POST https://api.assisted.space/v2/generate/xai \\\n  -H \"Content-Type: application/json\" \\\n  -H \"X-API-Key: your_api_key\" \\\n  -d '{\n    \"prompt\": \"A cyberpunk city at night with neon lights and flying vehicles\",\n    \"model\": \"grok-2-image\",\n    \"n\": 1,\n    \"size\": \"1024x1024\",\n    \"response_format\": \"url\",\n    \"api_key\": \"xai-api-key-here\"\n  }'\n```\n",
+        "operationId": "generateImageXAI",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "prompt"
+                ],
+                "properties": {
+                  "prompt": {
+                    "type": "string",
+                    "description": "The text prompt to generate an image from",
+                    "example": "A cyberpunk city at night with neon lights and flying vehicles"
+                  },
+                  "model": {
+                    "type": "string",
+                    "description": "The X.AI model to use for image generation",
+                    "default": "grok-2-image",
+                    "example": "grok-2-image"
+                  },
+                  "n": {
+                    "type": "integer",
+                    "description": "Number of images to generate",
+                    "default": 1,
+                    "minimum": 1,
+                    "maximum": 4,
+                    "example": 1
+                  },
+                  "size": {
+                    "type": "string",
+                    "description": "Size of the generated image",
+                    "default": "1024x1024",
+                    "example": "1024x1024"
+                  },
+                  "response_format": {
+                    "type": "string",
+                    "description": "Format of the response",
+                    "enum": [
+                      "url",
+                      "b64_json"
+                    ],
+                    "default": "url",
+                    "example": "url"
+                  },
+                  "api_key": {
+                    "type": "string",
+                    "description": "Optional X.AI API key to use for this request",
+                    "example": "xai-api-key-here"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ImageGenerationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/chat/gemini": {
+      "post": {
+        "tags": [
+          "Chat"
+        ],
+        "summary": "Chat with Google Gemini",
+        "description": "Generate a chat response using Google's Gemini models.\n## Features - Support for text-based chat - Vision capabilities with image input - Real-time streaming responses - Context window up to 128k tokens (model dependent)\n## CURL Example (Text) ```bash curl -X POST https://api.assisted.space/v2/chat/gemini \\\n  -H \"Content-Type: application/json\" \\\n  -H \"X-API-Key: your_api_key\" \\\n  -d '{\n    \"model\": \"gemini-2.0-flash\",\n    \"prompt\": \"Explain quantum computing to me.\",\n    \"max_tokens\": 1024,\n    \"temperature\": 0.7,\n    \"stream\": true\n  }'\n```\n## CURL Example (Vision) ```bash curl -X POST https://api.assisted.space/v2/chat/gemini \\\n  -H \"X-API-Key: your_api_key\" \\\n  -F \"model=gemini-1.5-pro\" \\\n  -F \"prompt=What can you tell me about this image?\" \\\n  -F \"image=@/path/to/your/image.jpg\" \\\n  -F \"stream=false\"\n```\n",
+        "operationId": "chatWithGemini",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GeminiChatRequest"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "model",
+                  "prompt"
+                ],
+                "properties": {
+                  "model": {
+                    "type": "string",
+                    "description": "The Gemini model to use",
+                    "example": "gemini-2.0-flash"
+                  },
+                  "prompt": {
+                    "type": "string",
+                    "description": "The user's input message",
+                    "example": "Write a short poem about artificial intelligence"
+                  },
+                  "max_tokens": {
+                    "type": "integer",
+                    "description": "Maximum number of tokens to generate",
+                    "default": 1024,
+                    "minimum": 1,
+                    "maximum": 128000
+                  },
+                  "temperature": {
+                    "type": "number",
+                    "description": "Sampling temperature between 0 and 1",
+                    "minimum": 0,
+                    "maximum": 1,
+                    "default": 0.7
+                  },
+                  "stream": {
+                    "type": "boolean",
+                    "description": "Whether to stream the response",
+                    "default": false
+                  },
+                  "image_data": {
+                    "type": "string",
+                    "description": "Base64-encoded image data (for vision capabilities)"
+                  },
+                  "image_path": {
+                    "type": "string",
+                    "description": "Path to an image file (server-side, admin only)",
+                    "example": "/path/to/server/image.jpg"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChatResponse"
+                }
+              },
+              "text/event-stream": {
+                "schema": {
+                  "type": "string",
+                  "description": "Server-sent events stream with response chunks"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tools/gemini": {
+      "post": {
+        "tags": [
+          "Tools"
+        ],
+        "summary": "Call Tools with Google Gemini",
+        "description": "Use Google Gemini models to call tools based on a prompt.\n## Features - Support for function/tool calling - Structured function definitions - Flexible parameter validation\n## CURL Example ```bash curl -X POST https://api.assisted.space/v2/tools/gemini \\\n  -H \"Content-Type: application/json\" \\\n  -H \"X-API-Key: your_api_key\" \\\n  -d '{\n    \"model\": \"gemini-2.0-flash\",\n    \"prompt\": \"What is the weather in Paris?\",\n    \"temperature\": 0.7,\n    \"tools\": [{\n      \"name\": \"get_weather\",\n      \"description\": \"Get the current weather in a given location\",\n      \"parameters\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"location\": {\n            \"type\": \"string\",\n            \"description\": \"The city and state, e.g. San Francisco, CA\"\n          },\n          \"unit\": {\n            \"type\": \"string\",\n            \"enum\": [\"celsius\", \"fahrenheit\"]\n          }\n        },\n        \"required\": [\"location\"]\n      }\n    }]\n  }'\n```\n",
+        "operationId": "callToolsWithGemini",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "model",
+                  "prompt",
+                  "tools"
+                ],
+                "properties": {
+                  "model": {
+                    "type": "string",
+                    "description": "The Gemini model to use",
+                    "example": "gemini-2.0-flash"
+                  },
+                  "prompt": {
+                    "type": "string",
+                    "description": "The user's input message",
+                    "example": "What is the weather in Paris?"
+                  },
+                  "temperature": {
+                    "type": "number",
+                    "description": "Sampling temperature between 0 and 1",
+                    "minimum": 0,
+                    "maximum": 1,
+                    "default": 0.7
+                  },
+                  "max_tokens": {
+                    "type": "integer",
+                    "description": "Maximum number of tokens to generate",
+                    "default": 1024
+                  },
+                  "tools": {
+                    "type": "array",
+                    "description": "Tools available for the model to use",
+                    "items": {
+                      "$ref": "#/components/schemas/Tool"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "content": {
+                      "type": "string",
+                      "description": "The content of the response",
+                      "example": "The weather in Paris is currently 18\u00b0C and partly cloudy."
+                    },
+                    "tool_calls": {
+                      "type": "array",
+                      "description": "Tools that were called by the model",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "description": "The name of the tool",
+                            "example": "get_weather"
+                          },
+                          "arguments": {
+                            "type": "object",
+                            "description": "The arguments passed to the tool",
+                            "example": {
+                              "location": "Paris, France",
+                              "unit": "celsius"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "model": {
+                      "type": "string",
+                      "description": "The model used to generate the response",
+                      "example": "gemini-2.0-flash"
+                    },
+                    "provider": {
+                      "type": "string",
+                      "description": "The provider used to generate the response",
+                      "example": "gemini"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/images/gemini": {
+      "post": {
+        "tags": [
+          "Images"
+        ],
+        "summary": "Generate Images with Google Gemini",
+        "description": "Generate images using Google Gemini's image generation capability.\n## Features - Text-to-image generation - Experimental feature - Available with gemini-2.0-flash-exp-image-generation model\n## CURL Example ```bash curl -X POST https://api.assisted.space/v2/images/gemini \\\n  -H \"Content-Type: application/json\" \\\n  -H \"X-API-Key: your_api_key\" \\\n  -d '{\n    \"model\": \"gemini-2.0-flash-exp-image-generation\",\n    \"prompt\": \"A cute robot gardener tending to a futuristic garden on Mars, digital art style\",\n    \"n\": 1,\n    \"size\": \"1024x1024\",\n    \"response_format\": \"url\"\n  }'\n```\n",
+        "operationId": "generateImagesWithGemini",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "model",
+                  "prompt"
+                ],
+                "properties": {
+                  "model": {
+                    "type": "string",
+                    "description": "The Gemini model to use (must support image generation)",
+                    "example": "gemini-2.0-flash-exp-image-generation"
+                  },
+                  "prompt": {
+                    "type": "string",
+                    "description": "The text prompt to generate an image from",
+                    "example": "A cute robot gardener tending to a futuristic garden on Mars, digital art style"
+                  },
+                  "n": {
+                    "type": "integer",
+                    "description": "Number of images to generate",
+                    "default": 1,
+                    "minimum": 1,
+                    "maximum": 4
+                  },
+                  "size": {
+                    "type": "string",
+                    "description": "Size of the generated image",
+                    "default": "1024x1024",
+                    "enum": [
+                      "256x256",
+                      "512x512",
+                      "1024x1024"
+                    ]
+                  },
+                  "response_format": {
+                    "type": "string",
+                    "description": "Format of the response",
+                    "default": "url",
+                    "enum": [
+                      "url",
+                      "b64_json"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "created": {
+                      "type": "number",
+                      "description": "Timestamp of when the images were created",
+                      "example": 1717041600
+                    },
+                    "data": {
+                      "type": "array",
+                      "description": "The generated images",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "url": {
+                            "type": "string",
+                            "description": "URL of the generated image",
+                            "example": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAA..."
+                          },
+                          "format": {
+                            "type": "string",
+                            "description": "Format of the image",
+                            "example": "url"
+                          }
+                        }
+                      }
+                    },
+                    "model": {
+                      "type": "string",
+                      "description": "The model used to generate the images",
+                      "example": "gemini-2.0-flash-exp-image-generation"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tools/archive": {
+      "get": {
+        "tags": [
+          "Tools"
+        ],
+        "summary": "Retrieve Archived Webpage (GET)",
+        "description": "Retrieve an archived version of a webpage using various archive services like  the Wayback Machine, Archive.is, Memento Aggregator, or 12ft.io.\n## Features - Multiple archive providers - Support for archived snapshots - Optional capture capability for Archive.is - Paywall bypassing with 12ft.io\n## CURL Example ```bash curl -X GET \"https://api.assisted.space/v2/tools/archive?url=https://example.com&provider=wayback\" \\\n  -H \"X-API-Key: your_api_key\"\n```\n",
+        "operationId": "retrieveArchivedWebpageGet",
+        "parameters": [
+          {
+            "name": "url",
+            "in": "query",
+            "description": "The URL to find an archived version for",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "https://example.com"
+            }
+          },
+          {
+            "name": "provider",
+            "in": "query",
+            "description": "The archive provider to use",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "wayback",
+                "archiveis",
+                "memento",
+                "12ft"
+              ],
+              "default": "wayback"
+            }
+          },
+          {
+            "name": "capture",
+            "in": "query",
+            "description": "Whether to capture a new snapshot (for archiveis only)",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "original_url": {
+                      "type": "string",
+                      "description": "The original URL",
+                      "example": "https://example.com"
+                    },
+                    "provider": {
+                      "type": "string",
+                      "description": "The archive provider used",
+                      "example": "wayback"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "description": "Timestamp of the archive operation",
+                      "example": "2024-04-03T15:23:45.123456"
+                    },
+                    "success": {
+                      "type": "boolean",
+                      "description": "Whether the operation was successful",
+                      "example": true
+                    },
+                    "archived_url": {
+                      "type": "string",
+                      "description": "URL to the archived version",
+                      "example": "https://web.archive.org/web/20230401123456/https://example.com"
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Status message",
+                      "example": "Successfully retrieved the most recent snapshot from the Wayback Machine"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Tools"
+        ],
+        "summary": "Retrieve Archived Webpage (POST)",
+        "description": "Retrieve an archived version of a webpage using various archive services. This POST endpoint is functionally identical to the GET version but accepts  parameters in the request body.\n## CURL Example ```bash curl -X POST https://api.assisted.space/v2/tools/archive \\\n  -H \"Content-Type: application/json\" \\\n  -H \"X-API-Key: your_api_key\" \\\n  -d '{\n    \"url\": \"https://example.com\",\n    \"provider\": \"wayback\",\n    \"capture\": false\n  }'\n```\n",
+        "operationId": "retrieveArchivedWebpagePost",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "url"
+                ],
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "description": "The URL to find an archived version for",
+                    "example": "https://example.com"
+                  },
+                  "provider": {
+                    "type": "string",
+                    "description": "The archive provider to use",
+                    "enum": [
+                      "wayback",
+                      "archiveis",
+                      "memento",
+                      "12ft"
+                    ],
+                    "default": "wayback"
+                  },
+                  "capture": {
+                    "type": "boolean",
+                    "description": "Whether to capture a new snapshot (for archiveis only)",
+                    "default": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "original_url": {
+                      "type": "string",
+                      "description": "The original URL",
+                      "example": "https://example.com"
+                    },
+                    "provider": {
+                      "type": "string",
+                      "description": "The archive provider used",
+                      "example": "wayback"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "description": "Timestamp of the archive operation",
+                      "example": "2024-04-03T15:23:45.123456"
+                    },
+                    "success": {
+                      "type": "boolean",
+                      "description": "Whether the operation was successful",
+                      "example": true
+                    },
+                    "archived_url": {
+                      "type": "string",
+                      "description": "URL to the archived version",
+                      "example": "https://web.archive.org/web/20230401123456/https://example.com"
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Status message",
+                      "example": "Successfully retrieved the most recent snapshot from the Wayback Machine"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tools/archive/schema": {
+      "get": {
+        "tags": [
+          "Tools"
+        ],
+        "summary": "Get Archive Tool Schema",
+        "description": "Get the JSON schema for the archive tool. This is useful for integrating the archive tool with other AI models and tools.\n## CURL Example ```bash curl -X GET https://api.assisted.space/v2/tools/archive/schema \\\n  -H \"X-API-Key: your_api_key\"\n```\n",
+        "operationId": "getArchiveToolSchema",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "example": "function"
+                    },
+                    "function": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "example": "get_archived_webpage"
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "Retrieve an archived version of a webpage from various archive services"
+                        },
+                        "parameters": {
+                          "type": "object"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tools/execute/get_archived_webpage": {
+      "post": {
+        "tags": [
+          "Tools"
+        ],
+        "summary": "Execute Archive Tool Directly",
+        "description": "Execute the get_archived_webpage tool directly without going through the provider's tool calling mechanism. This endpoint is useful for direct API access or for providers that don't support tool calling.\n## CURL Example ```bash curl -X POST https://api.assisted.space/v2/tools/execute/get_archived_webpage \\\n  -H \"Content-Type: application/json\" \\\n  -H \"X-API-Key: your_api_key\" \\\n  -d '{\n    \"url\": \"https://example.com\",\n    \"provider\": \"wayback\"\n  }'\n```\n",
+        "operationId": "executeGetArchivedWebpage",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "url"
+                ],
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "description": "The URL to find an archived version for",
+                    "example": "https://example.com"
+                  },
+                  "provider": {
+                    "type": "string",
+                    "description": "The archive provider to use",
+                    "enum": [
+                      "wayback",
+                      "archiveis",
+                      "memento",
+                      "12ft"
+                    ],
+                    "default": "wayback"
+                  },
+                  "capture": {
+                    "type": "boolean",
+                    "description": "Whether to capture a new snapshot (for archiveis only)",
+                    "default": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "original_url": {
+                      "type": "string",
+                      "example": "https://example.com"
+                    },
+                    "provider": {
+                      "type": "string",
+                      "example": "wayback"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "example": "2024-04-03T15:23:45.123456"
+                    },
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "archived_url": {
+                      "type": "string",
+                      "example": "https://web.archive.org/web/20230401123456/https://example.com"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully retrieved the most recent snapshot from the Wayback Machine"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tools/execute/code": {
+      "post": {
+        "tags": [
+          "Tools"
+        ],
+        "summary": "Execute Python Code",
+        "description": "Execute Python code in a restricted environment. This endpoint allows running Python code safely in a sandboxed environment with limited permissions and resource usage.\n## Security Features - Restricted environment with limited imports - Sandboxed execution - Resource limits to prevent abuse - Temporary file cleanup after execution\n## CURL Example ```bash curl -X POST https://api.assisted.space/v2/tools/execute/code \\\n  -H \"Content-Type: application/json\" \\\n  -H \"X-API-Key: your_api_key\" \\\n  -d '{\n    \"code\": \"import math\\n\\nfor i in range(5):\\n    print(f\\\"Square root of {i} is {math.sqrt(i)}\\\")\"\n  }'\n```\n",
+        "operationId": "executePythonCode",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "code"
+                ],
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "description": "The Python code to execute",
+                    "example": "import math\n\nfor i in range(5):\n    print(f\"Square root of {i} is {math.sqrt(i)}\")"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Whether the execution was successful",
+                      "example": true
+                    },
+                    "result": {
+                      "type": "string",
+                      "description": "The output of the code execution",
+                      "example": "Square root of 0 is 0.0\nSquare root of 1 is 1.0\nSquare root of 2 is 1.4142135623730951\nSquare root of 3 is 1.7320508075688772\nSquare root of 4 is 2.0"
+                    },
+                    "code": {
+                      "type": "string",
+                      "description": "The code that was executed",
+                      "example": "import math\n\nfor i in range(5):\n    print(f\"Square root of {i} is {math.sqrt(i)}\")"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Whether the execution was successful",
+                      "example": false
+                    },
+                    "error": {
+                      "type": "string",
+                      "description": "Error message",
+                      "example": "Error executing code: NameError: name 'undefined_function' is not defined"
+                    },
+                    "code": {
+                      "type": "string",
+                      "description": "The code that was executed",
+                      "example": "print(undefined_function())"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tools/analyze/text": {
+      "post": {
+        "tags": [
+          "Tools"
+        ],
+        "summary": "Analyze Text",
+        "description": "Analyze text for sentiment, key entities, and offensive content. This endpoint uses Tisane API to provide comprehensive text analysis.\n## Features - Sentiment analysis (positive, negative, neutral) - Entity extraction (people, places, organizations, etc.) - Offensive content detection - Multi-language support\n## CURL Example ```bash curl -X POST https://api.assisted.space/v2/tools/analyze/text \\\n  -H \"Content-Type: application/json\" \\\n  -H \"X-API-Key: your_api_key\" \\\n  -d '{\n    \"text\": \"I really enjoyed visiting New York City last summer. The people were friendly and the food was amazing.\",\n    \"language\": \"en\"\n  }'\n```\n",
+        "operationId": "analyzeText",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "text"
+                ],
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "description": "The text to analyze",
+                    "example": "I really enjoyed visiting New York City last summer. The people were friendly and the food was amazing."
+                  },
+                  "language": {
+                    "type": "string",
+                    "description": "The language code (default is 'en')",
+                    "default": "en",
+                    "example": "en"
+                  },
+                  "api_key": {
+                    "type": "string",
+                    "description": "The Tisane API key (optional, uses default if not provided)"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Whether the analysis was successful",
+                      "example": true
+                    },
+                    "result": {
+                      "type": "string",
+                      "description": "The analysis results",
+                      "example": "Text Analysis Results:\n\n  Sentiment: positive\n  Entities: New York City\n  No offensive content detected."
+                    },
+                    "text": {
+                      "type": "string",
+                      "description": "The text that was analyzed",
+                      "example": "I really enjoyed visiting New York City last summer. The people were friendly and the food was amazing."
+                    },
+                    "language": {
+                      "type": "string",
+                      "description": "The language code used for analysis",
+                      "example": "en"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Error analyzing text: API request failed"
+                    },
+                    "text": {
+                      "type": "string",
+                      "example": "I really enjoyed visiting New York City last summer. The people were friendly and the food was amazing."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tools/process/format": {
+      "post": {
+        "tags": [
+          "Tools"
+        ],
+        "summary": "Format Data",
+        "description": "Convert data between JSON and other formats (YAML, TOML, XML, CSV). This endpoint is useful for data transformation and format conversion.\n## Features - Supports multiple data formats (JSON, YAML, TOML, XML, CSV) - Various output styles (pretty, compact, single_line) - Handles complex nested structures\n## CURL Example ```bash curl -X POST https://api.assisted.space/v2/tools/process/format \\\n  -H \"Content-Type: application/json\" \\\n  -H \"X-API-Key: your_api_key\" \\\n  -d '{\n    \"data\": {\n      \"name\": \"John Doe\",\n      \"age\": 30,\n      \"address\": {\n        \"street\": \"123 Main St\",\n        \"city\": \"Anytown\",\n        \"zip\": \"12345\"\n      },\n      \"hobbies\": [\"reading\", \"running\", \"coding\"]\n    },\n    \"target_format\": \"yaml\",\n    \"style\": \"pretty\"\n  }'\n```\n",
+        "operationId": "formatData",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "data",
+                  "target_format"
+                ],
+                "properties": {
+                  "data": {
+                    "type": "object",
+                    "description": "The data to convert (as JSON object or string)",
+                    "example": {
+                      "name": "John Doe",
+                      "age": 30,
+                      "address": {
+                        "street": "123 Main St",
+                        "city": "Anytown",
+                        "zip": "12345"
+                      },
+                      "hobbies": [
+                        "reading",
+                        "running",
+                        "coding"
+                      ]
+                    }
+                  },
+                  "target_format": {
+                    "type": "string",
+                    "description": "The target format",
+                    "enum": [
+                      "json",
+                      "yaml",
+                      "toml",
+                      "xml",
+                      "csv"
+                    ],
+                    "example": "yaml"
+                  },
+                  "style": {
+                    "type": "string",
+                    "description": "Output style",
+                    "enum": [
+                      "pretty",
+                      "compact",
+                      "single_line"
+                    ],
+                    "default": "pretty",
+                    "example": "pretty"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Whether the format conversion was successful",
+                      "example": true
+                    },
+                    "result": {
+                      "type": "string",
+                      "description": "The converted data",
+                      "example": "name: John Doe\nage: 30\naddress:\n  street: 123 Main St\n  city: Anytown\n  zip: '12345'\nhobbies:\n- reading\n- running\n- coding\n"
+                    },
+                    "original_data": {
+                      "type": "object",
+                      "description": "The original data that was converted"
+                    },
+                    "target_format": {
+                      "type": "string",
+                      "description": "The target format",
+                      "example": "yaml"
+                    },
+                    "style": {
+                      "type": "string",
+                      "description": "The output style",
+                      "example": "pretty"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Error formatting data: Invalid JSON"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tools/execute/analyze_text": {
+      "post": {
+        "tags": [
+          "Tools"
+        ],
+        "summary": "Execute Text Analysis Tool Directly",
+        "description": "Execute the analyze_text tool directly without going through the provider's tool calling mechanism. This endpoint is useful for direct API access or for providers that don't support tool calling.\n## CURL Example ```bash curl -X POST https://api.assisted.space/v2/tools/execute/analyze_text \\\n  -H \"Content-Type: application/json\" \\\n  -H \"X-API-Key: your_api_key\" \\\n  -d '{\n    \"text\": \"I really enjoyed visiting New York City last summer. The people were friendly and the food was amazing.\",\n    \"language\": \"en\"\n  }'\n```\n",
+        "operationId": "executeAnalyzeText",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "text"
+                ],
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "description": "The text to analyze",
+                    "example": "I really enjoyed visiting New York City last summer. The people were friendly and the food was amazing."
+                  },
+                  "language": {
+                    "type": "string",
+                    "description": "The language code (default is 'en')",
+                    "default": "en",
+                    "example": "en"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TextAnalysisResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tools/execute/format_data": {
+      "post": {
+        "tags": [
+          "Tools"
+        ],
+        "summary": "Execute Format Data Tool Directly",
+        "description": "Execute the format_data tool directly without going through the provider's tool calling mechanism. This endpoint is useful for direct API access or for providers that don't support tool calling.\n## CURL Example ```bash curl -X POST https://api.assisted.space/v2/tools/execute/format_data \\\n  -H \"Content-Type: application/json\" \\\n  -H \"X-API-Key: your_api_key\" \\\n  -d '{\n    \"data\": {\n      \"name\": \"John Doe\",\n      \"age\": 30,\n      \"address\": {\n        \"street\": \"123 Main St\",\n        \"city\": \"Anytown\",\n        \"zip\": \"12345\"\n      },\n      \"hobbies\": [\"reading\", \"running\", \"coding\"]\n    },\n    \"target_format\": \"yaml\",\n    \"style\": \"pretty\"\n  }'\n```\n",
+        "operationId": "executeFormatData",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "data",
+                  "target_format"
+                ],
+                "properties": {
+                  "data": {
+                    "type": "object",
+                    "description": "The data to convert (as JSON object or string)"
+                  },
+                  "target_format": {
+                    "type": "string",
+                    "description": "The target format",
+                    "enum": [
+                      "json",
+                      "yaml",
+                      "toml",
+                      "xml",
+                      "csv"
+                    ]
+                  },
+                  "style": {
+                    "type": "string",
+                    "description": "Output style",
+                    "enum": [
+                      "pretty",
+                      "compact",
+                      "single_line"
+                    ],
+                    "default": "pretty"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormatDataResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tools/wolframalpha/query": {
+      "post": {
+        "tags": [
+          "Tools"
+        ],
+        "summary": "Query Wolfram Alpha",
+        "description": "Query the Wolfram Alpha API to solve problems or answer questions. This endpoint provides access to Wolfram Alpha's computational knowledge engine.\n## Features - Access to Wolfram Alpha's knowledge base - Support for mathematical calculations - Scientific data and analysis - Option for simple API (returns image URL) or text API\n## CURL Example ```bash curl -X POST https://api.assisted.space/v2/tools/wolframalpha/query \\\n  -H \"Content-Type: application/json\" \\\n  -H \"X-API-Key: your_api_key\" \\\n  -d '{\n    \"query\": \"integrate x^2 sin(x)\",\n    \"simple\": false\n  }'\n```\n",
+        "operationId": "queryWolframAlpha",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "query"
+                ],
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "description": "The question or problem to solve with Wolfram Alpha",
+                    "example": "integrate x^2 sin(x)"
+                  },
+                  "app_id": {
+                    "type": "string",
+                    "description": "The Wolfram Alpha API key (optional, uses environment variable if not provided)"
+                  },
+                  "simple": {
+                    "type": "boolean",
+                    "description": "Whether to use the simple API (returns an image URL) instead of the text API",
+                    "default": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Whether the query was successful",
+                      "example": true
+                    },
+                    "result_type": {
+                      "type": "string",
+                      "description": "Type of result (text or image)",
+                      "example": "text"
+                    },
+                    "result": {
+                      "type": "string",
+                      "description": "The result of the query (if result_type is text)",
+                      "example": "2 x^2 cos(x) - 4 x cos(x) - (x^2 - 4) sin(x)"
+                    },
+                    "result_url": {
+                      "type": "string",
+                      "description": "URL to the result image (if result_type is image)",
+                      "example": "http://api.wolframalpha.com/v1/simple?i=integrate+x%5E2+sin%28x%29&appid=XXXX"
+                    },
+                    "query": {
+                      "type": "string",
+                      "description": "The original query",
+                      "example": "integrate x^2 sin(x)"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tools/wolframalpha/schema": {
+      "get": {
+        "tags": [
+          "Tools"
+        ],
+        "summary": "Get Wolfram Alpha Tool Schema",
+        "description": "Get the JSON schema for the Wolfram Alpha tool. This is useful for integrating the Wolfram Alpha tool with other AI models and tools.\n## CURL Example ```bash curl -X GET https://api.assisted.space/v2/tools/wolframalpha/schema \\\n  -H \"X-API-Key: your_api_key\"\n```\n",
+        "operationId": "getWolframAlphaToolSchema",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "example": "function"
+                    },
+                    "function": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "example": "query_wolframalpha"
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "Query the Wolfram Alpha knowledge engine to solve problems or answer questions"
+                        },
+                        "parameters": {
+                          "type": "object"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tools/execute/query_wolframalpha": {
+      "post": {
+        "tags": [
+          "Tools"
+        ],
+        "summary": "Execute Wolfram Alpha Tool Directly",
+        "description": "Execute the query_wolframalpha tool directly without going through the provider's tool calling mechanism. This endpoint is useful for direct API access or for providers that don't support tool calling.\n## CURL Example ```bash curl -X POST https://api.assisted.space/v2/tools/execute/query_wolframalpha \\\n  -H \"Content-Type: application/json\" \\\n  -H \"X-API-Key: your_api_key\" \\\n  -d '{\n    \"query\": \"distance from Earth to Mars\",\n    \"simple\": false\n  }'\n```\n",
+        "operationId": "executeQueryWolframAlpha",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "query"
+                ],
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "description": "The question or problem to solve with Wolfram Alpha",
+                    "example": "distance from Earth to Mars"
+                  },
+                  "simple": {
+                    "type": "boolean",
+                    "description": "Whether to use the simple API (returns an image URL) instead of the text API",
+                    "default": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "result_type": {
+                      "type": "string",
+                      "example": "text"
+                    },
+                    "result": {
+                      "type": "string",
+                      "example": "225 million km (average distance)"
+                    },
+                    "query": {
+                      "type": "string",
+                      "example": "distance from Earth to Mars"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ApiInfo": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status of the API"
+          },
+          "version": {
+            "type": "string"
+          },
+          "created": {
+            "type": "integer",
+            "description": "Unix timestamp of when the image was created"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "url": {
+                  "type": "string",
+                  "description": "The URL for the generated image, available for 1 hour"
+                },
+                "b64_json": {
+                  "type": "string",
+                  "description": "The base64-encoded JSON of the generated image (if requested)"
+                },
+                "revised_prompt": {
+                  "type": "string",
+                  "description": "The prompt that was used to generate the image, potentially modified for safety"
+                }
+              }
+            },
+            "description": "Array of generated image objects"
+          },
+          "model": {
+            "type": "string",
+            "description": "The model used to generate the images"
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "Error message describing what went wrong"
+          }
+        }
+      },
+      "Tool": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the tool",
+            "example": "get_weather"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of what the tool does",
+            "example": "Get the current weather in a given location"
+          },
+          "parameters": {
+            "type": "object",
+            "description": "JSON Schema object describing the parameters for the tool",
+            "properties": {
+              "type": {
+                "type": "string",
+                "example": "object"
+              },
+              "properties": {
+                "type": "object"
+              },
+              "required": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "name",
+          "parameters"
+        ]
+      },
+      "TextAnalysisResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "Whether the analysis was successful",
+            "example": true
+          },
+          "result": {
+            "type": "string",
+            "description": "The analysis results",
+            "example": "Text Analysis Results:\n\n  Sentiment: positive\n  Entities: New York City\n  No offensive content detected."
+          },
+          "text": {
+            "type": "string",
+            "description": "The text that was analyzed",
+            "example": "I really enjoyed visiting New York City last summer. The people were friendly and the food was amazing."
+          },
+          "language": {
+            "type": "string",
+            "description": "The language code used for analysis",
+            "example": "en"
+          }
+        }
+      },
+      "FormatDataResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "Whether the format conversion was successful",
+            "example": true
+          },
+          "result": {
+            "type": "string",
+            "description": "The converted data",
+            "example": "name: John Doe\nage: 30\naddress:\n  street: 123 Main St\n  city: Anytown\n  zip: '12345'\nhobbies:\n- reading\n- running\n- coding\n"
+          },
+          "original_data": {
+            "type": "object",
+            "description": "The original data that was converted"
+          },
+          "target_format": {
+            "type": "string",
+            "description": "The target format",
+            "example": "yaml"
+          },
+          "style": {
+            "type": "string",
+            "description": "The output style",
+            "example": "pretty"
+          }
+        }
+      },
+      "GeminiChatRequest": {
+        "type": "object",
+        "required": [
+          "model",
+          "prompt"
+        ],
+        "properties": {
+          "model": {
+            "type": "string",
+            "description": "The Gemini model to use",
+            "example": "gemini-2.0-flash"
+          },
+          "prompt": {
+            "type": "string",
+            "description": "The user's input message",
+            "example": "Write a short poem about artificial intelligence"
+          },
+          "max_tokens": {
+            "type": "integer",
+            "description": "Maximum number of tokens to generate",
+            "default": 1024,
+            "minimum": 1,
+            "maximum": 128000
+          },
+          "temperature": {
+            "type": "number",
+            "description": "Sampling temperature between 0 and 1",
+            "minimum": 0,
+            "maximum": 1,
+            "default": 0.7
+          },
+          "stream": {
+            "type": "boolean",
+            "description": "Whether to stream the response",
+            "default": false
+          },
+          "image_data": {
+            "type": "string",
+            "description": "Base64-encoded image data (for vision capabilities)"
+          },
+          "image_path": {
+            "type": "string",
+            "description": "Path to an image file (server-side, admin only)",
+            "example": "/path/to/server/image.jpg"
+          }
+        }
+      },
+      "ResponsesRequest": {
+        "type": "object",
+        "required": [
+          "model",
+          "prompt"
+        ],
+        "properties": {
+          "model": {
+            "type": "string",
+            "description": "The OpenAI model to use (e.g., gpt-4o, gpt-4o-2024-11-20)",
+            "example": "gpt-4o"
+          },
+          "prompt": {
+            "type": "string",
+            "description": "Instruction for the AI model about how to process the document",
+            "example": "Please analyze this document and provide a detailed summary"
+          },
+          "file": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "binary"
+            },
+            "description": "File(s) to process (PDF, TXT, DOCX, etc.)"
+          },
+          "stream": {
+            "type": "boolean",
+            "description": "Whether to stream the response",
+            "default": false
+          },
+          "temperature": {
+            "type": "number",
+            "description": "Sampling temperature between 0 and 1",
+            "minimum": 0,
+            "maximum": 1,
+            "default": 0.7
+          },
+          "tools": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Tool"
+            },
+            "description": "Tools to make available to the model"
+          },
+          "web_search": {
+            "type": "boolean",
+            "description": "Whether to enable web search capability",
+            "default": false
+          },
+          "file_search": {
+            "type": "boolean",
+            "description": "Whether to enable file search for document Q&A",
+            "default": false
+          },
+          "computer_use": {
+            "type": "boolean",
+            "description": "Whether to enable computer use tools",
+            "default": false
+          },
+          "debug_mode": {
+            "type": "boolean",
+            "description": "Whether to enable debug mode for detailed processing info",
+            "default": false
+          },
+          "tool_choice": {
+            "type": "string",
+            "description": "How the model should choose to use tools",
+            "default": "auto",
+            "enum": [
+              "auto",
+              "required",
+              "none"
+            ]
+          }
+        }
+      },
+      "ResponsesResponse": {
+        "type": "object",
+        "properties": {
+          "response_id": {
+            "type": "string",
+            "description": "The ID of the response, used to retrieve the result",
+            "example": "resp_abc123def456"
+          },
+          "status": {
+            "type": "string",
+            "description": "The status of the request (completed, processing, error)",
+            "example": "processing"
+          },
+          "content": {
+            "type": "string",
+            "description": "The content of the response (if completed immediately)"
+          },
+          "model": {
+            "type": "string",
+            "description": "The model used to process the document",
+            "example": "gpt-4o"
+          },
+          "provider": {
+            "type": "string",
+            "description": "The provider used to process the document",
+            "example": "openai"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the response was created",
+            "example": "2024-04-03T12:34:56Z"
+          },
+          "completed_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the response was completed",
+            "example": "2024-04-03T12:35:26Z"
+          }
+        }
+      }
+    }
+  }
+}

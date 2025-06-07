@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XB78J5NWJG" aria-hidden="true"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-XB78J5NWJG");
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Alt Text xAi" />
+    <meta name="application-name" content="Alt Text xAi" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#2c1810" media="(prefers-color-scheme: dark)" />
+    <meta name="description" content="Ethical, sustainable, actually useful small language models for accessibility" />
+    
+    <title>Alt Text Experimental</title>
+    <meta property="og:title" content="Alt Text xAi" />
+    <meta property="og:description" content="Ethical, sustainable, actually useful small language models for accessibility" />
+    <meta property="og:image" content="https://i.imgur.com/YeAwK6f.gif" />
+    <meta property="og:url" content="https://actuallyusefulai.com/ai/alt/index.html" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Alt Text Experimental" />
+    <meta name="twitter:description" content="Ethical, sustainable, actually useful small language models for accessibility" />
+    <meta name="twitter:image" content="https://i.imgur.com/YeAwK6f.gif" />
+    
+    <link rel="manifest" href="manifest.json" />
+    <link rel="apple-touch-icon" href="https://i.imgur.com/YeAwK6f.gif" />
+    <link rel="icon" type="image/gif" href="https://i.imgur.com/YeAwK6f.gif">
+    <link rel="mask-icon" href="https://i.imgur.com/YeAwK6f.gif" color="#2c1810">
+    
+    <!-- External Dependencies -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/13.0.1/markdown-it.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.9/purify.min.js"></script>
+    
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap">
+    
+    <!-- Core Styles -->
+    <link rel="stylesheet" href="./styles/base.css" />
+    <link rel="stylesheet" href="./styles/theme.css" />
+    <link rel="stylesheet" href="./styles/components.css" />
+    <link rel="stylesheet" href="./styles/layout.css" />
+    <link rel="stylesheet" href="./styles/md.css" />
+    <link rel="stylesheet" href="./styles/badges.css" />
+  </head>
+  <body>
+    <div class="theme-toggle">
+      <button class="theme-button" id="themeToggle" aria-label="Toggle dark mode">
+        <svg class="theme-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16Z" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M12 3V5M12 19V21M3 12H5M19 12H21M5.63604 5.63604L7.05025 7.05025M16.9497 16.9497L18.364 18.364M5.63604 18.364L7.05025 16.9497M16.9497 7.05025L18.364 5.63604" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="chat-container">
+      <div class="header-container">
+        <h1 class="huge-header">Alt Text xAi</h1>
+        <p class="newspaper-description"><a href="https://patreon.com/lukeslp">Accessible, ethical, actually useful "AI"</a></p>
+        <p class="newspaper-description links-row">
+          <a href="https://github.com/actually-useful-ai/AltTextAI">Source</a> 
+          •&nbsp;<a href="https://actuallyusefulai.com/about/ethics.html"> Ethics</a>
+          •&nbsp;<a href="https://bsky.app/profile/coolhand.bsky.social"> @coolhand.bsky.social</a>
+        </p>
+      </div>
+      <!-- Control Panel - 2x2 Grid -->
+      <div class="control-panel">
+                <!-- Language Control -->
+                <div class="control-group">
+                  <label for="languageSelector">Language</label>
+                  <select id="languageSelector" class="control-selector">
+                    <option value="en">English</option>
+                    <option value="es">Español</option>
+                    <option value="fr">Français</option>
+                    <option value="de">Deutsch</option>
+                    <!-- Add more languages as needed -->
+                  </select>
+                </div>
+        <!-- Output Type Control -->
+        <div class="control-group">
+          <label for="promptSelector">Output Type</label>
+          <select id="promptSelector" class="control-selector">
+            <option value="altText">Alt Text</option>
+            <option value="generalDescription">General Description</option>
+            <option value="technicalAnalysis">Technical Analysis</option>
+            <option value="engineeringView">Engineering View</option>
+            <option value="maximalDetail">Maximal Detail</option>
+            <option value="comprehensiveDetail">Comprehensive Detail</option>
+            <option value="objectiveDescription">Objective Description</option>
+            <option value="memeAnalysis">Meme Analysis</option>
+            <option value="socialContext">Social Context</option>
+            <option value="emotionalResonance">Emotional Resonance</option>
+            <option value="socialEmotional">Social-Emotional</option>
+            <option value="culturalContext">Cultural Context</option>
+            <option value="catPerspective">Cat's Perspective</option>
+            <option value="dogPerspective">Dog's Perspective</option>
+            <option value="vanHelsingAnalysis">Van Helsing Analysis</option>
+            <option value="alienHistorian">Alien Historian</option>
+            <option value="locationDetective">Location Detective</option>
+          </select>
+        </div>
+
+        <!-- Quality Control -->
+        <!-- <div class="control-group">
+          <label for="modelSelector">Quality</label>
+          <select id="modelSelector" class="control-selector">
+            <option value="coolhand/impossible_alt:13b" selected>Fast</option>
+            <option value="camina" disabled>High (Coming Soon)</option>
+          </select>
+        </div> -->
+
+
+
+        <!-- TTS Control -->
+        <!-- <div class="control-group">
+          <label for="ttsSelector">Text to Speech</label>
+          <select id="ttsSelector" class="control-selector" disabled>
+            <option value="none">No Voice ($2 Patreon)</option>
+            <option value="gavin" disabled><a href="https://patreon.com/lukeslp" target="_blank" rel="noopener noreferrer">Gavin</a></option>
+            <option value="sophie" disabled><a href="https://patreon.com/lukeslp" target="_blank" rel="noopener noreferrer">Sophie</a></option>
+            <option value="skye" disabled><a href="https://patreon.com/lukeslp" target="_blank" rel="noopener noreferrer">Skye</a></option>
+            <option value="charlie" disabled><a href="https://patreon.com/lukeslp" target="_blank" rel="noopener noreferrer">Charlie</a></option>
+          </select>
+        </div> -->
+      </div>
+
+      <!-- Upload Area -->
+      <div id="uploadArea" class="upload-area message-item">
+        <input type="file" id="fileInput" accept="image/*" aria-label="Upload image">
+        <svg class="upload-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 16L12 8M12 8L15 11M12 8L9 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M16 4H17C19.2091 4 21 5.79086 21 8V16C21 18.2091 19.2091 20 17 20H7C4.79086 20 3 18.2091 3 16V8C3 5.79086 4.79086 4 7 4H8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <h2 class="mobile-text">Upload an Image</h2>
+        <h2 class="desktop-text">Tap, drop, or paste an image using Ctrl+V / Cmd+V</h2>
+        <div class="upload-info">
+          <p>Supported formats: JPG, PNG, GIF, WEBP, HEIC</p>
+          <p>Maximum file size: 10MB</p>
+        </div>
+        <button id="pasteButton" class="paste-button" aria-label="Or Paste one from your clipboard">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 12H8M12 16V8M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Tap to Paste
+        </button>
+      </div>
+
+      <!-- Result Container -->
+      <div id="resultContainer" class="result-container" style="display: none;">
+        <div class="image-container">
+          <img id="uploadedImage" alt="Uploaded image" style="display: none; max-width: 100%; max-height: 400px;">
+          <div class="progress-bar">
+            <div class="progress-fill"></div>
+          </div>
+        </div>
+        <div class="streaming-indicator">
+          <img src="https://i.imgur.com/2Vyi2ss.gif" alt="Processing..." class="streaming-avatar">
+        </div>
+        <div class="alt-text-container" id="altTextContainer">
+          <div id="altTextDisplay" class="alt-text-display" role="textbox" aria-label="Generated alt text"></div>
+        </div>
+        <div class="container-controls">
+          <!-- Copy button in its own row -->
+          <div class="control-row">
+            <button id="copyButton" class="icon-button animated-gradient hidden" aria-label="Copy alt text">
+              <div class="button-content">
+                <div class="button-inner">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+                  </svg>
+                  <span class="button-text">Copy Alt Text</span>
+                </div>
+              </div>
+              <div class="button-loading hidden">
+                <div class="spinner"></div>
+              </div>
+            </button>
+          </div>
+
+          <!-- Audio, Generate New, and Start Over in one row -->
+          <div class="control-row">
+            <button id="retryButton" class="icon-button animated-gradient hidden" aria-label="Generate new alt text">
+              <div class="button-content">
+                <div class="button-inner">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8c-.45-.83-.7-1.79-.7-2.8 0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z"/>
+                  </svg>
+                  <span class="button-text">Generate New</span>
+                </div>
+              </div>
+            </button>
+
+            <button id="globalRetryButton" class="icon-button animated-gradient hidden" aria-label="Start over with a new image">
+              <div class="button-content">
+                <div class="button-inner">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                  </svg>
+                  <span class="button-text">Start Over</span>
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pill-button-container">
+    <a href="https://bsky.assisted.space" target="_blank" rel="noopener noreferrer" class="pill-button">
+      <img src="https://actuallyusefulai.com/alt/assets/blueflyer.png" alt="Visit bsky.assisted.space" height="36">
+    </a>
+  </div>
+  <div class="badges-row">
+    <a href="https://github.com/lukeslp/alt-text-local-ai" target="_blank" rel="noopener noreferrer" class="badge-link">
+      <img src="https://actuallyusefulai.com/alt/dev/assets/github.png" alt="View on GitHub" width="48" height="48">
+    </a>
+    <a href="https://ollama.com/coolhand/impossible_alt" target="_blank" rel="noopener noreferrer" class="badge-link">
+      <img src="https://actuallyusefulai.com/alt/dev/assets/ollama.png" alt="View on Ollama" width="48" height="48">
+    </a>
+    <a href="https://patreon.com/lukeslp" target="_blank" rel="noopener noreferrer" class="badge-link">
+      <img src="https://actuallyusefulai.com/alt/dev/assets/patreon.png" alt="Support on Patreon" width="48" height="48">
+    </a>
+    <a href="https://lukesteuber.substack.com" target="_blank" rel="noopener noreferrer" class="badge-link">
+      <img src="https://actuallyusefulai.com/alt/dev/assets/substack.png" alt="Read Luke's Substack" width="48" height="48">
+    </a>
+    <a href="https://lukesteuber.com" target="_blank" rel="noopener noreferrer" class="badge-link">
+      <img src="https://actuallyusefulai.com/alt/dev/assets/frantic.png" alt="Visit Luke Steuber's website" width="48" height="48">
+    </a>
+  </div>
+  <script type="module">
+    import { AltTextGenerator } from './scripts/main.js';
+    import { ThemeManager } from './scripts/theme.js';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      window.altTextGenerator = new AltTextGenerator();
+      window.themeManager = new ThemeManager();
+    });
+  </script>
+  <style>
+
+  </style>
+</body>
+</html>

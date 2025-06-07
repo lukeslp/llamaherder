@@ -1,0 +1,245 @@
+[
+  {
+    "capabilities": [
+      "chat"
+    ],
+    "context_length": 4096,
+    "created_at": "2025-04-03T00:26:26.521709",
+    "description": "Cohere command-light model",
+    "endpoints": [
+      "generate",
+      "summarize",
+      "chat"
+    ],
+    "id": "command-light",
+    "is_finetuned": false,
+    "name": "command-light",
+    "owned_by": "Cohere"
+  },
+  {
+    "capabilities": [
+      "chat"
+    ],
+    "context_length": 8192,
+    "created_at": "2025-04-03T00:26:26.521705",
+    "description": "Cohere c4ai-aya-expanse-8b model",
+    "endpoints": [
+      "generate",
+      "chat"
+    ],
+    "id": "c4ai-aya-expanse-8b",
+    "is_finetuned": false,
+    "name": "c4ai-aya-expanse-8b",
+    "owned_by": "Cohere"
+  },
+  {
+    "capabilities": [
+      "chat"
+    ],
+    "context_length": 128000,
+    "created_at": "2025-04-03T00:26:26.521702",
+    "description": "Cohere command-r-plus-08-2024 model",
+    "endpoints": [
+      "generate",
+      "chat",
+      "summarize"
+    ],
+    "id": "command-r-plus-08-2024",
+    "is_finetuned": false,
+    "name": "command-r-plus-08-2024",
+    "owned_by": "Cohere"
+  },
+  {
+    "capabilities": [
+      "chat"
+    ],
+    "context_length": 128000,
+    "created_at": "2025-04-03T00:26:26.521699",
+    "description": "Cohere command-r-08-2024 model",
+    "endpoints": [
+      "generate",
+      "chat",
+      "summarize"
+    ],
+    "id": "command-r-08-2024",
+    "is_finetuned": false,
+    "name": "command-r-08-2024",
+    "owned_by": "Cohere"
+  },
+  {
+    "capabilities": [
+      "chat"
+    ],
+    "context_length": 16384,
+    "created_at": "2025-04-03T00:26:26.521695",
+    "description": "Cohere c4ai-aya-vision-8b model",
+    "endpoints": [
+      "chat"
+    ],
+    "id": "c4ai-aya-vision-8b",
+    "is_finetuned": false,
+    "name": "c4ai-aya-vision-8b",
+    "owned_by": "Cohere"
+  },
+  {
+    "capabilities": [
+      "chat"
+    ],
+    "context_length": 4096,
+    "created_at": "2025-04-03T00:26:26.521692",
+    "description": "Cohere command model",
+    "endpoints": [
+      "generate",
+      "summarize",
+      "chat"
+    ],
+    "id": "command",
+    "is_finetuned": false,
+    "name": "command",
+    "owned_by": "Cohere"
+  },
+  {
+    "capabilities": [
+      "chat"
+    ],
+    "context_length": 128000,
+    "created_at": "2025-04-03T00:26:26.521689",
+    "description": "Cohere c4ai-aya-expanse-32b model",
+    "endpoints": [
+      "generate",
+      "chat"
+    ],
+    "id": "c4ai-aya-expanse-32b",
+    "is_finetuned": false,
+    "name": "c4ai-aya-expanse-32b",
+    "owned_by": "Cohere"
+  },
+  {
+    "capabilities": [
+      "chat"
+    ],
+    "context_length": 4096,
+    "created_at": "2025-04-03T00:26:26.521685",
+    "description": "Cohere command-light-nightly model",
+    "endpoints": [
+      "generate",
+      "summarize",
+      "chat"
+    ],
+    "id": "command-light-nightly",
+    "is_finetuned": false,
+    "name": "command-light-nightly",
+    "owned_by": "Cohere"
+  },
+  {
+    "capabilities": [
+      "chat"
+    ],
+    "context_length": 128000,
+    "created_at": "2025-04-03T00:26:26.521682",
+    "description": "Cohere command-r7b-arabic-02-2025 model",
+    "endpoints": [
+      "generate",
+      "chat"
+    ],
+    "id": "command-r7b-arabic-02-2025",
+    "is_finetuned": false,
+    "name": "command-r7b-arabic-02-2025",
+    "owned_by": "Cohere"
+  },
+  {
+    "capabilities": [
+      "chat"
+    ],
+    "context_length": 16384,
+    "created_at": "2025-04-03T00:26:26.521679",
+    "description": "Cohere c4ai-aya-vision-32b model",
+    "endpoints": [
+      "chat"
+    ],
+    "id": "c4ai-aya-vision-32b",
+    "is_finetuned": false,
+    "name": "c4ai-aya-vision-32b",
+    "owned_by": "Cohere"
+  },
+  {
+    "capabilities": [
+      "chat"
+    ],
+    "context_length": 128000,
+    "created_at": "2025-04-03T00:26:26.521675",
+    "description": "Cohere command-r-plus model",
+    "endpoints": [
+      "generate",
+      "chat",
+      "summarize"
+    ],
+    "id": "command-r-plus",
+    "is_finetuned": false,
+    "name": "command-r-plus",
+    "owned_by": "Cohere"
+  },
+  {
+    "capabilities": [
+      "chat"
+    ],
+    "context_length": 128000,
+    "created_at": "2025-04-03T00:26:26.521672",
+    "description": "Cohere command-r7b-12-2024 model",
+    "endpoints": [
+      "generate",
+      "chat"
+    ],
+    "id": "command-r7b-12-2024",
+    "is_finetuned": false,
+    "name": "command-r7b-12-2024",
+    "owned_by": "Cohere"
+  },
+  {
+    "capabilities": [
+      "chat"
+    ],
+    "context_length": 288000,
+    "created_at": "2025-04-03T00:26:26.521669",
+    "description": "Cohere command-nightly model",
+    "endpoints": [
+      "chat"
+    ],
+    "id": "command-nightly",
+    "is_finetuned": false,
+    "name": "command-nightly",
+    "owned_by": "Cohere"
+  },
+  {
+    "capabilities": [
+      "chat"
+    ],
+    "context_length": 288000,
+    "created_at": "2025-04-03T00:26:26.521665",
+    "description": "Cohere command-a-03-2025 model",
+    "endpoints": [
+      "chat"
+    ],
+    "id": "command-a-03-2025",
+    "is_finetuned": false,
+    "name": "command-a-03-2025",
+    "owned_by": "Cohere"
+  },
+  {
+    "capabilities": [
+      "chat"
+    ],
+    "context_length": 128000,
+    "created_at": "2025-04-03T00:26:26.521644",
+    "description": "Cohere command-r model",
+    "endpoints": [
+      "generate",
+      "chat",
+      "summarize"
+    ],
+    "id": "command-r",
+    "is_finetuned": false,
+    "name": "command-r",
+    "owned_by": "Cohere"
+  }
+]

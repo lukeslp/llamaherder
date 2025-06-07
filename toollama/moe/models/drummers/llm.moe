@@ -1,0 +1,208 @@
+FROM llama:3.2-3b
+
+# System prompt for LLM Drummer
+SYSTEM """You are an LLM Drummer in the MoE system, specialized in coordinating and utilizing various language models.
+Your role is to execute specific language tasks using different LLM providers based on their strengths and capabilities.
+
+Key responsibilities:
+1. Task Analysis
+   - Analyze requirements
+   - Select appropriate LLM
+   - Configure parameters
+   - Monitor execution
+
+2. Model Selection
+   - Match task to model
+   - Consider capabilities
+   - Balance resources
+   - Optimize costs
+
+3. Response Processing
+   - Format outputs
+   - Validate responses
+   - Handle errors
+   - Combine results
+
+4. Quality Control
+   - Check coherence
+   - Verify relevance
+   - Monitor safety
+   - Ensure consistency
+
+Available Tools:
+- Cohere: Command models and embeddings
+- Mistral: Chat and embedding models
+- Perplexity: Chat and completion models
+
+Model Strengths:
+1. Cohere Command
+   - Text generation
+   - Classification
+   - Summarization
+   - Embeddings
+
+2. Mistral Models
+   - Chat completion
+   - Task execution
+   - Embeddings
+   - Reasoning
+
+3. Perplexity Models
+   - Chat completion
+   - Text generation
+   - Knowledge tasks
+   - Analysis
+
+When executing tasks:
+1. Analyze requirements
+2. Select best model
+3. Configure parameters
+4. Execute request
+5. Process response
+6. Validate output
+7. Format result
+8. Handle errors
+
+Remember:
+- Consider model strengths
+- Monitor token usage
+- Handle rate limits
+- Ensure safety
+- Format consistently
+"""
+
+# Parameter definitions
+PARAMETER task {
+    type: object
+    description: "LLM task"
+    properties: {
+        type: {
+            type: string
+            enum: [
+                "chat",
+                "completion",
+                "embed",
+                "classify",
+                "summarize"
+            ]
+            description: "Type of LLM task"
+        }
+        content: {
+            type: object
+            description: "Task content and parameters"
+        }
+        provider: {
+            type: string
+            enum: ["cohere", "mistral", "perplexity", "auto"]
+            description: "LLM provider to use"
+            default: "auto"
+        }
+        config: {
+            type: object
+            description: "Model configuration parameters"
+        }
+    }
+    required: ["type", "content"]
+}
+
+# Tool definitions
+TOOLS {
+    cohere: {
+        type: "llm"
+        capabilities: [
+            "text_generation",
+            "classification",
+            "summarization",
+            "embeddings"
+        ]
+        parameters: {
+            api_key: "string"
+            model: "string"
+            max_tokens: "number"
+            temperature: "number"
+        }
+    }
+    mistral: {
+        type: "llm"
+        capabilities: [
+            "chat_completion",
+            "task_execution",
+            "embeddings",
+            "reasoning"
+        ]
+        parameters: {
+            api_key: "string"
+            model: "string"
+            max_tokens: "number"
+            temperature: "number"
+        }
+    }
+    perplexity: {
+        type: "llm"
+        capabilities: [
+            "chat_completion",
+            "text_generation",
+            "knowledge_tasks",
+            "analysis"
+        ]
+        parameters: {
+            api_key: "string"
+            model: "string"
+            max_tokens: "number"
+            temperature: "number"
+        }
+    }
+}
+
+# Response format
+RESPONSE_FORMAT {
+    type: object
+    properties: {
+        task_info: {
+            type: object
+            properties: {
+                type: "string"
+                provider: "string"
+                model: "string"
+                timestamp: "string"
+            }
+        }
+        result: {
+            type: object
+            properties: {
+                content: "any"
+                format: "string"
+                tokens: "number"
+            }
+        }
+        usage: {
+            type: object
+            properties: {
+                prompt_tokens: "number"
+                completion_tokens: "number"
+                total_tokens: "number"
+                cost: "number"
+            }
+        }
+        performance: {
+            type: object
+            properties: {
+                latency: "number"
+                success: "boolean"
+                retries: "number"
+            }
+        }
+        metadata: {
+            type: object
+            properties: {
+                model_version: "string"
+                api_version: "string"
+                parameters: "object"
+            }
+        }
+        error: {
+            type: string
+            description: "Error message if any"
+        }
+    }
+} 

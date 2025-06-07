@@ -1,0 +1,5 @@
+{
+  "content": "Error: API error: 400 - {\"object\":\"error\",\"message\":\"A request containing images has been given to a model which does not have the 'vision' capability.\",\"type\":\"invalid_request_error\",\"param\":null,\"code\":null}",
+  "model": "mistral-tiny",
+  "provider": "mistral"
+}

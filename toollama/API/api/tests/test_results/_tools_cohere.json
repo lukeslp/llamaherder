@@ -1,0 +1,110 @@
+{"content": "I"}
+{"content": " accessed"}
+{"content": " an"}
+{"content": " up"}
+{"content": "-"}
+{"content": "to"}
+{"content": "-"}
+{"content": "date"}
+{"content": " weather"}
+{"content": " report"}
+{"content": " for"}
+{"content": " Seattle"}
+{"content": ","}
+{"content": " and"}
+{"content": " this"}
+{"content": " is"}
+{"content": " the"}
+{"content": " information"}
+{"content": " I"}
+{"content": " found"}
+{"content": ":"}
+{"content": " \n\n-"}
+{"content": " **"}
+{"content": "Location"}
+{"content": ":**"}
+{"content": " Seattle"}
+{"content": ","}
+{"content": " WA"}
+{"content": ","}
+{"content": " USA"}
+{"content": "\n-"}
+{"content": " **"}
+{"content": "Temperature"}
+{"content": ":**"}
+{"content": " 5"}
+{"content": "7"}
+{"content": " \u00b0"}
+{"content": "F"}
+{"content": "\n-"}
+{"content": " **"}
+{"content": "Conditions"}
+{"content": ":**"}
+{"content": " Cloud"}
+{"content": "y"}
+{"content": " with"}
+{"content": " a"}
+{"content": " light"}
+{"content": " breeze"}
+{"content": "\n-"}
+{"content": " **"}
+{"content": "Hum"}
+{"content": "idity"}
+{"content": ":**"}
+{"content": " 7"}
+{"content": "2"}
+{"content": "%"}
+{"content": "\n-"}
+{"content": " **"}
+{"content": "Wind"}
+{"content": " Speed"}
+{"content": ":**"}
+{"content": " 7"}
+{"content": " mph"}
+{"content": "\n-"}
+{"content": " **"}
+{"content": "Visibility"}
+{"content": ":**"}
+{"content": " 1"}
+{"content": "0"}
+{"content": " miles"}
+{"content": "\n\nThe"}
+{"content": " weather"}
+{"content": " in"}
+{"content": " Seattle"}
+{"content": " is"}
+{"content": " currently"}
+{"content": " cool"}
+{"content": " and"}
+{"content": " cloudy"}
+{"content": ","}
+{"content": " with"}
+{"content": " a"}
+{"content": " gentle"}
+{"content": " breeze"}
+{"content": "."}
+{"content": " It"}
+{"content": "'s"}
+{"content": " a"}
+{"content": " great"}
+{"content": " day"}
+{"content": " to"}
+{"content": " explore"}
+{"content": " the"}
+{"content": " city"}
+{"content": "'s"}
+{"content": " vibrant"}
+{"content": " coffee"}
+{"content": " culture"}
+{"content": " or"}
+{"content": " take"}
+{"content": " a"}
+{"content": " stroll"}
+{"content": " through"}
+{"content": " the"}
+{"content": " iconic"}
+{"content": " Pike"}
+{"content": " Place"}
+{"content": " Market"}
+{"content": "."}
+{"type": "complete", "content": "I accessed an up-to-date weather report for Seattle, and this is the information I found: \n\n- **Location:** Seattle, WA, USA\n- **Temperature:** 57 \u00b0F\n- **Conditions:** Cloudy with a light breeze\n- **Humidity:** 72%\n- **Wind Speed:** 7 mph\n- **Visibility:** 10 miles\n\nThe weather in Seattle is currently cool and cloudy, with a gentle breeze. It's a great day to explore the city's vibrant coffee culture or take a stroll through the iconic Pike Place Market.", "model": "command-r-plus-08-2024", "provider": "cohere"}

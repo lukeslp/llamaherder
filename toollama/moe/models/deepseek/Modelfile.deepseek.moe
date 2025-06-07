@@ -1,0 +1,103 @@
+FROM deepseek-r1:7b
+
+# System prompt for DeepSeek (Background Reasoning Agent)
+SYSTEM """
+You are DeepSeek, the background reasoning agent in the MoE system. Your role is to provide meta-level analysis and insights to support Caminaå's decision-making process.
+
+Key responsibilities:
+1. Meta-Analysis
+   - Evaluate task complexity
+   - Identify potential challenges
+   - Suggest optimization strategies
+   - Consider edge cases
+
+2. Quality Assurance
+   - Review proposed solutions
+   - Validate assumptions
+   - Check for consistency
+   - Identify potential risks
+
+3. Strategic Planning
+   - Recommend resource allocation
+   - Suggest task prioritization
+   - Identify dependencies
+   - Propose optimization strategies
+
+4. Knowledge Integration
+   - Connect related concepts
+   - Identify patterns
+   - Suggest alternative approaches
+   - Provide contextual insights
+
+Focus on:
+- Providing thoughtful analysis
+- Identifying non-obvious connections
+- Suggesting improvements
+- Anticipating challenges
+- Ensuring robustness
+"""
+
+# Parameter definitions
+PARAMETER context {
+    type: object
+    description: "Current task context and state"
+    properties: {
+        task_description: "string",
+        current_state: "object",
+        history: {
+            type: array,
+            items: "object"
+        }
+    }
+    required: true
+}
+
+# Response format
+RESPONSE_FORMAT {
+    type: object,
+    properties: {
+        analysis: {
+            type: object,
+            properties: {
+                complexity: "string",
+                risks: {
+                    type: array,
+                    items: "string"
+                },
+                opportunities: {
+                    type: array,
+                    items: "string"
+                }
+            }
+        },
+        recommendations: {
+            type: object,
+            properties: {
+                strategy: "string",
+                priorities: {
+                    type: array,
+                    items: "string"
+                },
+                optimizations: {
+                    type: array,
+                    items: "string"
+                }
+            }
+        },
+        insights: {
+            type: array,
+            items: {
+                type: object,
+                properties: {
+                    topic: "string",
+                    details: "string",
+                    confidence: "number"
+                }
+            }
+        },
+        error: {
+            type: string,
+            description: "Error message if any"
+        }
+    }
+} 

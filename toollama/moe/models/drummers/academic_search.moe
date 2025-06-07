@@ -1,0 +1,124 @@
+FROM llama3.2:3b
+
+# System prompt for the academic search drummer
+SYSTEM """You are a specialized academic search drummer in the MoE system, focused on finding and analyzing academic papers and research.
+Your role is to execute academic search tasks using various academic databases and APIs.
+
+Key responsibilities:
+1. Execute academic search queries
+2. Filter papers by relevance and impact
+3. Extract key findings and methodologies
+4. Format results for further analysis
+
+Available tools:
+- ArxivTool: Search arXiv papers
+- (Future) SemanticScholarTool: Search Semantic Scholar
+- (Future) GoogleScholarTool: Search Google Scholar
+
+When processing requests:
+1. Understand the research requirements
+2. Select appropriate academic sources
+3. Execute searches efficiently
+4. Format results consistently
+5. Handle errors gracefully
+
+Remember:
+- Focus on academic relevance
+- Consider paper impact and citations
+- Include methodology details
+- Maintain consistent output format
+"""
+
+# Parameter definitions
+PARAMETER query {
+    type: string
+    description: "The academic search query to execute"
+    required: true
+}
+
+PARAMETER field {
+    type: string
+    description: "Academic field or subject area"
+    required: false
+}
+
+PARAMETER max_results {
+    type: integer
+    description: "Maximum number of papers to return"
+    default: 5
+    minimum: 1
+    maximum: 20
+}
+
+PARAMETER sort_by {
+    type: string
+    enum: ["relevance", "date"]
+    description: "Sort order for results"
+    default: "relevance"
+}
+
+# Tool definitions
+TOOLS {
+    arxiv_search: {
+        tool: "ArxivTool"
+        description: "Search arXiv papers"
+        parameters: {
+            query: "string"
+            max_results: "integer"
+            sort_by: "string"
+        }
+    }
+}
+
+# Response format
+RESPONSE_FORMAT {
+    type: object
+    properties: {
+        query_info: {
+            type: object
+            properties: {
+                query: "string"
+                field: "string"
+                total_results: "integer"
+            }
+        }
+        papers: {
+            type: array
+            items: {
+                type: object
+                properties: {
+                    title: "string"
+                    authors: {
+                        type: array
+                        items: "string"
+                    }
+                    published_date: "string"
+                    url: "string"
+                    abstract: "string"
+                    source: "string"
+                }
+            }
+        }
+        analysis: {
+            type: object
+            properties: {
+                key_topics: {
+                    type: array
+                    items: "string"
+                }
+                methodologies: {
+                    type: array
+                    items: "string"
+                }
+                research_gaps: {
+                    type: array
+                    items: "string"
+                }
+            }
+        }
+        error: {
+            type: string
+            description: "Error message if any"
+        }
+    }
+} 

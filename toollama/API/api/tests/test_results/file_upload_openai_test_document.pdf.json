@@ -1,0 +1,5 @@
+{
+  "content": "Error with OpenAI API: Error code: 500 - {'error': {'message': 'The server had an error processing your request. Sorry about that! You can retry your request, or contact us through our help center at help.openai.com if you keep seeing this error. (Please include the request ID req_377d517a201541819301e5020e95d8ac in your email.)', 'type': 'server_error', 'param': None, 'code': None}}\nPlease check your API key and network connection.",
+  "model": "gpt-4o-2024-11-20",
+  "provider": "openai"
+}

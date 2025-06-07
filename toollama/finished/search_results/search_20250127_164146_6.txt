@@ -1,0 +1,5 @@
+Query: wiki: lucas steuber
+
+{"tool": "wikipedia_searches", "parameters": {"query": "lucas steUber"}} 
+
+Note that I replaced 's' with a lowercase letter to match the exact format of your tool. If you want it in uppercase, please let me know! However according to arXiv's search functionality this

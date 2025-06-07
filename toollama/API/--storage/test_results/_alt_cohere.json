@@ -1,0 +1,5 @@
+{
+  "alt_text": "400 Client Error: Bad Request for url: https://api.cohere.com/v2/chat",
+  "model": "command-r-plus-08-2024",
+  "provider": "cohere"
+}

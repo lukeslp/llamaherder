@@ -1,0 +1,160 @@
+.badges-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-md);
+  width: 100%;
+  margin: 0;
+  /* padding: var(--spacing-md) 0; */
+  background: transparent !important;
+  position: relative;
+  z-index: 1;
+}
+
+.badge-link {
+  display: inline-block;
+  transition: all 0.2s ease;
+  background: transparent !important;
+  text-decoration: none;
+  padding: var(--spacing-xs);
+  border-radius: 12px;
+}
+
+/* Light mode styles */
+:root[data-theme="light"] .badge-link {
+  /* filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1)); */
+}
+
+:root[data-theme="light"] .badge-link:hover {
+  transform: scale(1.1) translateY(-2px);
+  /* filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2)); */
+}
+
+/* Dark mode styles with glow */
+:root[data-theme="dark"] .badge-link {
+  /* filter: drop-shadow(0 0 4px var(--color-attention));   */
+}
+
+:root[data-theme="dark"] .badge-link:hover {
+  transform: scale(1.1) translateY(-2px);
+  filter: drop-shadow(0 0 4px var(--color-primary)) 
+          drop-shadow(0 0 6px var(--color-hover));
+}
+
+.badge-link:focus-visible {
+  outline: 2px solid var(--color-hover);
+  outline-offset: 2px;
+}
+
+.badge-link img {
+  width: 48px;
+  height: 48px;
+  display: block;
+  background: transparent !important;
+  padding: 0;
+  border-radius: 12px;
+  object-fit: contain;
+}
+
+@media (max-width: 480px) {
+  .badges-row {
+    padding: var(--spacing-sm) 0;
+    gap: var(--spacing-sm);
+  }
+  
+  .badge-link img {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+/* Add high contrast mode support */
+@media (forced-colors: active) {
+  .badge-link:focus-visible {
+    outline: 2px solid CanvasText;
+  }
+  
+  .badge-link img {
+    forced-color-adjust: none;
+  }
+}
+
+/* Pill Button Styles */
+.pill-button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: var(--spacing-md) 0;
+  position: relative;
+  z-index: 1;
+}
+
+.pill-button {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--spacing-xs) var(--spacing-md);
+  background-color: white; 
+  border: 2px solid var(--color-primary);
+  border-radius: 50px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.pill-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  background-color: white; 
+  border-color: var(--color-hover);
+}
+
+.pill-button:focus-visible {
+  outline: 2px solid var(--color-hover);
+  outline-offset: 2px;
+}
+
+.pill-button img {
+  height: 36px;
+  width: auto;
+  display: block;
+  object-fit: contain;
+}
+
+/* Light/Dark mode pill button variants */
+:root[data-theme="dark"] .pill-button {
+  box-shadow: 0 0 8px rgba(var(--color-primary-rgb), 0.3);
+}
+
+:root[data-theme="dark"] .pill-button:hover {
+  box-shadow: 0 0 12px rgba(var(--color-hover-rgb), 0.5);
+}
+
+@media (max-width: 480px) {
+  .pill-button-container {
+    margin: var(--spacing-sm) 0;
+  }
+  
+  .pill-button {
+    padding: var(--spacing-xs) var(--spacing-sm);
+  }
+  
+  .pill-button img {
+    height: 28px;
+  }
+}
+
+/* High contrast support for pill button */
+@media (forced-colors: active) {
+  .pill-button {
+    border: 2px solid CanvasText;
+  }
+  
+  .pill-button:focus-visible {
+    outline: 2px solid CanvasText;
+  }
+  
+  .pill-button img {
+    forced-color-adjust: none;
+  }
+}

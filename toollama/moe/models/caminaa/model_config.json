@@ -1,0 +1,9 @@
+{
+  "model_name": "mistral-small:22b",
+  "version": "1.0",
+  "description": "Model configuration for Caminaå (Coordinator).",
+  "parameters": {
+    "max_tokens": 512,
+    "temperature": 0.7
+  }
+} 

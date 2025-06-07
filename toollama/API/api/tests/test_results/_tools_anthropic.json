@@ -1,0 +1,6 @@
+{
+  "content": "<thinking>\nTo get the current weather in Seattle, I will use the get_weather tool. It requires the following parameters:\n\nlocation (required): The city and state. In this case, it should be set to \"Seattle, WA\".\n\nunit (optional): The unit of temperature. The user did not specify a preference, so I can omit this parameter and let the tool use its default unit.\n\nAll the required information is available to make the API call.\n</thinking>",
+  "model": "claude-3-opus-20240229",
+  "provider": "anthropic",
+  "tool_calls": []
+}

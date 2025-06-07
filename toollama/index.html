@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actually Useful Search</title>
+
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="Actually Useful Search">
+    <meta name="description" content="Accessible, ethical, practical AI">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://actuallyusefulsearch.com/">
+    <meta property="og:title" content="Actually Useful Search">
+    <meta property="og:description" content="Accessible, ethical, practical AI">
+    <meta property="og:image" content="https://i.imgur.com/kHogTSp.gif">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://actuallyusefulsearch.com/">
+    <meta property="twitter:title" content="Actually Useful Search">
+    <meta property="twitter:description" content="Accessible, ethical, practical AI">
+    <meta property="twitter:image" content="https://i.imgur.com/kHogTSp.gif">
+
+    <style>
+        :root {
+            --bg-color: #000000;
+            --text-color: #ffffff;
+            --accent-color: #00ff00;
+            --secondary-color: #333333;
+            --input-bg: #1a1a1a;
+            --step-inactive: #444444;
+            --step-active: var(--accent-color);
+            --step-complete: #00cc00;
+            --thought-color: #0858ae;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Open Sans', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+        }
+
+        .search-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-text {
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            font-weight: bold;
+            /* text-transform: uppercase; */
+            letter-spacing: 2px;
+        }
+
+        .logo {
+            width: 200px;
+            height: 200px;
+            object-fit: contain;
+            margin-bottom: 2rem;
+        }
+
+        .search-form {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid var(--secondary-color);
+            border-radius: 4px;
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            font-family: inherit;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+        }
+
+        .search-button {
+            padding: 1rem 2rem;
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            border: none;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-button:hover {
+            background-color: var(--step-complete);
+        }
+
+        .search-status {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 600px;
+            margin-top: 2rem;
+            position: relative;
+        }
+
+        .search-status::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: var(--step-inactive);
+            transform: translateY(-50%);
+            z-index: 0;
+        }
+
+        .status-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: var(--step-inactive);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .step-dot::after {
+            content: attr(data-count);
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            color: var(--accent-color);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .status-step[data-status="active"] .step-dot::after,
+        .status-step[data-status="complete"] .step-dot::after {
+            opacity: 1;
+        }
+
+        .step-label {
+            font-size: 0.9rem;
+            color: var(--step-inactive);
+            transition: all 0.3s ease;
+        }
+
+        .status-step[data-status="active"] .step-dot {
+            background-color: var(--step-active);
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.4);
+        }
+
+        .status-step[data-status="active"] .step-label {
+            color: var(--step-active);
+        }
+
+        .status-step[data-status="complete"] .step-dot {
+            background-color: var(--step-complete);
+        }
+
+        .status-step[data-status="complete"] .step-label {
+            color: var(--step-complete);
+        }
+
+        .results-container {
+            width: 100%;
+            max-width: 800px;
+            margin-top: 2rem;
+        }
+
+        .loading-indicator {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--secondary-color);
+            border-top-color: var(--accent-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .loading-text {
+            font-size: 1.1rem;
+            color: var(--accent-color);
+        }
+
+        .search-results {
+            /* background-color: var(--input-bg); */
+            border-radius: 4px;
+            padding: 2rem;
+            margin-top: 1rem;
+            white-space: pre-wrap;
+            font-size: 1rem;
+            line-height: 1.5;
+            /* border-left: 3px solid var(--accent-color); */
+        }
+
+        .console-container {
+            display: none;
+        }
+
+        .console-header {
+            color: var(--accent-color);
+            border-bottom: 1px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .progress-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            color: var(--accent-color);
+        }
+
+        .progress-item {
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            border-left: 2px solid var(--accent-color);
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+
+        .progress-item.complete {
+            opacity: 1;
+            border-left-color: var(--step-complete);
+        }
+
+        .thought-bubble {
+            background: var(--thought-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            position: relative;
+            opacity: 0.9;
+            /* border-left: 3px solid var(--accent-color); */
+            animation: fadeIn 0.3s ease forwards;
+        }
+        .final-answer {
+            background: var(--input-bg);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            position: relative;
+            opacity: 0.9;
+            border-left: 3px solid var(--accent-color);
+            animation: fadeIn 0.3s ease forwards;
+            display: none;
+        }
+
+        .final-answer.visible {
+            display: block;
+        }
+
+        .synthesis-text {
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+
+        .synthesis-text h1,
+        .synthesis-text h2,
+        .synthesis-text h3,
+        .synthesis-text h4,
+        .synthesis-text h5 {
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .synthesis-text p {
+            margin-bottom: 1rem;
+        }
+
+        .synthesis-text ul,
+        .synthesis-text ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .thought-bubble::before {
+            content: '💭';
+            position: absolute;
+            left: -1.5rem;
+            top: 0.5rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .progress-item {
+            animation: fadeIn 0.3s ease forwards;
+        }
+
+        @media (max-width: 1200px) {
+            .console-container {
+                position: static;
+                transform: none;
+                width: 100%;
+                max-width: 600px;
+                margin: 1rem auto;
+                max-height: 300px;
+            }
+        }
+
+        @keyframes blink {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .status-step[data-step="parallel"] .step-dot.blink {
+            animation: blink 0.5s ease;
+        }
+
+        .donor-login {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 12px 24px;
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: .8rem;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0, 255, 0, 0.2);
+        }
+
+        .donor-login:hover {
+            background-color: var(--step-complete);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 255, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="search-container">
+            <div class="logo-container">
+                <img src="https://i.imgur.com/1FLEjyX.gif" alt="Belter Search" class="logo">
+            </div>
+            <form id="searchForm" class="search-form">
+                <input type="text" id="searchInput" class="search-input" placeholder="Enter your search query..." autocomplete="off">
+                <button type="submit" class="search-button">Search</button>
+            </form>
+            <div id="searchStatus" class="search-status">
+                <div class="status-step" data-step="initial">
+                    <span class="step-dot" data-count="0"></span>
+                    <span class="step-label">Belter</span>
+                </div>
+                <div class="status-step" data-step="parallel">
+                    <span class="step-dot" data-count="0"></span>
+                    <span class="step-label">Drummers</span>
+                </div>
+                <div class="status-step" data-step="synthesis">
+                    <span class="step-dot" data-count="0"></span>
+                    <span class="step-label">Camina</span>
+                </div>
+            </div>
+            <div id="results" class="results-container">
+                <div id="loadingIndicator" class="loading-indicator hidden">
+                    <div class="spinner"></div>
+                    <div id="loadingText" class="loading-text">Searching...</div>
+                </div>
+                <div id="searchResults" class="search-results"></div>
+                <div id="finalAnswer" class="final-answer"></div>
+            </div>
+        </div>
+    </div>
+
+    <a href="https://actuallyusefulai.com/auth" class="donor-login">Donor Login</a>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchForm = document.getElementById('searchForm');
+            const searchInput = document.getElementById('searchInput');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            const loadingText = document.getElementById('loadingText');
+            const searchResults = document.getElementById('searchResults');
+            const finalAnswer = document.getElementById('finalAnswer');
+            const statusSteps = document.querySelectorAll('.status-step');
+            const API_URL = 'https://ai.assisted.space/api/chat';
+
+            function updateStatus(step, status, count = null) {
+                statusSteps.forEach(s => {
+                    if (s.dataset.step === step) {
+                        s.dataset.status = status;
+                        if (count !== null) {
+                            s.querySelector('.step-dot').dataset.count = count;
+                        }
+                    }
+                });
+            }
+
+            function resetStatus() {
+                statusSteps.forEach(s => {
+                    delete s.dataset.status;
+                    s.querySelector('.step-dot').dataset.count = '0';
+                });
+            }
+
+            function updateLoadingText(text) {
+                loadingText.textContent = text;
+            }
+
+            async function performInitialSearch(query) {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        model: "belter-searcher:latest",
+                        messages: [
+                            { role: "user", content: query }
+                        ],
+                        stream: false
+                    })
+                });
+                
+                if (!response.ok) throw new Error('Initial search failed');
+                return await response.json();
+            }
+
+            async function performParallelSearches(query, initialResults) {
+                // First generate contextual queries
+                const queryResponse = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        model: "belter-searcher:latest",
+                        messages: [
+                            {
+                                role: "user",
+                                content: `Based on these results, generate four topical follow-up queries that would help to learn more about the context of the user's query:\n\n${initialResults}`
+                            }
+                        ],
+                        stream: false
+                    })
+                });
+
+                if (!queryResponse.ok) throw new Error('Failed to generate follow-up queries');
+                const queryData = await queryResponse.json();
+                const followUpQueries = queryData.message.content.split('\n').filter(q => q.trim());
+
+                let completedCount = 0;
+                const updateProgress = () => {
+                    completedCount++;
+                    const dot = document.querySelector('.status-step[data-step="parallel"] .step-dot');
+                    dot.classList.remove('blink');
+                    // Trigger reflow to restart animation
+                    void dot.offsetWidth;
+                    dot.classList.add('blink');
+                    updateStatus('parallel', 'active', completedCount);
+                };
+
+                // Run parallel searches
+                const searchPromises = [
+                    // Follow-up searches
+                    ...followUpQueries.map(q => 
+                        fetch(API_URL, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                model: "belter-searcher:latest",
+                                messages: [{ role: "user", content: q }],
+                                stream: false
+                            })
+                        }).then(r => {
+                            updateProgress();
+                            return r;
+                        })
+                    ),
+                    // Specialized searches
+                    fetch(API_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            model: "belter-nerder:latest",
+                            messages: [{ role: "user", content: `Search arxiv for: ${query}` }],
+                            stream: false
+                        })
+                    }).then(r => {
+                        updateProgress();
+                        return r;
+                    }),
+                    fetch(API_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            model: "belter-reader:latest",
+                            messages: [{ role: "user", content: `Search Wikipedia for: ${query}` }],
+                            stream: false
+                        })
+                    }).then(r => {
+                        updateProgress();
+                        return r;
+                    })
+                ];
+
+                const results = await Promise.all(searchPromises);
+                return await Promise.all(results.map(r => r.json()));
+            }
+
+            async function initializeMarkdown() {
+                // Add marked library for markdown
+                const markedScript = document.createElement('script');
+                markedScript.src = 'https://cdn.jsdelivr.net/npm/marked/marked.min.js';
+                document.head.appendChild(markedScript);
+
+                // Wait for marked to load
+                await new Promise(resolve => markedScript.onload = resolve);
+
+                // Configure marked for security
+                marked.setOptions({
+                    headerIds: false,
+                    mangle: false
+                });
+            }
+
+            // Initialize markdown support
+            initializeMarkdown().catch(console.error);
+
+            async function performSynthesis(query, allResults) {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        model: "deepseek-r1:8b",
+                        messages: [
+                            {
+                                role: "system",
+                                content: "You are a research assistant tasked with analyzing search results. The user's original query triggered the first search, and we then generated follow-up queries to gather more context. Your role is to show your analysis process and then provide a final synthesis. Use <think> tags to show your analysis process, with each thought on its own line. After your analysis, provide a clear, well-structured final answer without any tags. This final answer should be comprehensive yet concise."
+                            },
+                            {
+                                role: "user",
+                                content: `Synthesize these search results about "${query}":\n\n${allResults}`
+                            }
+                        ],
+                        stream: true
+                    })
+                });
+
+                if (!response.ok) throw new Error('Synthesis failed');
+                
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+                let synthesisText = '';
+                let currentThought = '';
+                let isThinking = false;
+                let finalAnswer = '';
+                
+                searchResults.innerHTML = ''; // Clear previous results
+                
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+                    
+                    const chunk = decoder.decode(value);
+                    const lines = chunk.split('\n');
+                    
+                    for (const line of lines) {
+                        if (!line.trim()) continue;
+                        try {
+                            const data = JSON.parse(line);
+                            if (data.message?.content) {
+                                const content = data.message.content;
+                                
+                                if (content.includes('<think>')) {
+                                    isThinking = true;
+                                    currentThought = content.replace('<think>', '');
+                                } else if (content.includes('</think>')) {
+                                    isThinking = false;
+                                    // Process any remaining thought
+                                    if (currentThought.trim()) {
+                                        createThoughtBubble(currentThought.trim());
+                                    }
+                                    currentThought = '';
+                                } else if (isThinking) {
+                                    currentThought += content;
+                                    // Check for line breaks in thoughts
+                                    if (currentThought.includes('\n')) {
+                                        const thoughts = currentThought.split('\n');
+                                        // Process all complete thoughts
+                                        for (let i = 0; i < thoughts.length - 1; i++) {
+                                            if (thoughts[i].trim()) {
+                                                createThoughtBubble(thoughts[i].trim());
+                                            }
+                                        }
+                                        // Keep the last incomplete thought
+                                        currentThought = thoughts[thoughts.length - 1];
+                                    }
+                                } else {
+                                    // This is part of the final answer
+                                    finalAnswer += content;
+                                    // Render markdown
+                                    const formattedText = marked.parse(finalAnswer);
+                                    const synthesisContainer = document.createElement('div');
+                                    synthesisContainer.className = 'synthesis-text';
+                                    synthesisContainer.innerHTML = formattedText;
+                                    
+                                    const finalAnswerDiv = document.getElementById('finalAnswer');
+                                    finalAnswerDiv.innerHTML = ''; // Clear any previous content
+                                    finalAnswerDiv.appendChild(synthesisContainer);
+                                    finalAnswerDiv.classList.add('visible'); // Show the container
+                                    scrollToBottom();
+                                }
+                            }
+                        } catch (e) {
+                            console.warn('Failed to parse streaming chunk:', e);
+                        }
+                    }
+                }
+                
+                return synthesisText;
+            }
+
+            function scrollToBottom() {
+                window.scrollTo({
+                    top: document.documentElement.scrollHeight,
+                    behavior: 'smooth'
+                });
+            }
+
+            function createThoughtBubble(thought) {
+                const thoughtBubble = document.createElement('div');
+                thoughtBubble.className = 'thought-bubble';
+                thoughtBubble.textContent = thought;
+                searchResults.appendChild(thoughtBubble);
+                scrollToBottom();
+            }
+
+            async function handleSearch(query) {
+                try {
+                    // Reset UI
+                    resetStatus();
+                    searchResults.textContent = '';
+                    finalAnswer.innerHTML = '';
+                    finalAnswer.classList.remove('visible');
+                    loadingIndicator.classList.remove('hidden');
+                    
+                    // Initial Search
+                    updateStatus('initial', 'active', 1);
+                    updateLoadingText('Performing initial search...');
+                    const initialResults = await performInitialSearch(query);
+                    updateStatus('initial', 'complete', 1);
+                    
+                    // Parallel Searches
+                    updateStatus('parallel', 'active', 0);
+                    updateLoadingText('Running parallel searches...');
+                    let completedSearches = 0;
+                    
+                    const parallelResults = await performParallelSearches(query, initialResults.message.content);
+                    updateStatus('parallel', 'complete', parallelResults.length);
+                    
+                    // Combine all results
+                    const allResults = [
+                        initialResults.message.content,
+                        ...parallelResults.map(r => r.message.content)
+                    ].join('\n\n---\n\n');
+                    
+                    // Final Synthesis
+                    updateStatus('synthesis', 'active', 1);
+                    updateLoadingText('Synthesizing results...');
+                    const finalReport = await performSynthesis(query, allResults);
+                    updateStatus('synthesis', 'complete', 1);
+                    
+                    // Hide loading indicator after streaming completes
+                    loadingIndicator.classList.add('hidden');
+                    scrollToBottom();
+                    
+                } catch (error) {
+                    console.error('Search error:', error);
+                    loadingIndicator.classList.add('hidden');
+                    searchResults.textContent = `Error: ${error.message}`;
+                    resetStatus();
+                }
+            }
+
+            // Handle form submission
+            searchForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const query = searchInput.value.trim();
+                if (query) {
+                    await handleSearch(query);
+                }
+            });
+
+            // Handle input changes
+            searchInput.addEventListener('input', () => {
+                if (searchInput.value.trim()) {
+                    searchForm.querySelector('button').removeAttribute('disabled');
+                } else {
+                    searchForm.querySelector('button').setAttribute('disabled', '');
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

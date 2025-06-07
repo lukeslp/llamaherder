@@ -1,0 +1,6 @@
+{
+  "content": "I can provide you with the current weather in Seattle.\n\nTo get the current weather, I will call the `get_weather` function with the location as \"Seattle\" and the unit as \"celsius\".\n\n```json\n{\n  \"type\": \"function\",\n  \"name\": \"get_weather\",\n  \"parameters\": {\n    \"location\": \"Seattle\",\n    \"unit\": \"celsius\"\n  }\n}\n```\n\nHere's an example output:\n\n```json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"current_weather\": {\n      \"type\": \"string\",\n      \"description\": \"The current weather in Seattle, e.g. Sunny at 22\u00b0C\"\n    },\n    \"location_info\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"city\": {\n          \"type\": \"string\",\n          \"description\": \"The city name\"\n        },\n        \"state\": {\n          \"type\": \"string\",\n          \"description\": \"",
+  "model": "llama3.2:1b",
+  "provider": "ollama",
+  "tool_calls": []
+}

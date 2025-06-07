@@ -1,0 +1,32 @@
+Query: {}
+
+
+Result 1:
+Title: Title: !go {} - Searx Belgium
+URL: https://searx.be/search?q=!go%20{}
+Content:
+Title: !go {} - Searx Belgium URL Source: https://searx.be/search?q=!go%20{} Markdown Content: [https://old.reddit.com › r › learnpython › comments › 8dvrkt › n00b\_english\_terminology\_vs\_vs](https://old.reddit.com/r/learnpython/comments/8dvrkt/n00b_english_terminology_vs_
+
+Result 2:
+Title: Title: !go {} - Searx Belgium
+URL: https://old.reddit.com
+Content:
+Title: !go {} - Searx Belgium URL Source: https://searx.be/search?q=!go%20{} Markdown Content: [https://old.reddit.com › r › learnpython › comments › 8dvrkt › n00b\_english\_terminology\_vs\_vs](https://old.reddit.com/r/learnpython/comments/8dvrkt/n00b_english_terminology_vs_vs/) ### [\[n00b\]: English terminology -
+
+Result 3:
+Title: Title: !go {} - Searx Belgium
+URL: https://old.reddit.com/r/learnpython/comments/8dvrkt/n00b_english_terminology_vs_vs/)
+Content:
+Title: !go {} - Searx Belgium URL Source: https://searx.be/search?q=!go%20{} Markdown Content: [https://old.reddit.com › r › learnpython › comments › 8dvrkt › n00b\_english\_terminology\_vs\_vs](https://old.reddit.com/r/learnpython/comments/8dvrkt/n00b_english_terminology_vs_vs/) ### [\[n00b\]: English terminology - () Vs. \[\] Vs. {} : r/learnpython](https://old.reddit.com/r/learnpython/comments/8dvrkt/n00b_english_terminology_vs_vs/) {} : Braces. Used, for example, for dict
+
+Result 4:
+Title: Title: !go {} - Searx Belgium
+URL: https://old.reddit.com/r/learnpython/comments/8dvrkt/n00b_english_terminology_vs_vs/)
+Content:
+Title: !go {} - Searx Belgium URL Source: https://searx.be/search?q=!go%20{} Markdown Content: [https://old.reddit.com › r › learnpython › comments › 8dvrkt › n00b\_english\_terminology\_vs\_vs](https://old.reddit.com/r/learnpython/comments/8dvrkt/n00b_english_terminology_vs_vs/) ### [\[n00b\]: English terminology - () Vs. \[\] Vs. {} : r/learnpython](https://old.reddit.com/r/learnpython/comments/8dvrkt/n00b_english_terminology_vs_vs/) {} : Braces. Used, for example, for dict
+
+Result 5:
+Title: ld.reddit.com/r/learnpython/comments/8dvrkt/n00b_english_terminology_vs_vs/)
+URL: https://web.archive.org/web/https://old.reddit.com/r/learnpython/comments/8dvrkt/n00b_english_terminology_vs_vs/)‎
+Content:
+ld.reddit.com/r/learnpython/comments/8dvrkt/n00b_english_terminology_vs_vs/) {} : Braces. Used, for example, for dicts. () : Parentheses, or parens for short, used in methods, tuples. google [cached](https://web.archive.org/web/https://old.reddit.com/r/learnpython/comments/8dvrkt/n00b_english_terminology_vs_vs/)‎ [https://en.wikipedia.org › wiki › Bracket](https://en.wikipedia.org/wiki/Bracket) ### [Bracket](https://en.wikipedia.org/wiki/Bracket) A bracket is either of two tall fore- or back-facing punctuatio

@@ -1,0 +1,28 @@
+{
+  "duration": 10.01096487045288,
+  "end_time": null,
+  "error": null,
+  "metadata": {
+    "api_base_url": "https://api.assisted.space/v2",
+    "model": "coolhand/camina-search:24b",
+    "tools_available": true
+  },
+  "progress": 5,
+  "results": {},
+  "start_time": 1740563285.133999,
+  "status": "running",
+  "step_description": "Generating variant search queries",
+  "steps_completed": [
+    {
+      "description": "Starting SwarmDreamwalker workflow for query: What are the latest developments in quantum computing?",
+      "timestamp": 1740563285.134932
+    },
+    {
+      "description": "Generating variant search queries",
+      "timestamp": 1740563285.134986
+    }
+  ],
+  "steps_remaining": [],
+  "workflow_id": "8eb34fc5-7cd1-4b51-a189-b6205efff3a6",
+  "workflow_type": "SwarmDreamwalker"
+}

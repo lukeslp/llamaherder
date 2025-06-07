@@ -1,0 +1,115 @@
+# Test Model Configuration
+
+models:
+  # LLM Models
+  cohere:
+    model_id: cohere
+    model_type: llm
+    base_model: command
+    endpoint: http://localhost:8010/cohere
+    capabilities:
+      - text_generation
+      - classification
+      - summarization
+      - embeddings
+    max_tokens: 4096
+    temperature: 0.7
+    timeout: 30
+
+  mistral:
+    model_id: mistral
+    model_type: llm
+    base_model: mistral-small
+    endpoint: http://localhost:8011/mistral
+    capabilities:
+      - chat_completion
+      - task_execution
+      - embeddings
+      - reasoning
+    max_tokens: 8192
+    temperature: 0.7
+    timeout: 30
+
+  perplexity:
+    model_id: perplexity
+    model_type: llm
+    base_model: pplx-7b-chat
+    endpoint: http://localhost:8012/perplexity
+    capabilities:
+      - chat_completion
+      - text_generation
+      - knowledge_tasks
+      - analysis
+    max_tokens: 4096
+    temperature: 0.7
+    timeout: 30
+
+  # Belters
+  property_belter:
+    model_id: property_belter
+    model_type: belter
+    base_model: mistral-7b
+    endpoint: http://localhost:8001/belter
+    capabilities:
+      - property_analysis
+      - location_analysis
+      - market_analysis
+    max_tokens: 4096
+    temperature: 0.7
+    timeout: 60
+
+  knowledge_belter:
+    model_id: knowledge_belter
+    model_type: belter
+    base_model: mistral-7b
+    endpoint: http://localhost:8002/belter
+    capabilities:
+      - knowledge_search
+      - fact_verification
+      - citation_management
+    max_tokens: 4096
+    temperature: 0.7
+    timeout: 60
+
+  # Drummers
+  location_drummer:
+    model_id: location_drummer
+    model_type: drummer
+    base_model: llama-3.2-3b
+    endpoint: http://localhost:8003/drummer
+    capabilities:
+      - geocoding
+      - routing
+      - boundaries
+    max_tokens: 2048
+    temperature: 0.7
+    timeout: 30
+
+  research_drummer:
+    model_id: research_drummer
+    model_type: drummer
+    base_model: llama-3.2-3b
+    endpoint: http://localhost:8004/drummer
+    capabilities:
+      - academic_search
+      - paper_analysis
+      - citation_formatting
+    max_tokens: 2048
+    temperature: 0.7
+    timeout: 30
+
+# Global Settings
+settings:
+  retry_config:
+    max_retries: 3
+    base_delay: 1.0
+    max_delay: 10.0
+  rate_limits:
+    requests_per_minute: 60
+    tokens_per_minute: 100000
+  monitoring:
+    enable_metrics: true
+    enable_logging: true
+  security:
+    enable_validation: true
+    enable_sanitization: true 

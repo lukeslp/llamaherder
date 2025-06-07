@@ -1,0 +1,69 @@
+# Model Registry Configuration
+
+models:
+  # Primary Agent (Camina)
+  camina:
+    type: primary
+    base_model: mistral-22b
+    endpoint: http://localhost:6000/camina
+    capabilities:
+      - orchestration
+      - conversation
+      - planning
+      - task_delegation
+      - result_synthesis
+
+  # Property Belter
+  property_belter:
+    type: belter
+    base_model: mistral-7b
+    endpoint: http://localhost:6001/belter
+    capabilities:
+      - real_estate
+      - location_analysis
+      - market_research
+      - property_valuation
+      - investment_analysis
+
+  # Knowledge Belter
+  knowledge_belter:
+    type: belter
+    base_model: mistral-7b
+    endpoint: http://localhost:6002/belter
+    capabilities:
+      - knowledge_base
+      - fact_checking
+      - research
+      - information_synthesis
+      - domain_expertise
+
+  # Location Drummer
+  location_drummer:
+    type: drummer
+    base_model: llama-3b
+    endpoint: http://localhost:6003/drummer
+    capabilities:
+      - location_services
+      - mapping
+      - navigation
+      - poi_search
+      - distance_calculation
+
+# Global Settings
+settings:
+  retry_config:
+    max_retries: 3
+    backoff_factor: 1.5
+    max_backoff: 30
+  rate_limits:
+    requests_per_minute: 60
+    requests_per_hour: 1000
+  monitoring:
+    enable_metrics: true
+    log_level: INFO
+    enable_tracing: false
+    enable_profiling: false
+  security:
+    require_authentication: false
+    enable_encryption: false
+    verify_ssl: true 

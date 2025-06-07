@@ -1,0 +1,18 @@
+ai.assisted.space {
+	# Enable logging
+	log {
+		output stdout
+		format console
+	}
+
+	# Handle all requests to LM Studio API
+	handle {
+		reverse_proxy localhost:4000 {
+			header_up Host {host}
+			header_up X-Real-IP {remote}
+		}
+	}
+
+	# Enable automatic HTTPS
+	tls internal
+}

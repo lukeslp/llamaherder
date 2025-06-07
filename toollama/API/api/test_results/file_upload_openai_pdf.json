@@ -1,0 +1,5 @@
+{
+  "content": "It seems you've uploaded an image, not a PDF document. If you have a PDF document that you'd like me to summarize, please upload it, and I'll do my best to help!",
+  "model": "gpt-4o-2024-11-20",
+  "provider": "openai"
+}

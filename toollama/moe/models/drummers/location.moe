@@ -1,0 +1,217 @@
+FROM llama:3.2-3b
+
+# System prompt for Location Drummer
+SYSTEM """You are a Location Drummer in the MoE system, specialized in geographic and spatial analysis tasks.
+Your role is to execute specific location-based tasks using various APIs and tools to gather detailed information about properties and their surroundings.
+
+Key responsibilities:
+1. Location Analysis
+   - Geocoding addresses
+   - Calculating distances
+   - Determining boundaries
+   - Analyzing accessibility
+
+2. Data Collection
+   - Gather location data
+   - Access multiple APIs
+   - Validate responses
+   - Format results
+
+3. Metric Generation
+   - Calculate walk scores
+   - Determine transit access
+   - Evaluate bike-ability
+   - Assess connectivity
+
+Available Tools:
+- MapQuest API: Geocoding and routing
+- WalkScore API: Walkability metrics
+- Air Quality API: Environmental data
+- Boundary Service: Area definitions
+
+When executing tasks:
+1. Validate input data
+2. Select appropriate tools
+3. Execute API calls
+4. Process responses
+5. Format results
+6. Handle errors
+7. Return structured data
+
+Remember:
+- Verify API responses
+- Handle rate limits
+- Cache when possible
+- Log errors properly
+- Format consistently
+"""
+
+# Parameter definitions
+PARAMETER task {
+    type: object
+    description: "Location analysis task"
+    properties: {
+        address: {
+            type: string
+            description: "Property address to analyze"
+        }
+        metrics: {
+            type: array
+            items: {
+                type: string
+                enum: [
+                    "coordinates",
+                    "walk_score",
+                    "transit_score",
+                    "bike_score",
+                    "boundaries",
+                    "all"
+                ]
+            }
+            description: "Location metrics to calculate"
+        }
+        radius: {
+            type: number
+            description: "Analysis radius in miles"
+            default: 1.0
+        }
+    }
+    required: ["address"]
+}
+
+# Tool definitions
+TOOLS {
+    mapquest: {
+        type: "api"
+        capabilities: [
+            "geocoding",
+            "routing",
+            "static_maps"
+        ]
+        parameters: {
+            api_key: "string"
+            base_url: "string"
+            timeout: "number"
+        }
+    }
+    walkscore: {
+        type: "api"
+        capabilities: [
+            "walk_score",
+            "transit_score",
+            "bike_score"
+        ]
+        parameters: {
+            api_key: "string"
+            base_url: "string"
+            timeout: "number"
+        }
+    }
+    airquality: {
+        type: "api"
+        capabilities: [
+            "air_quality_index",
+            "pollutants",
+            "forecasts"
+        ]
+        parameters: {
+            api_key: "string"
+            base_url: "string"
+            timeout: "number"
+        }
+    }
+}
+
+# Response format
+RESPONSE_FORMAT {
+    type: object
+    properties: {
+        task_info: {
+            type: object
+            properties: {
+                address: "string"
+                requested_metrics: {
+                    type: array
+                    items: "string"
+                }
+                radius: "number"
+                timestamp: "string"
+            }
+        }
+        location: {
+            type: object
+            properties: {
+                coordinates: {
+                    type: object
+                    properties: {
+                        latitude: "number"
+                        longitude: "number"
+                    }
+                }
+                formatted_address: "string"
+                place_id: "string"
+            }
+        }
+        metrics: {
+            type: object
+            properties: {
+                walk_score: {
+                    type: object
+                    properties: {
+                        score: "number"
+                        description: "string"
+                        details: "object"
+                    }
+                }
+                transit_score: {
+                    type: object
+                    properties: {
+                        score: "number"
+                        description: "string"
+                        details: "object"
+                    }
+                }
+                bike_score: {
+                    type: object
+                    properties: {
+                        score: "number"
+                        description: "string"
+                        details: "object"
+                    }
+                }
+            }
+        }
+        boundaries: {
+            type: object
+            properties: {
+                neighborhood: "object"
+                city: "object"
+                county: "object"
+                state: "object"
+            }
+        }
+        metadata: {
+            type: object
+            properties: {
+                sources: {
+                    type: array
+                    items: "string"
+                }
+                timestamp: "string"
+                cache_status: "string"
+                api_calls: {
+                    type: object
+                    properties: {
+                        total: "number"
+                        successful: "number"
+                        failed: "number"
+                    }
+                }
+            }
+        }
+        error: {
+            type: string
+            description: "Error message if any"
+        }
+    }
+} 

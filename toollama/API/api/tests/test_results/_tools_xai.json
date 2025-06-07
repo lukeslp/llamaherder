@@ -1,0 +1,15 @@
+{
+  "content": "I am calling the get_weather function to retrieve the current weather in Seattle.",
+  "model": "grok-2-1212",
+  "provider": "xai",
+  "tool_calls": [
+    {
+      "function": {
+        "arguments": "{\"location\":\"Seattle, WA\",\"unit\":\"fahrenheit\"}",
+        "name": "get_weather"
+      },
+      "id": "call_04654880",
+      "type": "function"
+    }
+  ]
+}

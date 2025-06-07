@@ -1,0 +1,296 @@
+FROM mistral:7b
+
+# System prompt for LLM Belter
+SYSTEM """You are the LLM Belter, a specialized middle manager in the MoE system responsible for coordinating language model tasks and optimizing model selection.
+
+Key responsibilities:
+1. Task Analysis
+   - Parse LLM requests
+   - Identify requirements
+   - Plan execution
+   - Optimize resources
+
+2. Model Selection
+   - Analyze task needs
+   - Match capabilities
+   - Consider costs
+   - Balance performance
+
+3. Task Coordination
+   - Dispatch LLM Drummers
+   - Monitor execution
+   - Handle failures
+   - Aggregate results
+
+4. Quality Control
+   - Verify outputs
+   - Check coherence
+   - Ensure safety
+   - Validate costs
+
+Available Drummers:
+- Cohere Drummers: Command and embedding tasks
+- Mistral Drummers: Chat and reasoning tasks
+- Perplexity Drummers: Knowledge and analysis tasks
+
+Model Capabilities:
+1. Cohere Models
+   - Command: Text generation and classification
+   - Command-Light: Efficient processing
+   - Embed: Text embeddings and analysis
+
+2. Mistral Models
+   - Tiny: Fast, efficient responses
+   - Small: Balanced performance
+   - Medium: Complex reasoning
+   - Embed: Semantic analysis
+
+3. Perplexity Models
+   - 7B: Fast chat and completion
+   - 70B: Deep knowledge tasks
+
+When processing requests:
+1. Analyze task requirements
+2. Select optimal model
+3. Configure parameters
+4. Dispatch Drummers
+5. Monitor execution
+6. Validate results
+7. Optimize costs
+8. Format response
+
+Remember:
+- Balance performance and cost
+- Monitor resource usage
+- Ensure response quality
+- Handle errors gracefully
+- Track usage metrics
+"""
+
+# Parameter definitions
+PARAMETER request {
+    type: object
+    description: "LLM request"
+    properties: {
+        task: {
+            type: string
+            enum: [
+                "generate",
+                "chat",
+                "embed",
+                "classify",
+                "summarize",
+                "analyze"
+            ]
+            description: "Type of LLM task"
+        }
+        content: {
+            type: object
+            description: "Task content and requirements"
+        }
+        preferences: {
+            type: object
+            properties: {
+                model_size: {
+                    type: string
+                    enum: ["small", "medium", "large"]
+                    description: "Preferred model size"
+                }
+                priority: {
+                    type: string
+                    enum: ["speed", "quality", "cost"]
+                    description: "Task priority"
+                }
+                max_budget: {
+                    type: number
+                    description: "Maximum cost in USD"
+                }
+            }
+        }
+        format: {
+            type: string
+            enum: ["text", "json", "markdown", "html"]
+            description: "Response format"
+            default: "json"
+        }
+    }
+    required: ["task", "content"]
+}
+
+# Drummer definitions
+DRUMMERS {
+    cohere: {
+        type: "llm"
+        capabilities: [
+            "text_generation",
+            "classification",
+            "summarization",
+            "embeddings"
+        ]
+        tools: [
+            "llm_cohere"
+        ]
+        models: {
+            command: {
+                size: "medium"
+                speed: "medium"
+                cost: 0.0015
+            }
+            command_light: {
+                size: "small"
+                speed: "fast"
+                cost: 0.0010
+            }
+            embed: {
+                size: "small"
+                speed: "fast"
+                cost: 0.0001
+            }
+        }
+    }
+    mistral: {
+        type: "llm"
+        capabilities: [
+            "chat_completion",
+            "task_execution",
+            "embeddings",
+            "reasoning"
+        ]
+        tools: [
+            "llm_mistral"
+        ]
+        models: {
+            tiny: {
+                size: "small"
+                speed: "fast"
+                cost: 0.0002
+            }
+            small: {
+                size: "medium"
+                speed: "medium"
+                cost: 0.0006
+            }
+            medium: {
+                size: "large"
+                speed: "slow"
+                cost: 0.0020
+            }
+        }
+    }
+    perplexity: {
+        type: "llm"
+        capabilities: [
+            "chat_completion",
+            "text_generation",
+            "knowledge_tasks",
+            "analysis"
+        ]
+        tools: [
+            "llm_perplexity"
+        ]
+        models: {
+            "7b": {
+                size: "medium"
+                speed: "fast"
+                cost: 0.0007
+            }
+            "70b": {
+                size: "large"
+                speed: "medium"
+                cost: 0.0035
+            }
+        }
+    }
+}
+
+# Response format
+RESPONSE_FORMAT {
+    type: object
+    properties: {
+        request_info: {
+            type: object
+            properties: {
+                task: "string"
+                model: "string"
+                provider: "string"
+                timestamp: "string"
+            }
+        }
+        execution: {
+            type: object
+            properties: {
+                steps: {
+                    type: array
+                    items: {
+                        type: object
+                        properties: {
+                            drummer: "string"
+                            action: "string"
+                            status: "string"
+                            duration: "number"
+                        }
+                    }
+                }
+                total_time: "number"
+                total_cost: "number"
+            }
+        }
+        results: {
+            type: object
+            properties: {
+                content: "any"
+                format: "string"
+                tokens: {
+                    type: object
+                    properties: {
+                        prompt: "number"
+                        completion: "number"
+                        total: "number"
+                    }
+                }
+            }
+        }
+        metrics: {
+            type: object
+            properties: {
+                quality: {
+                    type: object
+                    properties: {
+                        coherence: "number"
+                        relevance: "number"
+                        safety: "number"
+                    }
+                }
+                performance: {
+                    type: object
+                    properties: {
+                        latency: "number"
+                        throughput: "number"
+                        success_rate: "number"
+                    }
+                }
+                cost: {
+                    type: object
+                    properties: {
+                        total: "number"
+                        per_token: "number"
+                        breakdown: "object"
+                    }
+                }
+            }
+        }
+        metadata: {
+            type: object
+            properties: {
+                model_versions: "object"
+                api_versions: "object"
+                rate_limits: "object"
+                cache_status: "string"
+            }
+        }
+        error: {
+            type: string
+            description: "Error message if any"
+        }
+    }
+} 

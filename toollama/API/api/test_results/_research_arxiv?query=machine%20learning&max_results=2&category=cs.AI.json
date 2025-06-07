@@ -1,0 +1,57 @@
+{
+  "count": 2,
+  "query": "machine learning",
+  "results": [
+    {
+      "authors": [
+        "Christian Janiesch",
+        "Patrick Zschech",
+        "Kai Heinrich"
+      ],
+      "categories": [
+        "cs.AI"
+      ],
+      "id": "2104.05314v2",
+      "links": {
+        "alternate": {
+          "href": "http://arxiv.org/abs/2104.05314v2",
+          "title": null
+        },
+        "related": {
+          "href": "http://arxiv.org/pdf/2104.05314v2",
+          "title": "pdf"
+        }
+      },
+      "pdf_url": null,
+      "published": "2021-04-12T09:54:12Z",
+      "summary": "Today, intelligent systems that offer artificial intelligence capabilities\noften rely on machine learning. Machine learning describes the capacity of\nsystems to learn from problem-specific training data to automate the process of\nanalytical model building and solve associated tasks. Deep learning is a\nmachine learning concept based on artificial neural networks. For many\napplications, deep learning models outperform shallow machine learning models\nand traditional data analysis approaches. In this article, we summarize the\nfundamentals of machine learning and deep learning to generate a broader\nunderstanding of the methodical underpinning of current intelligent systems. In\nparticular, we provide a conceptual distinction between relevant terms and\nconcepts, explain the process of automated analytical model building through\nmachine learning and deep learning, and discuss the challenges that arise when\nimplementing such intelligent systems in the field of electronic markets and\nnetworked business. These naturally go beyond technological aspects and\nhighlight issues in human-machine interaction and artificial intelligence\nservitization.",
+      "title": "Machine learning and deep learning",
+      "updated": "2021-04-14T10:31:01Z"
+    },
+    {
+      "authors": [
+        "Chuyu Xiong"
+      ],
+      "categories": [
+        "cs.AI"
+      ],
+      "id": "1602.00198v1",
+      "links": {
+        "alternate": {
+          "href": "http://arxiv.org/abs/1602.00198v1",
+          "title": null
+        },
+        "related": {
+          "href": "http://arxiv.org/pdf/1602.00198v1",
+          "title": "pdf"
+        }
+      },
+      "pdf_url": null,
+      "published": "2016-01-31T04:05:50Z",
+      "summary": "Mechanical learning is a computing system that is based on a set of simple\nand fixed rules, and can learn from incoming data. A learning machine is a\nsystem that realizes mechanical learning. Importantly, we emphasis that it is\nbased on a set of simple and fixed rules, contrasting to often called machine\nlearning that is sophisticated software based on very complicated mathematical\ntheory, and often needs human intervene for software fine tune and manual\nadjustments. Here, we discuss some basic facts and principles of such system,\nand try to lay down a framework for further study. We propose 2 directions to\napproach mechanical learning, just like Church-Turing pair: one is trying to\nrealize a learning machine, another is trying to well describe the mechanical\nlearning.",
+      "title": "Discussion on Mechanical Learning and Learning Machine",
+      "updated": "2016-01-31T04:05:50Z"
+    }
+  ],
+  "total_results": 2
+}

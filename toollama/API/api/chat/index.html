@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script>
+      (function (c, s, q, u, a, r, e) {
+          c.hj = c.hj || function(){(c.hj.q = c.hj.q || []).push(arguments)};
+          c._hjSettings = { hjid: a };
+          r = s.getElementsByTagName('head')[0];
+          e = s.createElement('script');
+          e.async = true;
+          e.src = q + c._hjSettings.hjid + u;
+          r.appendChild(e);
+      })(window, document, 'https://static.hj.contentsquare.net/c/csq-', '.js', 5357064);
+    </script>
+    <link rel="icon" href="/assets/favicons/fav_spiral_light.ico" type="image/x-icon">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OpenAI</title>
+    <script>
+      console.log('Document loading started');
+    </script>
+
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="OpenAI">
+    <meta name="description" content="OpenAI - GPT AI Assistant">
+    <meta name="keywords" content="OpenAI, GPT, AI, Assistant, Language Model">
+    <script>
+      console.log('Meta tags loaded');
+    </script>
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://clean.luke.studio/openai/">
+    <meta property="og:title" content="OpenAI">
+    <meta property="og:description" content="OpenAI - GPT AI Assistant">
+    <meta property="og:image" content="https://i.imgur.com/YeAwK6f.gif">
+    <script>
+      console.log('Open Graph tags loaded');
+    </script>
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://clean.luke.studio/openai/">
+    <meta property="twitter:title" content="OpenAI">
+    <meta property="twitter:description" content="OpenAI - GPT AI Assistant">
+    <meta property="twitter:image" content="https://i.imgur.com/YeAwK6f.gif">
+    <script>
+      console.log('Twitter tags loaded');
+    </script>
+
+    <!-- Markdown Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" onload="console.log('Marked.js loaded')" onerror="console.error('Failed to load Marked.js')"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js" onload="console.log('Highlight.js loaded')" onerror="console.error('Failed to load Highlight.js')"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css" onload="console.log('Highlight.js CSS loaded')" onerror="console.error('Failed to load Highlight.js CSS')">
+    <!-- DOMPurify for sanitization -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js" onload="console.log('DOMPurify loaded')" onerror="console.error('Failed to load DOMPurify')"></script>
+    <script>
+      console.log('External libraries loading initiated');
+    </script>
+
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+      
+      :root {
+        --primary-color: #2c1810;
+        --secondary-color: #1a0f0a;
+        --background-color: #f4f1ea;
+        --message-bg: #fff;
+        --user-message-bg: #f9f7f3;
+        --border-color: #e0d9c8;
+        --text-color: #333;
+        --metadata-color: #94a3b8;
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        margin: 0;
+        font-family: 'Playfair Display', serif;
+        background: var(--background-color);
+        padding: 20px;
+        color: var(--text-color);
+      }
+
+      .chat-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        background: var(--message-bg);
+        padding: 40px;
+        overflow-y: auto;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        border: 1px solid var(--border-color);
+        max-width: 800px;
+        margin: 0 auto;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      .message-container {
+        flex: 1;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .message-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .message {
+        padding: 12px;
+        border-radius: 0;
+        word-wrap: break-word;
+        font-size: 17px;
+        line-height: 1.8;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .user-message {
+        background-color: var(--user-message-bg);
+        font-style: italic;
+        text-align: right;
+      }
+
+      .bot-message {
+        text-align: justify;
+        letter-spacing: 0.3px;
+        text-indent: 20px;
+        font-weight: 400;
+      }
+
+      .message-metadata {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        font-size: 0.8em;
+        color: var(--metadata-color);
+      }
+
+      .input-container {
+        padding: 20px;
+        background-color: var(--background-color);
+        border-top: 1px solid var(--border-color);
+        max-width: 800px;
+        margin: 0 auto;
+        width: 100%;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .option-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 8px;
+        align-items: center;
+        justify-content: flex-start;
+      }
+
+      .option {
+        display: inline-flex;
+        align-items: center;
+        font-size: 12px;
+        background-color: var(--message-bg);
+        padding: 4px 8px;
+        border-radius: 12px;
+        border: 1px solid var(--border-color);
+        white-space: nowrap;
+      }
+
+      .option label {
+        margin-left: 4px;
+        cursor: pointer;
+      }
+
+      .file-label {
+        cursor: pointer;
+        color: var(--primary-color);
+        font-weight: bold;
+      }
+
+      .file-name {
+        margin-left: 4px;
+        font-size: 11px;
+        color: var(--metadata-color);
+        max-width: 100px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        display: inline-block;
+        vertical-align: middle;
+      }
+
+      .message-input-container {
+        display: flex;
+        gap: 10px;
+      }
+
+      #messageInput {
+        flex: 1;
+        padding: 12px;
+        border: 1px solid var(--border-color);
+        border-radius: 2px;
+        background-color: var(--message-bg);
+        font-family: 'Playfair Display', serif;
+        font-size: 16px;
+      }
+
+      #sendButton {
+        padding: 12px 24px;
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 2px;
+        cursor: pointer;
+        font-family: 'Playfair Display', serif;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: background-color 0.2s ease;
+      }
+
+      #sendButton:hover {
+        background-color: var(--secondary-color);
+      }
+
+      .error-message {
+        color: #e53e3e;
+        background-color: #fff5f5;
+        border: 1px solid #fc8181;
+      }
+
+      /* Code block styling */
+      pre {
+        background-color: #f6f8fa;
+        padding: 16px;
+        border-radius: 6px;
+        overflow-x: auto;
+        position: relative;
+      }
+
+      code {
+        font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+        font-size: 14px;
+      }
+      
+      /* Copy button for code blocks */
+      .copy-button {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        padding: 5px 10px;
+        background: #e0e0e0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 0.8em;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      
+      .copy-button:hover {
+        background: #d0d0d0;
+      }
+
+      @media (max-width: 768px) {
+        body {
+          padding: 10px;
+        }
+
+        .chat-container {
+          padding: 20px;
+        }
+
+        .input-container {
+          padding: 10px;
+        }
+
+        .option {
+          font-size: 11px;
+          padding: 3px 6px;
+        }
+
+        #messageInput {
+          font-size: 14px;
+        }
+
+        #sendButton {
+          padding: 8px 16px;
+        }
+      }
+    </style>
+    <script>
+      console.log('CSS styles defined');
+    </script>
+  </head>
+  <body onload="console.log('Body loaded')">
+    <script>
+      console.log('Body rendering started');
+    </script>
+    <div id="toast" class="toast"></div>
+    <script>
+      console.log('Toast element created');
+    </script>
+
+    <div style="text-align: center; padding: 20px; max-width: 800px; margin: 0 auto; border-bottom: none;">
+      <h1 style="font-size: 42px; margin: 0; font-weight: 700; letter-spacing: -1px;">OpenAI</h1>
+      <h3 style="font-size: 24px; margin: 0; font-weight: 700; letter-spacing: -1px;">Real API Integration - api.assisted.space/v2/responses</h3>
+      <p style="font-size: 14px; color: #555; margin-top: 5px;">Using the real OpenAI Responses API - No mock responses</p>
+      <script>
+        console.log('Header elements rendered');
+      </script>
+    </div>
+
+    <div class="chat-container">
+      <div class="message-container"></div>
+      <script>
+        console.log('Chat container initialized');
+      </script>
+    </div>
+    
+    <div class="input-container">
+      <div class="option-container">
+        <div class="option">
+          <input type="checkbox" id="webSearch" name="webSearch">
+          <label for="webSearch">Web Search</label>
+        </div>
+        <div class="option">
+          <input type="checkbox" id="fileSearch" name="fileSearch">
+          <label for="fileSearch">File Search</label>
+        </div>
+        <div class="option">
+          <input type="checkbox" id="computerUse" name="computerUse">
+          <label for="computerUse">Computer Use</label>
+        </div>
+        <div class="option">
+          <input type="checkbox" id="debugMode" name="debugMode">
+          <label for="debugMode">Debug Mode</label>
+        </div>
+        <div class="option file-upload">
+          <label for="fileUpload" class="file-label">Attach File</label>
+          <input type="file" id="fileUpload" name="fileUpload" style="display:none">
+          <span id="fileName" class="file-name"></span>
+        </div>
+      </div>
+      <div class="message-input-container">
+        <input type="text" id="messageInput" placeholder="Type your message here..." name="message" autocomplete="off">
+        <button id="sendButton">Send</button>
+      </div>
+    </div>
+
+    <div style="text-align: center; padding: 10px; max-width: 800px; margin: 10px auto; font-size: 14px; color: var(--metadata-color);">
+      <p>This interface uses the real api.assisted.space/v2/responses API for document processing with advanced capabilities. Enable <strong>Debug Mode</strong> to test without making actual API calls. If you don't upload a file, your message will be processed as a text file.</p>
+    </div>
+
+    <script src="index.js" onload="console.log('Main JavaScript loaded successfully')" onerror="console.error('Failed to load index.js')"></script>
+    <script>
+      console.log('Document fully loaded');
+      
+      // Add event listeners with logging
+      document.addEventListener('DOMContentLoaded', function() {
+        console.log('DOM fully loaded and parsed');
+        
+        // Log when message input changes
+        const messageInput = document.getElementById('messageInput');
+        if (messageInput) {
+          messageInput.addEventListener('input', function() {
+            console.log('Message input changed:', this.value.length > 0 ? 'Has content' : 'Empty');
+          });
+          console.log('Message input event listener attached');
+        } else {
+          console.error('Could not find message input element');
+        }
+        
+        // Log when send button is clicked
+        const sendButton = document.getElementById('sendButton');
+        if (sendButton) {
+          sendButton.addEventListener('click', function() {
+            console.log('Send button clicked via event listener');
+          });
+          console.log('Send button event listener attached');
+        } else {
+          console.error('Could not find send button element');
+        }
+      });
+      
+      // Log window errors
+      window.onerror = function(message, source, lineno, colno, error) {
+        console.error('Window error:', message, 'at', source, 'line:', lineno, 'column:', colno, 'Error object:', error);
+        return false;
+      };
+    </script>
+  </body>
+</html>

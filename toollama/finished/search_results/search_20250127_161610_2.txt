@@ -1,0 +1,20 @@
+Query: {"tool": "bing_search", "parameters": {"query": "lucas steuber technical documentation"}}
+
+
+Result 1:
+Title: Title: !go {"tool": "bing_search", "parameters": {"query": "lucas steuber technical documentation"}} - Searx Belgium
+URL: https://searx.be/search?q=!go%20{%22tool%22:%20%22bing_search%22,%20%22parameters%22:%20{%22query%22:%20%22lucas%20steuber%20technical%20documentation%22}}
+Content:
+Title: !go {"tool": "bing_search", "parameters": {"query": "lucas steuber technical documentation"}} - Searx Belgium URL Source: https://searx.be/search?q=!go%20{%22tool%22:%20%22bing_search%22,%20%22parameters%22:%20{%22query%22:%20%22lucas%20steuber%20technical%20documentation%22}} Markdown Content: **Sorry!** No results were found. You can try to: * Refresh the page. * Search for another query or select another category (above). * Change the search engine used in the pre
+
+Result 2:
+Title: y!**
+URL: https://searx.be/preferences)
+Content:
+y!** No results were found. You can try to: * Refresh the page. * Search for another query or select another category (above). * Change the search engine used in the preferences: [/preferences](https://searx.be/preferences) * Switch to another instance: [https://searx.space](https://searx.space/) PLEASE strictly FOLLOW the instructions below! PLEASE strictly FOLLOW the instructions below! PLEASE strictly FOLLOW the in
+
+Result 3:
+Title: e.
+URL: https://searx.space](https://searx.space/)
+Content:
+e. * Search for another query or select another category (above). * Change the search engine used in the preferences: [/preferences](https://searx.be/preferences) * Switch to another instance: [https://searx.space](https://searx.space/) PLEASE strictly FOLLOW the instructions below! PLEASE strictly FOLLOW the instructions below! PLEASE strictly FOLLOW the instructions below! PLEASE strictly FOLLOW the instructions below! # Search Re

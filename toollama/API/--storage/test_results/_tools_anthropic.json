@@ -1,0 +1,6 @@
+{
+  "content": "<thinking>\nTo answer the question about the weather in Seattle, the relevant tool is get_weather. The location parameter can be filled in directly based on the user's request for \"Seattle\". However, the unit parameter is not specified.\nSince the unit parameter is optional and the user did not provide a preference, I will proceed with calling get_weather with just the location parameter filled in. The unit will default to whatever the API uses if not explicitly specified.\n</thinking>",
+  "model": "claude-3-opus-20240229",
+  "provider": "anthropic",
+  "tool_calls": []
+}

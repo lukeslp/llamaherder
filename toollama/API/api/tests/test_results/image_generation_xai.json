@@ -1,0 +1,10 @@
+{
+  "created": 1743666400,
+  "data": [
+    {
+      "revised_prompt": "A high-resolution photograph of a cyberpunk city at night, viewed from a slightly elevated perspective. The scene is illuminated by vibrant neon lights from tall skyscrapers, with flying vehicles visible in the sky. The wet streets reflect the colorful neon signs, enhancing the futuristic atmosphere. The focus is on the central area of the city, avoiding overly complex backgrounds or foreground elements that could distract from the main scene. The mood is atmospheric and immersive, emphasizing the nocturnal, high-tech urban environment without unnecessary text or overly futuristic elements.",
+      "url": "https://imgen.x.ai/xai-imgen/xai-tmp-imgen-b375c186-0965-438f-9fb2-34e47068a2fa.jpeg"
+    }
+  ],
+  "model": "grok-2-image"
+}

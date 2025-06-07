@@ -1,0 +1,118 @@
+{
+  "count": 2,
+  "next_offset": 2,
+  "offset": 0,
+  "query": "machine learning",
+  "results": [
+    {
+      "abstract": "In recent years, deep learning (DL) has been the most popular computational approach in the field of machine learning (ML), achieving exceptional results on a variety of complex cognitive tasks, matching or even surpassing human performance. Deep learning technology, which grew out of artificial neural networks (ANN), has become a big deal in computing because it can learn from data. The ability to learn enormous volumes of data is one of the benefits of deep learning. In the past few years, the field of deep learning has grown quickly, and it has been used successfully in a wide range of traditional fields. In numerous disciplines, including cybersecurity, natural language processing, bioinformatics, robotics and control, and medical information processing, deep learning has outperformed well-known machine learning approaches. In order to provide a more ideal starting point from which to create a comprehensive understanding of deep learning, also, this article aims to provide a more detailed overview of the most significant facets of deep learning, including the most current developments in the field. Moreover, this paper discusses the significance of deep learning and the various deep learning techniques and networks. Additionally, it provides an overview of real-world application areas where deep learning techniques can be utilised. We conclude by identifying possible characteristics for future generations of deep learning modelling and providing research suggestions. On the same hand, this article intends to provide a comprehensive overview of deep learning modelling that can serve as a resource for academics and industry people alike. Lastly, we provide additional issues and recommended solutions to assist researchers in comprehending the existing research gaps. Various approaches, deep learning architectures, strategies, and applications are discussed in this work.",
+      "authors": [
+        {
+          "authorId": "2013359",
+          "name": "Mohammad Mustafa Taye"
+        }
+      ],
+      "openAccessPdf": {
+        "disclaimer": "Notice: This abstract is extracted from the open access paper or abstract available at https://api.unpaywall.org/v2/10.3390/computers12050091?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.3390/computers12050091, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+        "license": "CCBY",
+        "status": "GOLD",
+        "url": "https://www.mdpi.com/2073-431X/12/5/91/pdf?version=1682405138"
+      },
+      "paperId": "df70977e0347b76fb049c17c3956f643bcb43a55",
+      "publicationTypes": [
+        "JournalArticle",
+        "Review"
+      ],
+      "title": "Understanding of Machine Learning with Deep Learning: Architectures, Workflow, Applications and Future Directions",
+      "tldr": {
+        "model": "tldr@v2.0.0",
+        "text": "A comprehensive overview of deep learning modelling that can serve as a resource for academics and industry people alike is provided, including an overview of real-world application areas where deep learning techniques can be utilised."
+      },
+      "url": "https://www.semanticscholar.org/paper/df70977e0347b76fb049c17c3956f643bcb43a55",
+      "venue": "De Computis",
+      "year": 2023
+    },
+    {
+      "abstract": "In response to innovations in machine learning (ML) models, production workloads changed radically and rapidly. TPU v4 is the fifth Google domain specific architecture (DSA) and its third supercomputer for such ML models. Optical circuit switches (OCSes) dynamically reconfigure its interconnect topology to improve scale, availability, utilization, modularity, deployment, security, power, and performance; users can pick a twisted 3D torus topology if desired. Much cheaper, lower power, and faster than Infiniband, OCSes and underlying optical components are <5% of system cost and <3% of system power. Each TPU v4 includes SparseCores, dataflow processors that accelerate models that rely on embeddings by 5x--7x yet use only 5% of die area and power. Deployed since 2020, TPU v4 outperforms TPU v3 by 2.1x and improves performance/Watt by 2.7x. The TPU v4 supercomputer is 4x larger at 4096 chips and thus nearly 10x faster overall, which along with OCS flexibility and availability allows a large language model to train at an average of ~60% of peak FLOPS/second. For similar sized systems, it is ~4.3x--4.5x faster than the Graphcore IPU Bow and is 1.2x--1.7x faster and uses 1.3x--1.9x less power than the Nvidia A100. TPU v4s inside the energy-optimized warehouse scale computers of Google Cloud use ~2--6x less energy and produce ~20x less CO2e than contemporary DSAs in typical on-premise data centers.",
+      "authors": [
+        {
+          "authorId": "1715454",
+          "name": "N. Jouppi"
+        },
+        {
+          "authorId": "1753079661",
+          "name": "George Kurian"
+        },
+        {
+          "authorId": "2153701529",
+          "name": "Sheng Li"
+        },
+        {
+          "authorId": "49735130",
+          "name": "Peter C. Ma"
+        },
+        {
+          "authorId": "1395811464",
+          "name": "R. Nagarajan"
+        },
+        {
+          "authorId": "2144577",
+          "name": "Lifeng Nai"
+        },
+        {
+          "authorId": "2056800684",
+          "name": "Nishant Patil"
+        },
+        {
+          "authorId": "1929462",
+          "name": "Suvinay Subramanian"
+        },
+        {
+          "authorId": "1394189636",
+          "name": "Andy Swing"
+        },
+        {
+          "authorId": "1762455",
+          "name": "Brian Towles"
+        },
+        {
+          "authorId": "39660914",
+          "name": "C. Young"
+        },
+        {
+          "authorId": "50177639",
+          "name": "Xiaoping Zhou"
+        },
+        {
+          "authorId": "2109465503",
+          "name": "Zongwei Zhou"
+        },
+        {
+          "authorId": "2052996328",
+          "name": "David A. Patterson"
+        }
+      ],
+      "openAccessPdf": {
+        "disclaimer": "Notice: This abstract is extracted from the open access paper or abstract available at https://arxiv.org/abs/2304.01433, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use.",
+        "license": null,
+        "status": "BRONZE",
+        "url": "https://dl.acm.org/doi/pdf/10.1145/3579371.3589350"
+      },
+      "paperId": "7c25adf2ddb35df05a61c697da97efb8583d77df",
+      "publicationTypes": [
+        "JournalArticle",
+        "Book",
+        "Conference"
+      ],
+      "title": "TPU v4: An Optically Reconfigurable Supercomputer for Machine Learning with Hardware Support for Embeddings",
+      "tldr": {
+        "model": "tldr@v2.0.0",
+        "text": "The TPU v4 supercomputer is 4x larger at 4096 chips and thus nearly 10x faster overall, which along with OCS flexibility and availability allows a large language model to train at an average of ~60% of peak FLOPS/second."
+      },
+      "url": "https://www.semanticscholar.org/paper/7c25adf2ddb35df05a61c697da97efb8583d77df",
+      "venue": "International Symposium on Computer Architecture",
+      "year": 2023
+    }
+  ],
+  "total": 451569
+}

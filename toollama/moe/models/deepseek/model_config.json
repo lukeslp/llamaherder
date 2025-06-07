@@ -1,0 +1,9 @@
+{
+  "model_name": "deepseek-r1:7b",
+  "version": "1.0",
+  "description": "Model configuration for DeepSeek Reasoner (Background Agent).",
+  "parameters": {
+    "max_tokens": 256,
+    "temperature": 0.5
+  }
+} 

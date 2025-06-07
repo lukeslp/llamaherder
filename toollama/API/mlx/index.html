@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="icon" href="/assets/favicons/fav_spiral_light.ico" type="image/x-icon">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>lm studio</title>
+
+    <!-- Markdown Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/13.0.1/markdown-it.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+      
+      body {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        margin: 0;
+        font-family: 'Playfair Display', serif;
+        background: #f4f1ea;
+        padding: 20px;
+      }
+      .chat-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        background: #fff;
+        padding: 40px;
+        overflow-y: auto;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        border: 1px solid #e0d9c8;
+        max-width: 800px;
+        margin: 0 auto;
+        width: 100%;
+      }
+      .messages {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        flex: 1;
+        overflow-y: auto;
+        column-count: 1;
+        column-gap: 40px;
+      }
+      .message {
+        margin-bottom: 20px;
+        break-inside: avoid;
+        padding: 12px;
+        border-radius: 0;
+        word-wrap: break-word;
+        font-size: 17px;
+        line-height: 1.8;
+      }
+      .user-message {
+        background-color: #f9f7f3;
+        border: none;
+        font-style: italic;
+        text-align: right;
+        border-bottom: 1px solid #e0d9c8;
+      }
+      .bot-message {
+        text-align: justify;
+        letter-spacing: 0.3px;
+        line-height: 1.8;
+        text-indent: 20px;
+        font-weight: 400;
+        border-bottom: 1px solid #e0d9c8;
+      }
+      .input-container {
+        padding: 20px;
+        background-color: #f4f1ea;
+        border-top: 1px solid #e0d9c8;
+        max-width: 800px;
+        margin: 0 auto;
+        width: 100%;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: space-between;
+      }
+      #messageInput {
+        flex: 1;
+        padding: 12px;
+        border: 1px solid #a9a9a9;
+        border-radius: 2px;
+        margin-right: 10px;
+        background-color: #fff;
+        font-family: 'Playfair Display', serif;
+        font-size: 16px;
+      }
+      #sendButton {
+        padding: 12px 24px;
+        background-color: #2c1810;
+        color: white;
+        border: none;
+        border-radius: 2px;
+        cursor: pointer;
+        font-family: 'Playfair Display', serif;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      #sendButton:hover {
+        background-color: #1a0f0a;
+      }
+      
+      /* Style for the typewriter text animation */
+      .bot-message .message-content {
+        opacity: 0.9;
+        animation: typing 0.05s steps(1, end);
+      }
+      
+      @keyframes typing {
+        from { opacity: 0.7; }
+        to { opacity: 0.9; }
+      }
+      
+      .message-container {
+        position: relative;
+        margin-bottom: 10px;
+      }
+      
+      .token-count {
+        font-size: 0.7em;
+        color: #94a3b8;
+        position: absolute;
+        right: 0;
+        bottom: -15px;
+        opacity: 0.8;
+      }
+      
+      .user-message .token-count {
+        display: none;
+      }
+      
+      .bot-message .token-count {
+        color: #94a3b8;
+      }
+      
+      /* Update the styles for the override box and input container */
+      .bot-id-controls {
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        display: flex;
+        gap: 10px;
+        z-index: 100;
+      }
+      
+      #botIdInput {
+        width: 100px;
+        padding: 8px;
+        font-family: 'Playfair Display', serif;
+        border: 1px solid #a9a9a9;
+        border-radius: 2px;
+        background: white;
+      }
+      
+      /* Toast notification */
+      .toast {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #2c1810;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 4px;
+        font-family: 'Playfair Display', serif;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+        z-index: 1000;
+      }
+
+      .toast.show {
+        opacity: 1;
+      }
+
+      /* Responsive styles */
+      @media (max-width: 768px) {
+        body {
+          padding: 10px;
+        }
+
+        .chat-container {
+          padding: 20px;
+        }
+
+        .input-container {
+          padding: 10px;
+        }
+
+        #messageInput, #botIdInput {
+          font-size: 14px;
+        }
+
+        #sendButton, #botIdSubmitButton {
+          padding: 8px 16px;
+        }
+
+        h1 {
+          font-size: 32px !important;
+        }
+      }
+
+      /* Bot ID container styles */
+      .bot-id-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 10px 0;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+
+      #botIdInput {
+        flex: 1;
+        padding: 8px;
+        font-family: 'Playfair Display', serif;
+        border: 1px solid #a9a9a9;
+        border-radius: 2px;
+        background: white;
+      }
+
+      #botIdSubmitButton {
+        padding: 8px 16px;
+        background-color: #2c1810;
+        color: white;
+        border: none;
+        border-radius: 2px;
+        cursor: pointer;
+        font-family: 'Playfair Display', serif;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        white-space: nowrap;
+      }
+
+      /* Add new styles for progress and streaming indicators */
+      .progress-bar {
+        width: 100%;
+        height: 4px;
+        background-color: #f0f0f0;
+        margin: 10px 0;
+        border-radius: 2px;
+        overflow: hidden;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background-color: #2c1810;
+        width: 0;
+        transition: width 0.3s ease-in-out;
+      }
+
+      .streaming-indicator {
+        display: flex;
+        justify-content: center;
+        margin: 10px 0;
+      }
+
+      .streaming-gif {
+        height: 20px;
+      }
+
+      .message-item {
+        opacity: 1;
+        transition: opacity 0.3s ease-in-out;
+      }
+
+      .message-item.fade-in {
+        opacity: 0;
+      }
+
+      .result-container {
+        margin: 10px 0;
+        padding: 10px;
+        border-radius: 4px;
+        background-color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="toast" class="toast"></div>
+
+    <div style="text-align: center; padding: 20px; max-width: 800px; margin: 0 auto; border-bottom: none;">
+      <h1 style="font-size: 42px; margin: 0; font-weight: 700; letter-spacing: -1px;">mlx</h1>
+      <h3 style="font-size: 24px; margin: 0; font-weight: 700; letter-spacing: -1px;">actuallyusefulai.com</h1>
+      </div>
+    </div>
+
+    <div class="chat-container">
+      <ul class="messages" id="messages"></ul>
+    </div>
+    
+    <!-- <div class="bot-id-controls">
+      <input 
+        type="text" 
+        id="botIdInput" 
+        placeholder="Bot ID"
+      >
+      <button id="botIdSubmitButton">
+        set
+      </button>
+    </div> -->
+    <div class="input-container">
+      <input type="text" id="messageInput" placeholder="Type a message..." />
+      <button id="sendButton">Send</button>
+    </div>
+
+    <script>
+      const API_BASE_URL = "https://api.assisted.space/v2/chat/mlx";
+      const state = {
+        currentBotId: "7419082412887408645",
+        conversationId: null,
+        isFirstMessage: true,
+        md: window.markdownit(),
+      };
+
+      function processMessageContent(content) {
+        console.log("Processing message content:", content);
+        const parsedContent = state.md.render(content);
+        const container = document.createElement("div");
+        container.className = "markdown-body message-content";
+        container.innerHTML = parsedContent;
+
+        container.querySelectorAll("pre code").forEach((block) => {
+          hljs.highlightElement(block);
+        });
+
+        console.log("Processed message container:", container.outerHTML);
+        return container.outerHTML;
+      }
+
+      function createMessageItem(content, type) {
+        console.log("Creating message item:", { content, type });
+        const messagesList = document.getElementById("messages");
+        
+        const container = document.createElement("div");
+        container.className = `message-container ${type}-container`;
+        
+        const messageEl = document.createElement("li");
+        messageEl.className = `message ${type}`;
+        messageEl.innerHTML = processMessageContent(content);
+        
+        if (type === "bot-message") {
+          const metadataEl = document.createElement("div");
+          metadataEl.className = "message-metadata";
+          
+          const modelNameEl = document.createElement("span");
+          modelNameEl.className = "model-name";
+          modelNameEl.textContent = "Loading...";
+          
+          const tokenCountEl = document.createElement("span");
+          tokenCountEl.className = "token-count";
+          tokenCountEl.textContent = "Calculating tokens...";
+          
+          metadataEl.appendChild(modelNameEl);
+          metadataEl.appendChild(tokenCountEl);
+          
+          container.appendChild(metadataEl);
+          container.appendChild(messageEl);
+          messagesList.appendChild(container);
+          
+          return { messageEl, tokenCountEl, modelNameEl };
+        } else {
+          container.appendChild(messageEl);
+          messagesList.appendChild(container);
+          return { messageEl, tokenCountEl: null, modelNameEl: null };
+        }
+      }
+
+      function autoScroll() {
+        console.log("Auto-scrolling chat container");
+        const chatBox = document.querySelector(".chat-container");
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }
+
+      async function sendMessage() {
+        const messageInput = document.getElementById("messageInput");
+        const message = messageInput.value.trim();
+        if (!message) return;
+
+        // Clear input
+        messageInput.value = '';
+
+        // Get the messages container
+        const messagesContainer = document.getElementById("messages");
+
+        // Add user message to chat
+        const { messageEl } = createMessageItem(message, "user-message");
+        messagesContainer.appendChild(messageEl);
+
+        // Add bot message placeholder
+        const { messageEl: botMessageEl, tokenCountEl: botTokenCountEl, modelNameEl: botModelNameEl } = 
+            createMessageItem("", "bot-message");
+        messagesContainer.appendChild(botMessageEl);
+
+        // Auto scroll
+        autoScroll();
+
+        // Use XMLHttpRequest instead of fetch
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', 'https://api.assisted.space/v2/chat/mlx', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.withCredentials = true;
+        
+        // Setup event handlers
+        xhr.onload = function() {
+            console.log("XHR response status:", xhr.status);
+            console.log("XHR response text:", xhr.responseText);
+            
+            if (xhr.status >= 200 && xhr.status < 300) {
+                try {
+                    const data = JSON.parse(xhr.responseText);
+                    console.log("Parsed response data:", data);
+                    
+                    if (data.error) {
+                        showToast(data.error, 'error');
+                        botMessageEl.innerHTML = processMessageContent(`Error: ${data.error}`);
+                    } else if (data.message && data.message.content) {
+                        botMessageEl.innerHTML = processMessageContent(data.message.content);
+                        autoScroll();
+                    }
+                } catch (e) {
+                    console.error("Error parsing JSON response:", e);
+                    botMessageEl.innerHTML = processMessageContent('Error parsing response from server');
+                }
+            } else {
+                console.error("Server error:", xhr.status, xhr.statusText);
+                
+                if (xhr.status === 503) {
+                    botMessageEl.innerHTML = processMessageContent('Error: MLX provider not available. Please ensure MLX is properly installed on your system.');
+                } else {
+                    botMessageEl.innerHTML = processMessageContent(`Error: Server returned status ${xhr.status}`);
+                }
+            }
+        };
+        
+        xhr.onerror = function() {
+            console.error("Network error occurred");
+            botMessageEl.innerHTML = processMessageContent('Network error: Could not connect to the server');
+        };
+        
+        // Log all headers received
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                console.log("All response headers:", xhr.getAllResponseHeaders());
+            }
+        };
+        
+        // Send the request
+        const payload = JSON.stringify({
+            message: message,
+            model: 'mlx-community/Llama-3.2-3B-Instruct-4bit',
+            max_tokens: 4096
+        });
+        
+        console.log("Sending payload:", payload);
+        xhr.send(payload);
+      }
+
+      function showToast(message, duration = 3000) {
+        console.log("Showing toast:", message);
+        const toast = document.getElementById("toast");
+        toast.textContent = message;
+        toast.classList.add("show");
+        
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, duration);
+      }
+
+      // Initialize everything after DOM is loaded
+      document.addEventListener('DOMContentLoaded', () => {
+        // Initialize chat interface
+        const sendButton = document.getElementById("sendButton");
+        const messageInput = document.getElementById("messageInput");
+        
+        if (sendButton && messageInput) {
+          sendButton.addEventListener("click", sendMessage);
+          messageInput.addEventListener("keypress", (event) => {
+            if (event.key === "Enter" && !event.shiftKey) {
+              event.preventDefault();
+              sendMessage();
+            }
+          });
+        } else {
+          console.error("Required elements not found");
+        }
+
+        // Initialize bot ID controls if they exist
+        const botIdSubmitButton = document.getElementById("botIdSubmitButton");
+        const botIdInput = document.getElementById("botIdInput");
+        
+        if (botIdSubmitButton && botIdInput) {
+          botIdSubmitButton.addEventListener("click", () => {
+            const botIdValue = botIdInput.value.trim();
+            console.log("Bot ID input:", botIdValue);
+            if (botIdValue) {
+              state.currentBotId = botIdValue;
+              showToast(`Bot ID updated to: ${state.currentBotId}`);
+            } else {
+              showToast("Please enter a valid Bot ID.");
+            }
+          });
+        }
+      });
+    </script> 
+  </body>
+</html>

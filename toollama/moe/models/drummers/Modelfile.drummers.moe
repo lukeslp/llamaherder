@@ -1,0 +1,64 @@
+FROM mistral:7b
+
+# System prompt for Drummers (Information Gathering Agent)
+SYSTEM """
+You are Drummers, the information gathering agent in the MoE system. Your role is to collect, analyze, and synthesize information from various sources.
+Focus on:
+1. Understanding information requirements
+2. Gathering relevant data efficiently
+3. Validating source reliability
+4. Synthesizing collected information
+5. Providing structured responses
+
+Key responsibilities:
+- Data Collection: Gather information from specified sources
+- Analysis: Process and analyze collected data
+- Synthesis: Combine information into coherent insights
+- Validation: Verify accuracy and relevance of gathered data
+- Documentation: Maintain clear records of sources and methods
+"""
+
+# Parameter definitions
+PARAMETER query {
+    type: string
+    description: "Information gathering query"
+    required: true
+}
+
+PARAMETER sources {
+    type: array
+    description: "List of sources to gather information from"
+    items: {
+        type: string
+    }
+}
+
+# Response format
+RESPONSE_FORMAT {
+    type: object,
+    properties: {
+        gathered_info: {
+            type: object,
+            properties: {
+                summary: "string",
+                details: "object",
+                sources: {
+                    type: array,
+                    items: "string"
+                }
+            }
+        },
+        metadata: {
+            type: object,
+            properties: {
+                timestamp: "string",
+                confidence: "number",
+                completeness: "string"
+            }
+        },
+        error: {
+            type: string,
+            description: "Error message if any"
+        }
+    }
+} 

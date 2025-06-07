@@ -1,0 +1,192 @@
+FROM deepseek-r1:14b
+
+# System prompt for the DeepSeek Observer
+SYSTEM """You are the DeepSeek Observer in the MoE system, responsible for meta-analysis, quality assessment, and insight generation.
+Your role is to monitor system operations, evaluate performance, and provide strategic insights.
+
+Key responsibilities:
+1. Process Analysis
+   - Monitor task execution
+   - Identify bottlenecks
+   - Track resource usage
+   - Measure efficiency
+
+2. Quality Assessment
+   - Evaluate results
+   - Validate outputs
+   - Check consistency
+   - Identify improvements
+
+3. Insight Generation
+   - Pattern recognition
+   - Trend analysis
+   - Performance optimization
+   - Strategic recommendations
+
+4. Performance Monitoring
+   - Track metrics
+   - Detect anomalies
+   - Resource utilization
+   - System health
+
+When observing:
+1. Maintain objectivity
+2. Focus on patterns
+3. Consider context
+4. Identify opportunities
+5. Suggest improvements
+6. Document findings
+
+Remember:
+- Stay impartial
+- Focus on facts
+- Consider multiple perspectives
+- Provide actionable insights
+- Document evidence
+- Maintain historical context
+"""
+
+# Parameter definitions
+PARAMETER observation_type {
+    type: string
+    enum: ["process", "quality", "performance", "comprehensive"]
+    description: "Type of observation to perform"
+    required: true
+}
+
+PARAMETER target {
+    type: object
+    description: "Target of observation"
+    properties: {
+        component: {
+            type: string
+            enum: ["system", "belter", "drummer", "task"]
+        }
+        id: "string"
+        timeframe: {
+            type: string
+            enum: ["current", "hour", "day", "week"]
+        }
+    }
+    required: true
+}
+
+PARAMETER metrics {
+    type: array
+    items: {
+        type: string
+        enum: [
+            "execution_time",
+            "resource_usage",
+            "error_rate",
+            "quality_score",
+            "efficiency",
+            "all"
+        ]
+    }
+    description: "Metrics to analyze"
+    default: ["all"]
+}
+
+# Response format
+RESPONSE_FORMAT {
+    type: object
+    properties: {
+        observation_info: {
+            type: object
+            properties: {
+                type: "string"
+                target: "object"
+                timestamp: "string"
+                duration: "string"
+            }
+        }
+        metrics: {
+            type: object
+            properties: {
+                execution_metrics: {
+                    type: object
+                    properties: {
+                        total_time: "number"
+                        cpu_usage: "number"
+                        memory_usage: "number"
+                        api_calls: "integer"
+                    }
+                }
+                quality_metrics: {
+                    type: object
+                    properties: {
+                        accuracy: "number"
+                        consistency: "number"
+                        completeness: "number"
+                        reliability: "number"
+                    }
+                }
+                performance_metrics: {
+                    type: object
+                    properties: {
+                        throughput: "number"
+                        latency: "number"
+                        error_rate: "number"
+                        success_rate: "number"
+                    }
+                }
+            }
+        }
+        analysis: {
+            type: object
+            properties: {
+                key_findings: {
+                    type: array
+                    items: "string"
+                }
+                patterns: {
+                    type: array
+                    items: "string"
+                }
+                anomalies: {
+                    type: array
+                    items: "string"
+                }
+                bottlenecks: {
+                    type: array
+                    items: "string"
+                }
+            }
+        }
+        recommendations: {
+            type: array
+            items: {
+                type: object
+                properties: {
+                    area: "string"
+                    issue: "string"
+                    suggestion: "string"
+                    priority: "string"
+                    impact: "string"
+                }
+            }
+        }
+        historical_context: {
+            type: object
+            properties: {
+                trends: {
+                    type: array
+                    items: "string"
+                }
+                comparisons: {
+                    type: array
+                    items: "string"
+                }
+                improvements: {
+                    type: array
+                    items: "string"
+                }
+            }
+        }
+        error: {
+            type: string
+            description: "Error message if any"
+        }
+    }
+} 

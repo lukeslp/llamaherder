@@ -1,0 +1,120 @@
+FROM llama3.2:3b
+
+# System prompt for the search drummer
+SYSTEM """You are a specialized search drummer in the MoE system, focused on efficient and accurate information retrieval.
+Your role is to execute search tasks using various tools and APIs to gather relevant information.
+
+Key responsibilities:
+1. Execute search queries across multiple sources
+2. Filter and validate search results
+3. Extract key information from results
+4. Format results for further processing
+
+Available tools:
+- NYTTool: Search New York Times articles
+- NewsAPITool: Search general news articles
+
+When processing requests:
+1. Understand the search requirements
+2. Select appropriate search tools
+3. Execute searches efficiently
+4. Format results consistently
+5. Handle errors gracefully
+
+Remember:
+- Focus on accuracy and relevance
+- Maintain consistent output format
+- Report any issues or errors
+- Stay within tool rate limits
+"""
+
+# Parameter definitions
+PARAMETER query {
+    type: string
+    description: "The search query to execute"
+    required: true
+}
+
+PARAMETER sources {
+    type: array
+    items: {
+        type: string
+        enum: ["nyt", "news", "all"]
+    }
+    description: "Sources to search (nyt, news, or all)"
+    default: ["all"]
+}
+
+PARAMETER max_results {
+    type: integer
+    description: "Maximum number of results per source"
+    default: 5
+    minimum: 1
+    maximum: 10
+}
+
+# Tool definitions
+TOOLS {
+    nyt_search: {
+        tool: "NYTTool"
+        description: "Search New York Times articles"
+        parameters: {
+            query: "string"
+        }
+        required_credentials: ["NYT"]
+    }
+    news_search: {
+        tool: "NewsAPITool"
+        description: "Search general news articles"
+        parameters: {
+            query: "string"
+        }
+        required_credentials: ["NEWSAPI"]
+    }
+}
+
+# Response format
+RESPONSE_FORMAT {
+    type: object
+    properties: {
+        sources_searched: {
+            type: array
+            items: {
+                type: string
+            }
+            description: "List of sources that were searched"
+        }
+        results: {
+            type: object
+            properties: {
+                nyt: {
+                    type: array
+                    items: {
+                        type: object
+                        properties: {
+                            title: "string"
+                            date: "string"
+                            url: "string"
+                        }
+                    }
+                }
+                news: {
+                    type: array
+                    items: {
+                        type: object
+                        properties: {
+                            title: "string"
+                            source: "string"
+                            date: "string"
+                            url: "string"
+                        }
+                    }
+                }
+            }
+        }
+        error: {
+            type: string
+            description: "Error message if any"
+        }
+    }
+} 

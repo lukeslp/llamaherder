@@ -1,0 +1,21 @@
+{
+  "count": 3,
+  "query": "python flask api",
+  "results": [
+    {
+      "body": "Learn how to write a REST server using the Flask framework in Python. See how to handle GET, POST, PUT, DELETE, and other HTTP requests with JSON data.",
+      "href": "https://pythonbasics.org/flask-rest-api/",
+      "title": "Flask REST API Tutorial - Python Tutorial"
+    },
+    {
+      "body": "Learn how to create a REST API in Python using the Flask framework with or without external libraries. See examples of GET, POST, PUT and DELETE methods and how to use flask_restful library.",
+      "href": "https://www.geeksforgeeks.org/python-build-a-rest-api-using-flask/",
+      "title": "Python | Build a REST API using Flask - GeeksforGeeks"
+    },
+    {
+      "body": "Flask is a Python web framework that makes getting started quick and easy, with the ability to scale up to complex applications. Learn how to install, configure, use, and extend Flask with tutorials, patterns, API reference, and more.",
+      "href": "https://flask.palletsprojects.com/",
+      "title": "Welcome to Flask \u2014 Flask Documentation (3.1.x)"
+    }
+  ]
+}

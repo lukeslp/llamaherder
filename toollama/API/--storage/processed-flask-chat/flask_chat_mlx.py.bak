@@ -1,0 +1,408 @@
+#!/usr/bin/env python
+"""
+MLX Chat Implementation for Flask
+This module provides a Flask interface to the MLX framework for streaming chat responses.
+Supports model selection and multi-turn conversations with streaming responses.
+"""
+
+from flask import Flask, render_template_string, request, Response, stream_with_context
+import os
+import sys
+import json
+import subprocess
+import tempfile
+import shutil
+from typing import Generator, List, Dict, Optional, Union
+import markdown
+import logging
+
+app = Flask(__name__)
+app.config["SECRET_KEY"] = "your-secret-key"  # replace with a secure key in production
+
+# --- MLXChat implementation ---
+class MLXChat:
+    # Define available models
+    MODELS = [
+        {
+            "id": "mlx-community/Qwen2-7B-Instruct-4bit",
+            "name": "qwen:7b",
+            "context_length": 8192,
+            "description": "Qwen2 7B optimized for Apple Silicon"
+        },
+        {
+            "id": "mlx-community/Mistral-7B-Instruct-v0.3-4bit",
+            "name": "mistral:7b",
+            "context_length": 8192,
+            "description": "Mistral 7B optimized for instruction following"
+        },
+        {
+            "id": "mlx-community/Mistral-Nemo-Instruct-2407-4bit",
+            "name": "nemo:7b",
+            "context_length": 8192,
+            "description": "Mistral Nemo optimized for instruction following"
+        },
+        {
+            "id": "mlx-community/DeepSeek-R1-Distill-Qwen-7B-8bit",
+            "name": "deepseek:7b",
+            "context_length": 8192,
+            "description": "DeepSeek R1 optimized for reasoning"
+        },
+        {
+            "id": "mlx-community/Mistral-Small-24B-Instruct-2501-4bit",
+            "name": "mistral-small:24b",
+            "context_length": 8192,
+            "description": "Mistral Small 24B optimized for instruction following"
+        },
+        {
+            "id": "mlx-community/DeepSeek-R1-Distill-Qwen-32B-4bit",
+            "name": "deepseek:32b",
+            "context_length": 8192,
+            "description": "DeepSeek R1 optimized for reasoning"
+        }
+    ]
+
+    def __init__(self):
+        """Initialize the MLX Chat client."""
+        # Check if mlx_lm.generate is available
+        self.is_available = self._check_mlx_available()
+        # Initialize conversation history
+        self.conversation_history = []
+        # Add system message
+        self.clear_conversation()
+    
+    def _check_mlx_available(self) -> bool:
+        """Check if mlx_lm.generate is available in the system."""
+        try:
+            mlx_path = shutil.which("mlx_lm.generate")
+            if mlx_path:
+                print(f"Found MLX command-line tool at: {mlx_path}")
+                return True
+            else:
+                print("MLX command-line tool not found in PATH")
+                return False
+        except Exception as e:
+            print(f"Error checking for MLX availability: {e}")
+            return False
+    
+    def list_models(self):
+        """Return a list of available models."""
+        if not self.is_available:
+            return []
+        return self.MODELS
+
+    def stream_chat_response(self, message: str, model: str = "qwen:7b", max_tokens: int = 1024):
+        """
+        Stream a chat response from MLX.
+        
+        Args:
+            message (str): The user's input message
+            model (str): The MLX model to use
+            max_tokens (int): Maximum number of tokens to generate
+            
+        Yields:
+            str: Chunks of the response text as they arrive
+        """
+        if not self.is_available:
+            yield "Error: MLX is not available on this system"
+            return
+        
+        try:
+            # Add user message to history
+            self.conversation_history.append({
+                "role": "user",
+                "content": message
+            })
+            
+            # Format conversation context
+            formatted_prompt = self._format_conversation()
+            
+            # Get the model ID from the model name
+            model_id = self._get_model_id(model)
+            
+            # Create a temporary file for the prompt
+            with tempfile.NamedTemporaryFile(mode='w', delete=False) as temp_file:
+                temp_file.write(formatted_prompt)
+                temp_file_path = temp_file.name
+            
+            try:
+                # Run mlx_lm.generate command
+                cmd = [
+                    "mlx_lm.generate",
+                    "--model", model_id,
+                    "--prompt", temp_file_path,
+                    "--max-tokens", str(max_tokens),
+                    "--verbose", "True"
+                ]
+                
+                print(f"Running command: {' '.join(cmd)}")
+                
+                # Run the command and capture output
+                process = subprocess.Popen(
+                    cmd,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    text=True,
+                    bufsize=1
+                )
+                
+                # Process output line by line
+                response_text = ""
+                for line in process.stdout:
+                    # Skip lines that are not part of the response
+                    if line.startswith("Loading") or line.startswith("Tokenizing"):
+                        continue
+                    
+                    # Clean up the line
+                    chunk = line.strip()
+                    if chunk:
+                        response_text += chunk
+                        yield chunk
+                
+                # Wait for the process to complete
+                process.wait()
+                
+                # Check for errors
+                if process.returncode != 0:
+                    error_output = process.stderr.read()
+                    print(f"Error running MLX command: {error_output}", file=sys.stderr)
+                    yield f"Error: {error_output}"
+                    return
+                
+                # Add assistant message to history
+                self.conversation_history.append({
+                    "role": "assistant",
+                    "content": response_text
+                })
+                
+            finally:
+                # Clean up the temporary file
+                os.unlink(temp_file_path)
+        
+        except Exception as e:
+            print(f"Error generating MLX response: {e}", file=sys.stderr)
+            yield f"Error: {str(e)}"
+    
+    def _format_conversation(self) -> str:
+        """Format the conversation history for the model."""
+        formatted = ""
+        for entry in self.conversation_history:
+            role = entry["role"]
+            content = entry["content"]
+            if role == "user":
+                formatted += f"User: {content}\n"
+            elif role == "assistant":
+                formatted += f"Assistant: {content}\n"
+            elif role == "system":
+                formatted += f"System: {content}\n"
+        return formatted
+    
+    def _get_model_id(self, model: str) -> str:
+        """Get the model ID from the model name."""
+        # If the model is already a full ID, return it
+        if "/" in model:
+            return model
+        
+        # If the model is a short name, look it up
+        for m in self.MODELS:
+            if m["name"] == model:
+                return m["id"]
+        
+        # If the model is a short name without the provider prefix, try to match it
+        for m in self.MODELS:
+            name_parts = m["name"].split(":")
+            if len(name_parts) > 1 and name_parts[0] == model:
+                return m["id"]
+        
+        # Default to the first model if no match is found
+        print(f"Model {model} not found, using default model", file=sys.stderr)
+        return self.MODELS[0]["id"]
+
+    def clear_conversation(self):
+        """Clear the conversation history, keeping only the system message."""
+        self.conversation_history = [{
+            "role": "system",
+            "content": "You are a helpful AI assistant running locally on Apple Silicon."
+        }]
+
+# --- Global MLXChat instance ---
+# NOTE: In a production multi-user environment, you'd want to manage per-user conversation state.
+chat_client = MLXChat()
+
+# --- HTML template for the chat UX ---
+INDEX_HTML = """
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Streaming Chat with MLX</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    #chat-container { border: 1px solid #ccc; padding: 10px; height: 400px; overflow-y: auto; }
+    .message { margin: 5px 0; }
+    .user { color: blue; }
+    .assistant { color: green; }
+    .system { color: gray; font-style: italic; }
+    #controls { margin-top: 10px; }
+    select, input[type="text"] { padding: 5px; }
+    button { padding: 5px 10px; }
+    .info-box { 
+      background-color: #f8f9fa; 
+      border: 1px solid #ddd; 
+      padding: 10px; 
+      margin-bottom: 15px; 
+      border-radius: 5px;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+  <h2>Streaming Chat with MLX (Apple Silicon)</h2>
+  
+  <div class="info-box">
+    <p><strong>MLX Chat</strong> - Run powerful language models locally on your Apple Silicon Mac.</p>
+    <p>This interface uses the MLX framework to run models directly on your device with no data sent to external servers.</p>
+  </div>
+  
+  <div>
+    <label for="model">Choose a model:</label>
+    <select id="model">
+      {% for m in models %}
+        <option value="{{ m.name }}">{{ m.name }} - {{ m.description }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div id="chat-container"></div>
+  <div id="controls">
+    <form id="chatForm">
+      <input type="text" id="message" placeholder="Enter your message" size="60" required>
+      <button type="submit">Send</button>
+      <button type="button" id="clearBtn">Clear Conversation</button>
+    </form>
+  </div>
+  
+  <script>
+    const chatContainer = document.getElementById("chat-container");
+
+    // Add system message at start
+    function addSystemMessage() {
+      const msgDiv = document.createElement("div");
+      msgDiv.classList.add("message");
+      msgDiv.classList.add("system");
+      msgDiv.innerHTML = "<strong>System:</strong> You are chatting with a local MLX model running on Apple Silicon. No data is sent to external servers.<br>";
+      chatContainer.appendChild(msgDiv);
+    }
+    
+    // Add system message when page loads
+    addSystemMessage();
+
+    function appendMessage(sender, text, newline = true) {
+      const msgDiv = document.createElement("div");
+      msgDiv.classList.add("message");
+      msgDiv.classList.add(sender.toLowerCase());
+      
+      // Use marked.js to render markdown in the response
+      const formattedText = sender === "Assistant" ? marked.parse(text) : text;
+      
+      msgDiv.innerHTML = "<strong>" + sender + ":</strong> " + 
+                         (sender === "Assistant" ? formattedText : text) + 
+                         (newline ? "<br>" : "");
+      chatContainer.appendChild(msgDiv);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    document.getElementById("chatForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+      const messageInput = document.getElementById("message");
+      const modelSelect = document.getElementById("model");
+      const message = messageInput.value.trim();
+      if (!message) return;
+      appendMessage("You", message);
+      messageInput.value = "";
+      
+      try {
+        const response = await fetch("/chat", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            message: message,
+            model: modelSelect.value
+          })
+        });
+        
+        if (!response.ok) {
+          appendMessage("Assistant", "Error: " + response.statusText);
+          return;
+        }
+        
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let responseText = "";
+        let done = false;
+        
+        // Create a placeholder for the assistant's message
+        const assistantMsgDiv = document.createElement("div");
+        assistantMsgDiv.classList.add("message");
+        assistantMsgDiv.classList.add("assistant");
+        assistantMsgDiv.innerHTML = "<strong>Assistant:</strong> ";
+        chatContainer.appendChild(assistantMsgDiv);
+        
+        while (!done) {
+          const { value, done: doneReading } = await reader.read();
+          done = doneReading;
+          if (value) {
+            const chunk = decoder.decode(value);
+            if (chunk) {
+              responseText += chunk;
+              // Update the assistant's message with the accumulated text
+              assistantMsgDiv.innerHTML = "<strong>Assistant:</strong> " + marked.parse(responseText);
+              chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+          }
+        }
+      } catch (err) {
+        appendMessage("Assistant", "Error: " + err);
+      }
+    });
+
+    // Clear conversation button
+    document.getElementById("clearBtn").addEventListener("click", function() {
+      fetch("/clear", { method: "POST" }).then(() => {
+        chatContainer.innerHTML = "";
+        addSystemMessage();
+      });
+    });
+  </script>
+</body>
+</html>
+"""
+
+@app.route("/", methods=["GET"])
+def index():
+    """Render the chat interface."""
+    models = chat_client.list_models()
+    return render_template_string(INDEX_HTML, models=models)
+
+@app.route("/chat", methods=["POST"])
+def chat():
+    """Handle chat requests and stream responses."""
+    data = request.json
+    message = data.get("message", "")
+    model = data.get("model", "qwen:7b")
+    max_tokens = data.get("max_tokens", 1024)
+    
+    def generate():
+        for chunk in chat_client.stream_chat_response(message, model, max_tokens):
+            yield chunk
+    
+    return Response(stream_with_context(generate()), mimetype="text/plain")
+
+@app.route("/clear", methods=["POST"])
+def clear():
+    """Clear the conversation history."""
+    chat_client.clear_conversation()
+    return {"status": "success", "message": "Conversation cleared"}
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5003, debug=True) 

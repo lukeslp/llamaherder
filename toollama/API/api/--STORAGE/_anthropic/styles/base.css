@@ -1,0 +1,198 @@
+/* Base Variables */
+:root {
+  /* Safe Area Insets */
+  --sat: env(safe-area-inset-top);
+  --sar: env(safe-area-inset-right);
+  --sab: env(safe-area-inset-bottom);
+  --sal: env(safe-area-inset-left);
+
+  /* Typography */
+  --font-inclusive: 'Open Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+  --font-code: 'Open Sans', monospace;
+  --font-size-tiny: 10px;
+  --font-size-xsmall: 12px;
+  --font-size-small: 14px;
+  --font-size-medium: 16px;
+  --font-size-large: 18px;
+  --font-size-xlarge: 20px;
+  --font-size-xxlarge: 24px;
+  --font-size-xxxlarge: 32px;
+  --font-size-huge: 42px;
+  --font-scale: 1;
+
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+
+  /* Layout */
+  --panel-width: 300px;
+  --accent-width: 35px;
+  --transition-standard: all 0.2s ease;
+  --dropdown-arrow-size: 12px;
+  --dropdown-icon-size: 1.1rem;
+
+  /* Gradient Variables */
+  --gradient-border: linear-gradient(
+    45deg,
+    var(--color-primary) 0%,
+    var(--color-secondary) 25%,
+    var(--color-tertiary) 50%,
+    var(--color-secondary) 75%,
+    var(--color-primary) 100%
+  );
+  
+  --gradient-border-hover: linear-gradient(
+    45deg,
+    var(--color-primary-light) 0%,
+    var(--color-secondary-light) 25%,
+    var(--color-tertiary-light) 50%,
+    var(--color-secondary-light) 75%,
+    var(--color-primary-light) 100%
+  );
+  
+  /* Surface Colors */
+  --color-surface-hover: rgba(var(--rgb-surface), 0.9);
+}
+
+/* Reset & Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-inclusive);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  overflow: auto;
+  align-items: center;
+  -webkit-overflow-scrolling: touch;
+  font-size: var(--font-size-medium);
+  line-height: 1.5;
+  /* padding-bottom: 100px; */
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-text-secondary);
+  transition: var(--transition-standard);
+}
+
+a:hover {
+  color: var(--color-hover);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Utility Classes */
+.hidden {
+  display: none !important;
+}
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInChar {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes gradientRotate {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.alt-text-display {
+  margin-bottom: var(--spacing-lg);
+  text-align: left;
+  font-size: var(--font-size-large);
+  line-height: 1.6;
+  color: var(--color-text-primary);
+  padding: var(--spacing-md);
+}
+
+/* Add a helper class for animated gradients */
+.animated-gradient {
+  background: linear-gradient(var(--color-surface), var(--color-surface)) padding-box,
+              var(--gradient-border) border-box;
+  border: 2px solid transparent;
+  background-size: 200% 200%;
+  animation: gradientRotate 4s linear infinite;
+}
+
+/* Gradient Animation */
+@keyframes gradientRotate {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Ensure animations are disabled for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .animated-gradient,
+  .icon-button,
+  .alt-text-display,
+  #ttsControl,
+  .alt-text-container,
+  .upload-area,
+  .paste-button,
+  #copyButton,
+  #retryButton,
+  #globalRetryButton {
+    animation: none !important;
+    transition: none !important;
+  }
+} 

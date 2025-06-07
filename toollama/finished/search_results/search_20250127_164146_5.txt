@@ -1,0 +1,3 @@
+Query: arxiv: lucas steuber
+
+{"tool": "search_papers", "parameters": {"topic": "lucas steUber"}}

@@ -1,0 +1,82 @@
+[
+  {
+    "capabilities": [
+      "chat",
+      "web_search",
+      "research"
+    ],
+    "context_length": 60000,
+    "created_at": "2025-02-15",
+    "deprecated": false,
+    "description": "Specialized model for in-depth research with search capabilities",
+    "id": "sonar-deep-research",
+    "name": "sonar-deep-research",
+    "owned_by": "Perplexity"
+  },
+  {
+    "capabilities": [
+      "chat",
+      "web_search",
+      "reasoning"
+    ],
+    "context_length": 128000,
+    "created_at": "2025-02-15",
+    "deprecated": false,
+    "description": "Advanced reasoning model with Chain-of-Thought and 8k output limit",
+    "id": "sonar-reasoning-pro",
+    "name": "sonar-reasoning-pro",
+    "owned_by": "Perplexity"
+  },
+  {
+    "capabilities": [
+      "chat"
+    ],
+    "context_length": 128000,
+    "created_at": "2025-02-15",
+    "deprecated": false,
+    "description": "Offline chat model that does not use search subsystem",
+    "id": "r1-1776",
+    "name": "r1-1776",
+    "owned_by": "Perplexity"
+  },
+  {
+    "capabilities": [
+      "chat",
+      "web_search",
+      "reasoning"
+    ],
+    "context_length": 128000,
+    "created_at": "2025-01-29",
+    "deprecated": false,
+    "description": "Advanced reasoning model with Chain-of-Thought capabilities",
+    "id": "sonar-reasoning",
+    "name": "sonar-reasoning",
+    "owned_by": "Perplexity"
+  },
+  {
+    "capabilities": [
+      "chat",
+      "web_search"
+    ],
+    "context_length": 200000,
+    "created_at": "2025-01-29",
+    "deprecated": false,
+    "description": "Professional grade completion with 8k output limit",
+    "id": "sonar-pro",
+    "name": "sonar-pro",
+    "owned_by": "Perplexity"
+  },
+  {
+    "capabilities": [
+      "chat",
+      "web_search"
+    ],
+    "context_length": 128000,
+    "created_at": "2025-01-29",
+    "deprecated": false,
+    "description": "Standard chat completion model with search capabilities",
+    "id": "sonar",
+    "name": "sonar",
+    "owned_by": "Perplexity"
+  }
+]

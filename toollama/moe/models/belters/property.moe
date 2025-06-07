@@ -1,0 +1,316 @@
+FROM mistral:7b
+
+# System prompt for Property Analysis Belter
+SYSTEM """You are the Property Analysis Belter, a specialized middle manager in the MoE system responsible for coordinating comprehensive property and location analysis tasks.
+
+Key responsibilities:
+1. Task Decomposition
+   - Parse property analysis requests
+   - Identify required data points
+   - Create task sequences
+   - Assign priorities
+
+2. Drummer Coordination
+   - Dispatch Location Drummers
+   - Monitor task progress
+   - Handle failures
+   - Aggregate results
+
+3. Analysis Integration
+   - Combine data sources
+   - Validate information
+   - Generate insights
+   - Create visualizations
+
+4. Quality Assurance
+   - Verify data accuracy
+   - Check completeness
+   - Ensure consistency
+   - Validate sources
+
+Available Drummers:
+- Location Drummers: Geographic and spatial analysis
+- Market Drummers: Real estate and pricing analysis
+- Environment Drummers: Air quality and climate analysis
+- Community Drummers: Neighborhood and demographic analysis
+
+Analysis Capabilities:
+1. Location Analysis
+   - Geocoding and mapping
+   - Distance calculations
+   - Route planning
+   - Area boundaries
+
+2. Market Analysis
+   - Property valuation
+   - Market trends
+   - Investment potential
+   - Comparable properties
+
+3. Environmental Analysis
+   - Air quality metrics
+   - Climate patterns
+   - Natural hazards
+   - Sustainability factors
+
+4. Community Analysis
+   - Demographics
+   - Schools and education
+   - Crime statistics
+   - Amenities and services
+
+When processing requests:
+1. Analyze the property query
+2. Identify required data points
+3. Create task sequence
+4. Dispatch appropriate Drummers
+5. Monitor progress
+6. Aggregate results
+7. Generate insights
+8. Format response
+
+Remember:
+- Maintain data accuracy
+- Consider multiple sources
+- Provide context
+- Include visualizations
+- Document assumptions
+- Note limitations
+"""
+
+# Parameter definitions
+PARAMETER request {
+    type: object
+    description: "Property analysis request"
+    properties: {
+        address: {
+            type: string
+            description: "Property address to analyze"
+        }
+        analysis_type: {
+            type: string
+            enum: ["basic", "detailed", "comprehensive"]
+            description: "Level of analysis detail required"
+        }
+        include: {
+            type: array
+            items: {
+                type: string
+                enum: [
+                    "location",
+                    "market",
+                    "environment",
+                    "community",
+                    "investment",
+                    "all"
+                ]
+            }
+            description: "Analysis aspects to include"
+        }
+        format: {
+            type: string
+            enum: ["text", "json", "markdown", "html"]
+            description: "Response format"
+            default: "json"
+        }
+    }
+    required: ["address"]
+}
+
+# Drummer definitions
+DRUMMERS {
+    location: {
+        type: "location"
+        capabilities: [
+            "geocoding",
+            "mapping",
+            "routing",
+            "boundaries"
+        ]
+        tools: [
+            "mapquest_api",
+            "walkscore_api"
+        ]
+    }
+    market: {
+        type: "market"
+        capabilities: [
+            "valuation",
+            "trends",
+            "investment",
+            "comparables"
+        ]
+        tools: [
+            "property_api",
+            "market_api"
+        ]
+    }
+    environment: {
+        type: "environment"
+        capabilities: [
+            "air_quality",
+            "climate",
+            "hazards",
+            "sustainability"
+        ]
+        tools: [
+            "airquality_api",
+            "climate_api"
+        ]
+    }
+    community: {
+        type: "community"
+        capabilities: [
+            "demographics",
+            "education",
+            "safety",
+            "amenities"
+        ]
+        tools: [
+            "census_api",
+            "education_api",
+            "crime_api"
+        ]
+    }
+}
+
+# Response format
+RESPONSE_FORMAT {
+    type: object
+    properties: {
+        request_info: {
+            type: object
+            properties: {
+                address: "string"
+                analysis_type: "string"
+                included_aspects: {
+                    type: array
+                    items: "string"
+                }
+                timestamp: "string"
+            }
+        }
+        location_data: {
+            type: object
+            properties: {
+                coordinates: {
+                    type: object
+                    properties: {
+                        latitude: "number"
+                        longitude: "number"
+                    }
+                }
+                walk_score: "number"
+                transit_score: "number"
+                bike_score: "number"
+                boundaries: {
+                    type: object
+                }
+            }
+        }
+        market_data: {
+            type: object
+            properties: {
+                estimated_value: "number"
+                price_history: {
+                    type: array
+                    items: {
+                        type: object
+                        properties: {
+                            date: "string"
+                            price: "number"
+                        }
+                    }
+                }
+                market_trends: {
+                    type: object
+                }
+                investment_metrics: {
+                    type: object
+                }
+            }
+        }
+        environmental_data: {
+            type: object
+            properties: {
+                air_quality: {
+                    type: object
+                    properties: {
+                        aqi: "number"
+                        pollutants: {
+                            type: object
+                        }
+                    }
+                }
+                climate: {
+                    type: object
+                }
+                hazards: {
+                    type: array
+                    items: "string"
+                }
+            }
+        }
+        community_data: {
+            type: object
+            properties: {
+                demographics: {
+                    type: object
+                }
+                schools: {
+                    type: array
+                    items: {
+                        type: object
+                        properties: {
+                            name: "string"
+                            rating: "number"
+                            distance: "number"
+                        }
+                    }
+                }
+                amenities: {
+                    type: object
+                }
+                safety: {
+                    type: object
+                }
+            }
+        }
+        analysis: {
+            type: object
+            properties: {
+                summary: "string"
+                highlights: {
+                    type: array
+                    items: "string"
+                }
+                recommendations: {
+                    type: array
+                    items: "string"
+                }
+            }
+        }
+        metadata: {
+            type: object
+            properties: {
+                sources: {
+                    type: array
+                    items: "string"
+                }
+                last_updated: "string"
+                data_quality: {
+                    type: object
+                    properties: {
+                        completeness: "number"
+                        accuracy: "number"
+                        freshness: "number"
+                    }
+                }
+            }
+        }
+        error: {
+            type: string
+            description: "Error message if any"
+        }
+    }
+} 

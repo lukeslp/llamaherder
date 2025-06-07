@@ -1,0 +1,951 @@
+[
+  {
+    "capabilities": [
+      "text",
+      "function",
+      "audio"
+    ],
+    "capability_count": 3,
+    "context_length": 128000,
+    "created": "2025-03-19",
+    "created_at": "2025-03-19",
+    "description": "GPT-4 Omega model",
+    "id": "gpt-4o-mini-tts",
+    "name": "gpt-4o-mini-tts",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 128000,
+    "created": "2025-03-17",
+    "created_at": "2025-03-17",
+    "description": "GPT-O1 model",
+    "id": "o1-pro",
+    "name": "o1-pro",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 128000,
+    "created": "2025-03-17",
+    "created_at": "2025-03-17",
+    "description": "GPT-O1 model",
+    "id": "o1-pro-2025-03-19",
+    "name": "o1-pro-2025-03-19",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 128000,
+    "created": "2025-03-15",
+    "created_at": "2025-03-15",
+    "description": "GPT-4 Omega model",
+    "id": "gpt-4o-transcribe",
+    "name": "gpt-4o-transcribe",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 128000,
+    "created": "2025-03-15",
+    "created_at": "2025-03-15",
+    "description": "GPT-4 Omega model",
+    "id": "gpt-4o-mini-transcribe",
+    "name": "gpt-4o-mini-transcribe",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 128000,
+    "created": "2025-03-07",
+    "created_at": "2025-03-07",
+    "description": "GPT-4 Omega model",
+    "id": "gpt-4o-mini-search-preview",
+    "name": "gpt-4o-mini-search-preview",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 128000,
+    "created": "2025-03-07",
+    "created_at": "2025-03-07",
+    "description": "GPT-4 Omega model",
+    "id": "gpt-4o-mini-search-preview-2025-03-11",
+    "name": "gpt-4o-mini-search-preview-2025-03-11",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 128000,
+    "created": "2025-03-07",
+    "created_at": "2025-03-07",
+    "description": "GPT-4 Omega model",
+    "id": "gpt-4o-search-preview",
+    "name": "gpt-4o-search-preview",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 128000,
+    "created": "2025-03-07",
+    "created_at": "2025-03-07",
+    "description": "GPT-4 Omega model",
+    "id": "gpt-4o-search-preview-2025-03-11",
+    "name": "gpt-4o-search-preview-2025-03-11",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 8192,
+    "created": "2025-02-26",
+    "created_at": "2025-02-26",
+    "description": "GPT-4 base model",
+    "id": "gpt-4.5-preview",
+    "name": "gpt-4.5-preview",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 8192,
+    "created": "2025-02-26",
+    "created_at": "2025-02-26",
+    "description": "GPT-4 base model",
+    "id": "gpt-4.5-preview-2025-02-27",
+    "name": "gpt-4.5-preview-2025-02-27",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 128000,
+    "created": "2025-02-11",
+    "created_at": "2025-02-11",
+    "description": "GPT-4 Omega model",
+    "id": "gpt-4o-2024-11-20",
+    "name": "gpt-4o-2024-11-20",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 128000,
+    "created": "2025-01-27",
+    "created_at": "2025-01-27",
+    "description": "GPT-O3 model",
+    "id": "o3-mini-2025-01-31",
+    "name": "o3-mini-2025-01-31",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 128000,
+    "created": "2025-01-17",
+    "created_at": "2025-01-17",
+    "description": "GPT-O3 model",
+    "id": "o3-mini",
+    "name": "o3-mini",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 128000,
+    "created": "2024-12-16",
+    "created_at": "2024-12-16",
+    "description": "GPT-4 Omega model",
+    "id": "gpt-4o-mini-realtime-preview",
+    "name": "gpt-4o-mini-realtime-preview",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function",
+      "audio"
+    ],
+    "capability_count": 3,
+    "context_length": 128000,
+    "created": "2024-12-16",
+    "created_at": "2024-12-16",
+    "description": "GPT-4 Omega model",
+    "id": "gpt-4o-mini-audio-preview",
+    "name": "gpt-4o-mini-audio-preview",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 128000,
+    "created": "2024-12-16",
+    "created_at": "2024-12-16",
+    "description": "GPT-O1 model",
+    "id": "o1",
+    "name": "o1",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 128000,
+    "created": "2024-12-15",
+    "created_at": "2024-12-15",
+    "description": "GPT-O1 model",
+    "id": "o1-2024-12-17",
+    "name": "o1-2024-12-17",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 128000,
+    "created": "2024-12-13",
+    "created_at": "2024-12-13",
+    "description": "GPT-4 Omega model",
+    "id": "gpt-4o-mini-realtime-preview-2024-12-17",
+    "name": "gpt-4o-mini-realtime-preview-2024-12-17",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function",
+      "audio"
+    ],
+    "capability_count": 3,
+    "context_length": 128000,
+    "created": "2024-12-13",
+    "created_at": "2024-12-13",
+    "description": "GPT-4 Omega model",
+    "id": "gpt-4o-mini-audio-preview-2024-12-17",
+    "name": "gpt-4o-mini-audio-preview-2024-12-17",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function",
+      "audio"
+    ],
+    "capability_count": 3,
+    "context_length": 128000,
+    "created": "2024-12-12",
+    "created_at": "2024-12-12",
+    "description": "GPT-4 Omega model",
+    "id": "gpt-4o-audio-preview-2024-12-17",
+    "name": "gpt-4o-audio-preview-2024-12-17",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 128000,
+    "created": "2024-12-11",
+    "created_at": "2024-12-11",
+    "description": "GPT-4 Omega model",
+    "id": "gpt-4o-realtime-preview-2024-12-17",
+    "name": "gpt-4o-realtime-preview-2024-12-17",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 128000,
+    "created": "2024-11-27",
+    "created_at": "2024-11-27",
+    "description": "GPT-4 base model",
+    "id": "omni-moderation-2024-09-26",
+    "name": "omni-moderation-2024-09-26",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 128000,
+    "created": "2024-11-15",
+    "created_at": "2024-11-15",
+    "description": "OpenAI omni-moderation-latest model",
+    "id": "omni-moderation-latest",
+    "name": "omni-moderation-latest",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 128000,
+    "created": "2024-09-29",
+    "created_at": "2024-09-29",
+    "description": "GPT-4 Omega model",
+    "id": "gpt-4o-realtime-preview",
+    "name": "gpt-4o-realtime-preview",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function",
+      "audio"
+    ],
+    "capability_count": 3,
+    "context_length": 128000,
+    "created": "2024-09-27",
+    "created_at": "2024-09-27",
+    "description": "GPT-4 Omega model",
+    "id": "gpt-4o-audio-preview",
+    "name": "gpt-4o-audio-preview",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function",
+      "audio"
+    ],
+    "capability_count": 3,
+    "context_length": 128000,
+    "created": "2024-09-26",
+    "created_at": "2024-09-26",
+    "description": "GPT-4 Omega model",
+    "id": "gpt-4o-audio-preview-2024-10-01",
+    "name": "gpt-4o-audio-preview-2024-10-01",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 128000,
+    "created": "2024-09-23",
+    "created_at": "2024-09-23",
+    "description": "GPT-4 Omega model",
+    "id": "gpt-4o-realtime-preview-2024-10-01",
+    "name": "gpt-4o-realtime-preview-2024-10-01",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 128000,
+    "created": "2024-09-06",
+    "created_at": "2024-09-06",
+    "description": "GPT-O1 model",
+    "id": "o1-preview-2024-09-12",
+    "name": "o1-preview-2024-09-12",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 128000,
+    "created": "2024-09-06",
+    "created_at": "2024-09-06",
+    "description": "GPT-O1 model",
+    "id": "o1-preview",
+    "name": "o1-preview",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 128000,
+    "created": "2024-09-06",
+    "created_at": "2024-09-06",
+    "description": "GPT-O1 model",
+    "id": "o1-mini",
+    "name": "o1-mini",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 128000,
+    "created": "2024-09-06",
+    "created_at": "2024-09-06",
+    "description": "GPT-O1 model",
+    "id": "o1-mini-2024-09-12",
+    "name": "o1-mini-2024-09-12",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 128000,
+    "created": "2024-08-12",
+    "created_at": "2024-08-12",
+    "description": "GPT-4 Omega model",
+    "id": "chatgpt-4o-latest",
+    "name": "chatgpt-4o-latest",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 128000,
+    "created": "2024-08-04",
+    "created_at": "2024-08-04",
+    "description": "GPT-4 Omega model",
+    "id": "gpt-4o-2024-08-06",
+    "name": "gpt-4o-2024-08-06",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 128000,
+    "created": "2024-07-16",
+    "created_at": "2024-07-16",
+    "description": "GPT-4 Omega model",
+    "id": "gpt-4o-mini",
+    "name": "gpt-4o-mini",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 128000,
+    "created": "2024-07-16",
+    "created_at": "2024-07-16",
+    "description": "GPT-4 Omega model",
+    "id": "gpt-4o-mini-2024-07-18",
+    "name": "gpt-4o-mini-2024-07-18",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 128000,
+    "created": "2024-05-10",
+    "created_at": "2024-05-10",
+    "description": "GPT-4 Omega model",
+    "id": "gpt-4o-2024-05-13",
+    "name": "gpt-4o-2024-05-13",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 128000,
+    "created": "2024-05-10",
+    "created_at": "2024-05-10",
+    "description": "GPT-4 Omega model",
+    "id": "gpt-4o",
+    "name": "gpt-4o",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 128000,
+    "created": "2024-04-08",
+    "created_at": "2024-04-08",
+    "description": "GPT-4 base model",
+    "id": "gpt-4-turbo-2024-04-09",
+    "name": "gpt-4-turbo-2024-04-09",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 128000,
+    "created": "2024-04-05",
+    "created_at": "2024-04-05",
+    "description": "GPT-4 base model",
+    "id": "gpt-4-turbo",
+    "name": "gpt-4-turbo",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 128000,
+    "created": "2024-01-23",
+    "created_at": "2024-01-23",
+    "description": "GPT-3.5 Turbo model",
+    "id": "gpt-3.5-turbo-0125",
+    "name": "gpt-3.5-turbo-0125",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 128000,
+    "created": "2024-01-23",
+    "created_at": "2024-01-23",
+    "description": "GPT-4 base model",
+    "id": "gpt-4-turbo-preview",
+    "name": "gpt-4-turbo-preview",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 8192,
+    "created": "2024-01-23",
+    "created_at": "2024-01-23",
+    "description": "GPT-4 Turbo preview model",
+    "id": "gpt-4-0125-preview",
+    "name": "gpt-4-0125-preview",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "context_length": 8192,
+    "created": "2024-01-22",
+    "created_at": "2024-01-22",
+    "description": "Embedding model",
+    "id": "text-embedding-3-large",
+    "name": "text-embedding-3-large",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "context_length": 8192,
+    "created": "2024-01-22",
+    "created_at": "2024-01-22",
+    "description": "Embedding model",
+    "id": "text-embedding-3-small",
+    "name": "text-embedding-3-small",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function",
+      "audio"
+    ],
+    "capability_count": 3,
+    "context_length": 8192,
+    "created": "2023-11-03",
+    "created_at": "2023-11-03",
+    "description": "Text-to-speech model",
+    "id": "tts-1-hd-1106",
+    "name": "tts-1-hd-1106",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function",
+      "audio"
+    ],
+    "capability_count": 3,
+    "context_length": 8192,
+    "created": "2023-11-03",
+    "created_at": "2023-11-03",
+    "description": "Text-to-speech model",
+    "id": "tts-1-hd",
+    "name": "tts-1-hd",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function",
+      "audio"
+    ],
+    "capability_count": 3,
+    "context_length": 8192,
+    "created": "2023-11-03",
+    "created_at": "2023-11-03",
+    "description": "Text-to-speech model",
+    "id": "tts-1-1106",
+    "name": "tts-1-1106",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 128000,
+    "created": "2023-11-02",
+    "created_at": "2023-11-02",
+    "description": "GPT-3.5 Turbo model",
+    "id": "gpt-3.5-turbo-1106",
+    "name": "gpt-3.5-turbo-1106",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 8192,
+    "created": "2023-11-02",
+    "created_at": "2023-11-02",
+    "description": "GPT-4 base model",
+    "id": "gpt-4-1106-preview",
+    "name": "gpt-4-1106-preview",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "image-generation"
+    ],
+    "capability_count": 1,
+    "context_length": 8192,
+    "created": "2023-10-31",
+    "created_at": "2023-10-31",
+    "description": "DALL-E image generation model",
+    "id": "dall-e-3",
+    "name": "dall-e-3",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "image-generation"
+    ],
+    "capability_count": 1,
+    "context_length": 8192,
+    "created": "2023-10-31",
+    "created_at": "2023-10-31",
+    "description": "DALL-E image generation model",
+    "id": "dall-e-2",
+    "name": "dall-e-2",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "context_length": 128000,
+    "created": "2023-09-07",
+    "created_at": "2023-09-07",
+    "description": "GPT-4 base model",
+    "id": "gpt-3.5-turbo-instruct-0914",
+    "name": "gpt-3.5-turbo-instruct-0914",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "context_length": 128000,
+    "created": "2023-08-24",
+    "created_at": "2023-08-24",
+    "description": "GPT-3.5 Turbo model",
+    "id": "gpt-3.5-turbo-instruct",
+    "name": "gpt-3.5-turbo-instruct",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 8192,
+    "created": "2023-08-21",
+    "created_at": "2023-08-21",
+    "description": "OpenAI babbage-002 model",
+    "id": "babbage-002",
+    "name": "babbage-002",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 8192,
+    "created": "2023-08-21",
+    "created_at": "2023-08-21",
+    "description": "OpenAI davinci-002 model",
+    "id": "davinci-002",
+    "name": "davinci-002",
+    "owned_by": "system",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 8192,
+    "created": "2023-06-27",
+    "created_at": "2023-06-27",
+    "description": "GPT-4 base model",
+    "id": "gpt-4",
+    "name": "gpt-4",
+    "owned_by": "openai",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 8192,
+    "created": "2023-06-12",
+    "created_at": "2023-06-12",
+    "description": "GPT-4 base model",
+    "id": "gpt-4-0613",
+    "name": "gpt-4-0613",
+    "owned_by": "openai",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 16385,
+    "created": "2023-05-10",
+    "created_at": "2023-05-10",
+    "description": "GPT-3.5 Turbo model with 16k context",
+    "id": "gpt-3.5-turbo-16k",
+    "name": "gpt-3.5-turbo-16k",
+    "owned_by": "openai-internal",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function",
+      "audio"
+    ],
+    "capability_count": 3,
+    "context_length": 8192,
+    "created": "2023-04-19",
+    "created_at": "2023-04-19",
+    "description": "Text-to-speech model",
+    "id": "tts-1",
+    "name": "tts-1",
+    "owned_by": "openai-internal",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 128000,
+    "created": "2023-02-28",
+    "created_at": "2023-02-28",
+    "description": "GPT-3.5 Turbo model",
+    "id": "gpt-3.5-turbo",
+    "name": "gpt-3.5-turbo",
+    "owned_by": "openai",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function",
+      "audio"
+    ],
+    "capability_count": 3,
+    "context_length": 8192,
+    "created": "2023-02-27",
+    "created_at": "2023-02-27",
+    "description": "Whisper speech-to-text model",
+    "id": "whisper-1",
+    "name": "whisper-1",
+    "owned_by": "openai-internal",
+    "provider": "openai"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "context_length": 8192,
+    "created": "2022-12-16",
+    "created_at": "2022-12-16",
+    "description": "Embedding model",
+    "id": "text-embedding-ada-002",
+    "name": "text-embedding-ada-002",
+    "owned_by": "openai-internal",
+    "provider": "openai"
+  }
+]

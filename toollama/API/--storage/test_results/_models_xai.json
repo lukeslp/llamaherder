@@ -1,0 +1,64 @@
+[
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 8192,
+    "created": 1737331200,
+    "created_at": "2025-01-19",
+    "description": "X.AI grok-2-1212 model",
+    "id": "grok-2-1212",
+    "name": "Grok 2 1212",
+    "owned_by": "xai",
+    "provider": "xai"
+  },
+  {
+    "capabilities": [
+      "vision",
+      "text",
+      "function"
+    ],
+    "capability_count": 3,
+    "context_length": 8192,
+    "created": 1733961600,
+    "created_at": "2024-12-11",
+    "description": "X.AI grok-2-vision-1212 model",
+    "id": "grok-2-vision-1212",
+    "name": "Grok 2 Vision 1212",
+    "owned_by": "xai",
+    "provider": "xai"
+  },
+  {
+    "capabilities": [
+      "vision",
+      "text",
+      "function"
+    ],
+    "capability_count": 3,
+    "context_length": 8192,
+    "created": 1730764800,
+    "created_at": "2024-11-04",
+    "description": "X.AI grok-vision-beta model",
+    "id": "grok-vision-beta",
+    "name": "Grok Vision Beta",
+    "owned_by": "xai",
+    "provider": "xai"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 8192,
+    "created": 1727136000,
+    "created_at": "2024-09-23",
+    "description": "X.AI grok-beta model",
+    "id": "grok-beta",
+    "name": "Grok Beta",
+    "owned_by": "xai",
+    "provider": "xai"
+  }
+]

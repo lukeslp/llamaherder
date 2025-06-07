@@ -1,0 +1,161 @@
+:root {
+  --color-primary: #2c1810;
+  --color-primary-dark: #1a91da;
+  --color-accent: #5558bcc3;
+  --color-attention: #a3a124;
+  --color-hover: #2795D9;
+  --color-focus: rgba(29, 161, 242, 0.4);
+  --color-background: #b8b8b8;
+  --color-surface: #ffffff;
+  --color-bg-secondary: #f5f5f5;
+  --color-bg-error: rgba(255, 0, 0, 0.1);
+  --color-border: #e0e0e0;
+  --color-border-error: #ff0000;
+  --color-text: #333333;
+  --color-text-primary: #2c1810;
+  --color-text-secondary: #666666;
+  --color-text-tertiary: #94a3b8;
+  --color-text-error: #ff0000;
+  --color-text-code: #000000;
+  --color-bg-code: #ffffff;
+  --color-shadow-primary: rgba(0, 0, 0, 0.2);
+  --color-shadow-secondary: rgba(0, 0, 0, 0.15);
+  --color-shadow-subtle: rgba(0, 0, 0, 0.08);
+  --color-overlay: rgba(44, 24, 16, 0.225);
+  --container-bg: rgba(255, 255, 255, 0.9);
+  --icon-filter: none;
+  --footer-text-bg: var(--color-surface);
+  --footer-text-color: var(--color-text-primary);
+  --gradient-border: linear-gradient(135deg,
+    var(--color-primary),
+    var(--color-accent),
+    var(--color-attention),
+    var(--color-accent),
+    var(--color-primary)
+  );
+}
+
+:root[data-theme="dark"] {
+  --color-primary: #2c1810;
+  --color-primary-dark: #1a91da;
+  --color-accent: #5558bcc3;
+  --color-attention: #a3a124;
+  --color-hover: #2795D9;
+  --color-focus: rgba(29, 161, 242, 0.4);
+  --color-background: #000000;
+  --color-surface: #333333;
+  --color-bg-secondary: #444444;
+  --container-bg: rgba(51, 51, 51, 0.95);
+  --color-border: #e0e0e0;
+  --color-text: #ffffff;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #cccccc;
+  --color-text-tertiary: #999999;
+  --footer-text-bg: #ffffff;
+  --footer-text-color: #000000;
+  --color-shadow-primary: rgba(0, 0, 0, 0.5);
+  --color-shadow-secondary: rgba(0, 0, 0, 0.3);
+  --color-shadow-subtle: rgba(0, 0, 0, 0.2);
+  --color-overlay: rgba(0, 0, 0, 0.7);
+  --icon-filter: brightness(0) invert(1);
+  --gradient-border: linear-gradient(135deg,
+    var(--color-primary),
+    var(--color-accent),
+    var(--color-attention),
+    var(--color-accent),
+    var(--color-primary)
+  );
+  --control-panel-bg: var(--color-surface);
+  --control-item-bg: var(--color-bg-secondary);
+  --control-border: var(--color-border);
+}
+
+:root[data-theme="light"] .upload-area {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+:root[data-theme="light"] .upload-area:hover {
+  border-color: var(--color-primary);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 12px var(--color-shadow-subtle);
+}
+
+:root[data-theme="dark"] .upload-area {
+  background: var(--container-bg);
+  border-color: var(--color-border);
+}
+
+:root[data-theme="dark"] .upload-area:hover {
+  border-color: var(--color-primary);
+  background: rgba(60, 60, 60, 0.95);
+}
+
+:root[data-theme="dark"] .icon-button,
+:root[data-theme="dark"] .prompt-selector,
+:root[data-theme="dark"] .radio-group {
+  background: var(--container-bg);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+}
+
+:root[data-theme="dark"] .icon-button:hover,
+:root[data-theme="dark"] .prompt-selector:hover,
+:root[data-theme="dark"] .radio-group:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px var(--color-shadow-primary);
+  border-color: var(--color-primary);
+  background: rgba(60, 60, 60, 0.95);
+}
+
+:root[data-theme="dark"] .streaming-avatar {
+  filter: invert(1);
+}
+
+.theme-toggle {
+  position: fixed;
+  top: var(--spacing-md);
+  right: var(--spacing-md);
+  z-index: 1000;
+}
+
+.theme-button {
+  background: var(--container-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--color-text-primary);
+  transition: var(--transition-standard);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.theme-button:hover {
+  transform: scale(1.1);
+  border-color: var(--color-primary);
+  background: rgba(60, 60, 60, 0.95);
+}
+
+:root[data-theme="dark"] .icon-button:focus,
+:root[data-theme="dark"] .prompt-selector:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+:root[data-theme="light"] body {
+  background-color: #e7e8ffda;
+}
+
+:root[data-theme="dark"] body {
+  background-color: #2e2c4e;
+}
+
+.animated-gradient {
+  animation: gradientRotate 4s linear infinite;
+}

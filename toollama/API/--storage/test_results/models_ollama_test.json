@@ -1,0 +1,1244 @@
+[
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-02-24T20:47:06.593504417-08:00",
+    "created_at": "2025-02-24",
+    "description": "Ollama QWEN2 model - 1.8B parameters",
+    "family": "qwen2",
+    "format": "gguf",
+    "id": "deepscaler:latest",
+    "name": "deepscaler:latest",
+    "owned_by": "ollama",
+    "parameter_size": "1.8B",
+    "provider": "ollama",
+    "quantization": "F16"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-02-24T20:44:50.228857919-08:00",
+    "created_at": "2025-02-24",
+    "description": "Ollama QWEN2 model - 7.6B parameters",
+    "family": "qwen2",
+    "format": "gguf",
+    "id": "openthinker:7b",
+    "name": "openthinker:7b",
+    "owned_by": "ollama",
+    "parameter_size": "7.6B",
+    "provider": "ollama",
+    "quantization": "Q4_K_M"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-02-19T23:55:03.091286394-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama LLAMA model - 22.2B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "coolhand/camina:22b",
+    "name": "coolhand/camina:22b",
+    "owned_by": "ollama",
+    "parameter_size": "22.2B",
+    "provider": "ollama",
+    "quantization": "Q4_0"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-02-19T23:29:02.689345146-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama LLAMA model - 3.2B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "coolhand/belter-coder:3b",
+    "name": "coolhand/belter-coder:3b",
+    "owned_by": "ollama",
+    "parameter_size": "3.2B",
+    "provider": "ollama",
+    "quantization": "Q4_K_M"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-02-19T23:28:34.752530552-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama LLAMA model - 23.6B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "coolhand/belter-coder:22b",
+    "name": "coolhand/belter-coder:22b",
+    "owned_by": "ollama",
+    "parameter_size": "23.6B",
+    "provider": "ollama",
+    "quantization": "Q4_K_M"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-02-19T23:27:35.578681851-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama LLAMA model - 7.2B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "coolhand/belter-coder:7b",
+    "name": "coolhand/belter-coder:7b",
+    "owned_by": "ollama",
+    "parameter_size": "7.2B",
+    "provider": "ollama",
+    "quantization": "Q4_0"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-02-19T23:25:46.561648025-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama LLAMA model - 23.6B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "coolhand/drummer-hunter:24b",
+    "name": "coolhand/drummer-hunter:24b",
+    "owned_by": "ollama",
+    "parameter_size": "23.6B",
+    "provider": "ollama",
+    "quantization": "Q4_K_M"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-02-19T23:25:28.600163761-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama LLAMA model - 22.2B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "coolhand/drummer-hunter:22b",
+    "name": "coolhand/drummer-hunter:22b",
+    "owned_by": "ollama",
+    "parameter_size": "22.2B",
+    "provider": "ollama",
+    "quantization": "Q4_0"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-02-19T23:22:41.646485682-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama LLAMA model - 1.2B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "coolhand/drummer-hunter:1b",
+    "name": "coolhand/drummer-hunter:1b",
+    "owned_by": "ollama",
+    "parameter_size": "1.2B",
+    "provider": "ollama",
+    "quantization": "Q8_0"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-02-19T23:22:21.797909499-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama LLAMA model - 3.2B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "coolhand/drummer-hunter:3b",
+    "name": "coolhand/drummer-hunter:3b",
+    "owned_by": "ollama",
+    "parameter_size": "3.2B",
+    "provider": "ollama",
+    "quantization": "Q4_K_M"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-02-19T23:22:00.012797194-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama LLAMA model - 7.2B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "coolhand/drummer-hunter:7b",
+    "name": "coolhand/drummer-hunter:7b",
+    "owned_by": "ollama",
+    "parameter_size": "7.2B",
+    "provider": "ollama",
+    "quantization": "Q4_0"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-02-19T23:21:38.539040778-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama LLAMA model - 8.0B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "coolhand/drummer-hunter:8b",
+    "name": "coolhand/drummer-hunter:8b",
+    "owned_by": "ollama",
+    "parameter_size": "8.0B",
+    "provider": "ollama",
+    "quantization": "Q4_K_M"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-02-19T23:20:49.631461349-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama LLAMA model - 7.2B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "mistral:7b",
+    "name": "mistral:7b",
+    "owned_by": "ollama",
+    "parameter_size": "7.2B",
+    "provider": "ollama",
+    "quantization": "Q4_0"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-02-19T23:19:41.49394023-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama LLAMA model - 7.2B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "coolhand/drummer-wayback:7b",
+    "name": "coolhand/drummer-wayback:7b",
+    "owned_by": "ollama",
+    "parameter_size": "7.2B",
+    "provider": "ollama",
+    "quantization": "Q4_0"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-02-19T23:15:34.142557077-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama LLAMA model - 3.2B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "coolhand/drummer-smolscraper:3b",
+    "name": "coolhand/drummer-smolscraper:3b",
+    "owned_by": "ollama",
+    "parameter_size": "3.2B",
+    "provider": "ollama",
+    "quantization": "Q4_K_M"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-02-19T16:26:50.935277233-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama LLAMA model - 3.2B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "coolhand/filellama:3b",
+    "name": "coolhand/filellama:3b",
+    "owned_by": "ollama",
+    "parameter_size": "3.2B",
+    "provider": "ollama",
+    "quantization": "Q4_K_M"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-02-19T16:26:43.904356026-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama LLAMA model - 12.2B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "coolhand/filellama:12b",
+    "name": "coolhand/filellama:12b",
+    "owned_by": "ollama",
+    "parameter_size": "12.2B",
+    "provider": "ollama",
+    "quantization": "Q4_0"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-02-19T16:26:40.332540138-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama LLAMA model - 7.2B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "coolhand/filellama:7b",
+    "name": "coolhand/filellama:7b",
+    "owned_by": "ollama",
+    "parameter_size": "7.2B",
+    "provider": "ollama",
+    "quantization": "Q4_0"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-02-19T16:26:29.095306128-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama QWEN2 model - 14.8B parameters",
+    "family": "qwen2",
+    "format": "gguf",
+    "id": "coolhand/filellama:14b",
+    "name": "coolhand/filellama:14b",
+    "owned_by": "ollama",
+    "parameter_size": "14.8B",
+    "provider": "ollama",
+    "quantization": "Q4_K_M"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-02-19T16:26:20.431483099-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama LLAMA model - 8.0B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "coolhand/filellama:8b",
+    "name": "coolhand/filellama:8b",
+    "owned_by": "ollama",
+    "parameter_size": "8.0B",
+    "provider": "ollama",
+    "quantization": "Q4_K_M"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-02-19T16:26:16.314311139-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama LLAMA model - 1.2B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "coolhand/filellama:1b",
+    "name": "coolhand/filellama:1b",
+    "owned_by": "ollama",
+    "parameter_size": "1.2B",
+    "provider": "ollama",
+    "quantization": "Q8_0"
+  },
+  {
+    "capabilities": [
+      "text",
+      "vision"
+    ],
+    "capability_count": 2,
+    "created": "2025-02-19T16:25:06.369674365-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama LLAMA model - 3.8B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "coolhand/altllama:4b",
+    "name": "coolhand/altllama:4b",
+    "owned_by": "ollama",
+    "parameter_size": "3.8B",
+    "provider": "ollama",
+    "quantization": "Q4_K_M"
+  },
+  {
+    "capabilities": [
+      "text",
+      "vision"
+    ],
+    "capability_count": 2,
+    "created": "2025-02-19T16:25:02.0723685-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama PHI2 model - 1.4B parameters",
+    "family": "phi2",
+    "format": "gguf",
+    "id": "coolhand/altllama:2b",
+    "name": "coolhand/altllama:2b",
+    "owned_by": "ollama",
+    "parameter_size": "1.4B",
+    "provider": "ollama",
+    "quantization": "Q4_0"
+  },
+  {
+    "capabilities": [
+      "text",
+      "vision"
+    ],
+    "capability_count": 2,
+    "created": "2025-02-19T16:24:57.851837635-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama LLAMA model - 13.0B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "coolhand/altllama:13b",
+    "name": "coolhand/altllama:13b",
+    "owned_by": "ollama",
+    "parameter_size": "13.0B",
+    "provider": "ollama",
+    "quantization": "Q4_0"
+  },
+  {
+    "capabilities": [
+      "text",
+      "vision"
+    ],
+    "capability_count": 2,
+    "created": "2025-02-19T16:24:54.138969218-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama LLAMA model - 8.0B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "coolhand/altllama:8b",
+    "name": "coolhand/altllama:8b",
+    "owned_by": "ollama",
+    "parameter_size": "8.0B",
+    "provider": "ollama",
+    "quantization": "Q4_K_M"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-02-19T16:24:47.243344889-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama LLAMA model - 23.6B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "coolhand/schollama:24b",
+    "name": "coolhand/schollama:24b",
+    "owned_by": "ollama",
+    "parameter_size": "23.6B",
+    "provider": "ollama",
+    "quantization": "Q4_K_M"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-02-19T16:24:43.723396267-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama LLAMA model - 3.2B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "coolhand/schollama:3b",
+    "name": "coolhand/schollama:3b",
+    "owned_by": "ollama",
+    "parameter_size": "3.2B",
+    "provider": "ollama",
+    "quantization": "Q4_K_M"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-02-19T16:24:39.698521707-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama LLAMA model - 7.2B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "coolhand/schollama:7b",
+    "name": "coolhand/schollama:7b",
+    "owned_by": "ollama",
+    "parameter_size": "7.2B",
+    "provider": "ollama",
+    "quantization": "Q4_0"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-02-19T16:24:36.375242437-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama QWEN2 model - 32.8B parameters",
+    "family": "qwen2",
+    "format": "gguf",
+    "id": "coolhand/schollama:32b",
+    "name": "coolhand/schollama:32b",
+    "owned_by": "ollama",
+    "parameter_size": "32.8B",
+    "provider": "ollama",
+    "quantization": "Q4_K_M"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-02-19T16:24:32.870008503-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama QWEN2 model - 14.8B parameters",
+    "family": "qwen2",
+    "format": "gguf",
+    "id": "coolhand/schollama:14b",
+    "name": "coolhand/schollama:14b",
+    "owned_by": "ollama",
+    "parameter_size": "14.8B",
+    "provider": "ollama",
+    "quantization": "Q4_K_M"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-02-19T16:24:28.915260663-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama LLAMA model - 22.2B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "coolhand/schollama:22b",
+    "name": "coolhand/schollama:22b",
+    "owned_by": "ollama",
+    "parameter_size": "22.2B",
+    "provider": "ollama",
+    "quantization": "Q4_0"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-02-19T16:24:25.49885599-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama LLAMA model - 8.0B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "coolhand/schollama:8b",
+    "name": "coolhand/schollama:8b",
+    "owned_by": "ollama",
+    "parameter_size": "8.0B",
+    "provider": "ollama",
+    "quantization": "Q4_K_M"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-02-19T16:24:21.736443275-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama LLAMA model - 1.2B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "coolhand/schollama:1b",
+    "name": "coolhand/schollama:1b",
+    "owned_by": "ollama",
+    "parameter_size": "1.2B",
+    "provider": "ollama",
+    "quantization": "Q8_0"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-02-19T16:24:18.502787393-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama LLAMA model - 12.2B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "coolhand/schollama:12b",
+    "name": "coolhand/schollama:12b",
+    "owned_by": "ollama",
+    "parameter_size": "12.2B",
+    "provider": "ollama",
+    "quantization": "Q4_0"
+  },
+  {
+    "capabilities": [
+      "text",
+      "vision"
+    ],
+    "capability_count": 2,
+    "created": "2025-02-19T16:23:34.456813138-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama LLAMA model - 3.8B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "coolhand/filellama-vision:4b",
+    "name": "coolhand/filellama-vision:4b",
+    "owned_by": "ollama",
+    "parameter_size": "3.8B",
+    "provider": "ollama",
+    "quantization": "Q4_K_M"
+  },
+  {
+    "capabilities": [
+      "text",
+      "vision"
+    ],
+    "capability_count": 2,
+    "created": "2025-02-19T16:23:22.230199259-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama LLAMA model - 7.2B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "coolhand/filellama-vision:7b",
+    "name": "coolhand/filellama-vision:7b",
+    "owned_by": "ollama",
+    "parameter_size": "7.2B",
+    "provider": "ollama",
+    "quantization": "Q4_0"
+  },
+  {
+    "capabilities": [
+      "text",
+      "vision"
+    ],
+    "capability_count": 2,
+    "created": "2025-02-19T16:23:22.204651982-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama LLAMA model - 7B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "llava:7b",
+    "name": "llava:7b",
+    "owned_by": "ollama",
+    "parameter_size": "7B",
+    "provider": "ollama",
+    "quantization": "Q4_0"
+  },
+  {
+    "capabilities": [
+      "text",
+      "vision"
+    ],
+    "capability_count": 2,
+    "created": "2025-02-19T16:23:13.184458742-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama LLAMA model - 13.0B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "coolhand/filellama-vision:13b",
+    "name": "coolhand/filellama-vision:13b",
+    "owned_by": "ollama",
+    "parameter_size": "13.0B",
+    "provider": "ollama",
+    "quantization": "Q4_0"
+  },
+  {
+    "capabilities": [
+      "text",
+      "vision"
+    ],
+    "capability_count": 2,
+    "created": "2025-02-19T16:23:08.391589981-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama PHI2 model - 1.4B parameters",
+    "family": "phi2",
+    "format": "gguf",
+    "id": "coolhand/filellama-vision:2b",
+    "name": "coolhand/filellama-vision:2b",
+    "owned_by": "ollama",
+    "parameter_size": "1.4B",
+    "provider": "ollama",
+    "quantization": "Q4_0"
+  },
+  {
+    "capabilities": [
+      "text",
+      "vision"
+    ],
+    "capability_count": 2,
+    "created": "2025-02-19T16:23:04.284081063-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama LLAMA model - 8.0B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "coolhand/filellama-vision:8b",
+    "name": "coolhand/filellama-vision:8b",
+    "owned_by": "ollama",
+    "parameter_size": "8.0B",
+    "provider": "ollama",
+    "quantization": "Q4_K_M"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-02-19T16:22:28.498104297-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama LLAMA model - 361.82M parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "filellama:360m",
+    "name": "filellama:360m",
+    "owned_by": "ollama",
+    "parameter_size": "361.82M",
+    "provider": "ollama",
+    "quantization": "F16"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-02-19T16:22:28.486842832-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama LLAMA model - 361.82M parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "smollm2:360m",
+    "name": "smollm2:360m",
+    "owned_by": "ollama",
+    "parameter_size": "361.82M",
+    "provider": "ollama",
+    "quantization": "F16"
+  },
+  {
+    "capabilities": [
+      "text",
+      "vision"
+    ],
+    "capability_count": 2,
+    "created": "2025-02-19T15:19:54.663905003-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama PHI2 model - 1B parameters",
+    "family": "phi2",
+    "format": "gguf",
+    "id": "moondream:latest",
+    "name": "moondream:latest",
+    "owned_by": "ollama",
+    "parameter_size": "1B",
+    "provider": "ollama",
+    "quantization": "Q4_0"
+  },
+  {
+    "capabilities": [
+      "text",
+      "vision"
+    ],
+    "capability_count": 2,
+    "created": "2025-02-19T15:19:46.714331341-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama LLAMA model - 8B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "llava-llama3:8b",
+    "name": "llava-llama3:8b",
+    "owned_by": "ollama",
+    "parameter_size": "8B",
+    "provider": "ollama",
+    "quantization": "Q4_K_M"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-02-19T15:15:07.960897959-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama LLAMA model - 1.2B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "coolhand/filellama:360m",
+    "name": "coolhand/filellama:360m",
+    "owned_by": "ollama",
+    "parameter_size": "1.2B",
+    "provider": "ollama",
+    "quantization": "Q8_0"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-02-19T15:07:19.596342296-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama LLAMA model - 7.2B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "mistral:latest",
+    "name": "mistral:latest",
+    "owned_by": "ollama",
+    "parameter_size": "7.2B",
+    "provider": "ollama",
+    "quantization": "Q4_0"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-02-19T15:01:59.326523298-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama QWEN2 model - 14.8B parameters",
+    "family": "qwen2",
+    "format": "gguf",
+    "id": "qwen2.5:14b",
+    "name": "qwen2.5:14b",
+    "owned_by": "ollama",
+    "parameter_size": "14.8B",
+    "provider": "ollama",
+    "quantization": "Q4_K_M"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-02-19T14:56:14.623401624-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama MLLAMA model - 9.8B parameters",
+    "family": "mllama",
+    "format": "gguf",
+    "id": "coolhand/filellama-vision:11b",
+    "name": "coolhand/filellama-vision:11b",
+    "owned_by": "ollama",
+    "parameter_size": "9.8B",
+    "provider": "ollama",
+    "quantization": "Q4_K_M"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-02-19T13:24:01.728177407-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama QWEN2 model - 32.8B parameters",
+    "family": "qwen2",
+    "format": "gguf",
+    "id": "coolhand/filellama:34b",
+    "name": "coolhand/filellama:34b",
+    "owned_by": "ollama",
+    "parameter_size": "32.8B",
+    "provider": "ollama",
+    "quantization": "Q4_K_M"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-02-19T12:35:56.490619145-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama QWEN2 model - 32.8B parameters",
+    "family": "qwen2",
+    "format": "gguf",
+    "id": "qwq:latest",
+    "name": "qwq:latest",
+    "owned_by": "ollama",
+    "parameter_size": "32.8B",
+    "provider": "ollama",
+    "quantization": "Q4_K_M"
+  },
+  {
+    "capabilities": [
+      "text",
+      "vision"
+    ],
+    "capability_count": 2,
+    "created": "2025-02-19T12:31:17.771534109-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama LLAMA model - 34B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "llava:34b",
+    "name": "llava:34b",
+    "owned_by": "ollama",
+    "parameter_size": "34B",
+    "provider": "ollama",
+    "quantization": "Q4_0"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-02-19T12:30:33.006004996-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama QWEN2 model - 32.8B parameters",
+    "family": "qwen2",
+    "format": "gguf",
+    "id": "qwen2.5:32b",
+    "name": "qwen2.5:32b",
+    "owned_by": "ollama",
+    "parameter_size": "32.8B",
+    "provider": "ollama",
+    "quantization": "Q4_K_M"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-02-19T12:30:24.121907815-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama LLAMA model - 23.6B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "mistral-small:24b",
+    "name": "mistral-small:24b",
+    "owned_by": "ollama",
+    "parameter_size": "23.6B",
+    "provider": "ollama",
+    "quantization": "Q4_K_M"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-02-19T12:09:41.585782491-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama LLAMA model - 8.0B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "hermes3:latest",
+    "name": "hermes3:latest",
+    "owned_by": "ollama",
+    "parameter_size": "8.0B",
+    "provider": "ollama",
+    "quantization": "Q4_0"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-02-19T11:09:52.721138772-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama MLLAMA model - 9.8B parameters",
+    "family": "mllama",
+    "format": "gguf",
+    "id": "coolhand/impossible_alt:11b",
+    "name": "coolhand/impossible_alt:11b",
+    "owned_by": "ollama",
+    "parameter_size": "9.8B",
+    "provider": "ollama",
+    "quantization": "Q4_K_M"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-02-19T11:08:43.86274721-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama MLLAMA model - 9.8B parameters",
+    "family": "mllama",
+    "format": "gguf",
+    "id": "llama3.2-vision:latest",
+    "name": "llama3.2-vision:latest",
+    "owned_by": "ollama",
+    "parameter_size": "9.8B",
+    "provider": "ollama",
+    "quantization": "Q4_K_M"
+  },
+  {
+    "capabilities": [
+      "text",
+      "vision"
+    ],
+    "capability_count": 2,
+    "created": "2025-02-19T11:02:35.07882431-08:00",
+    "created_at": "2025-02-19",
+    "description": "Ollama LLAMA model - 7B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "llava:latest",
+    "name": "llava:latest",
+    "owned_by": "ollama",
+    "parameter_size": "7B",
+    "provider": "ollama",
+    "quantization": "Q4_0"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-02-18T12:36:33.27790638-08:00",
+    "created_at": "2025-02-18",
+    "description": "Ollama LLAMA model - 1.2B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "llama3.2:1b",
+    "name": "llama3.2:1b",
+    "owned_by": "ollama",
+    "parameter_size": "1.2B",
+    "provider": "ollama",
+    "quantization": "Q8_0"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-01-30T18:46:20.657681571-08:00",
+    "created_at": "2025-01-30",
+    "description": "Ollama LLAMA model - 22.2B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "mistral-small:22b",
+    "name": "mistral-small:22b",
+    "owned_by": "ollama",
+    "parameter_size": "22.2B",
+    "provider": "ollama",
+    "quantization": "Q4_0"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-01-30T17:15:29.905622504-08:00",
+    "created_at": "2025-01-30",
+    "description": "Ollama LLAMA model - 12.2B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "mistral-nemo:latest",
+    "name": "mistral-nemo:latest",
+    "owned_by": "ollama",
+    "parameter_size": "12.2B",
+    "provider": "ollama",
+    "quantization": "Q4_0"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-01-27T14:46:48.098550956-08:00",
+    "created_at": "2025-01-27",
+    "description": "Ollama PHI3 model - 14.7B parameters",
+    "family": "phi3",
+    "format": "gguf",
+    "id": "phi4:latest",
+    "name": "phi4:latest",
+    "owned_by": "ollama",
+    "parameter_size": "14.7B",
+    "provider": "ollama",
+    "quantization": "Q4_K_M"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-01-24T15:54:35.63589633-08:00",
+    "created_at": "2025-01-24",
+    "description": "Ollama QWEN2 model - 14.8B parameters",
+    "family": "qwen2",
+    "format": "gguf",
+    "id": "deepseek-r1:14b",
+    "name": "deepseek-r1:14b",
+    "owned_by": "ollama",
+    "parameter_size": "14.8B",
+    "provider": "ollama",
+    "quantization": "Q4_K_M"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-01-24T15:54:07.181319352-08:00",
+    "created_at": "2025-01-24",
+    "description": "Ollama QWEN2 model - 7.6B parameters",
+    "family": "qwen2",
+    "format": "gguf",
+    "id": "deepseek-r1:7b",
+    "name": "deepseek-r1:7b",
+    "owned_by": "ollama",
+    "parameter_size": "7.6B",
+    "provider": "ollama",
+    "quantization": "Q4_K_M"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-01-24T15:54:04.605838846-08:00",
+    "created_at": "2025-01-24",
+    "description": "Ollama LLAMA model - 8.0B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "deepseek-r1:8b",
+    "name": "deepseek-r1:8b",
+    "owned_by": "ollama",
+    "parameter_size": "8.0B",
+    "provider": "ollama",
+    "quantization": "Q4_K_M"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-01-24T15:50:17.919142046-08:00",
+    "created_at": "2025-01-24",
+    "description": "Ollama QWEN2 model - 1.8B parameters",
+    "family": "qwen2",
+    "format": "gguf",
+    "id": "deepseek-r1:1.5b",
+    "name": "deepseek-r1:1.5b",
+    "owned_by": "ollama",
+    "parameter_size": "1.8B",
+    "provider": "ollama",
+    "quantization": "Q4_K_M"
+  },
+  {
+    "capabilities": [
+      "text",
+      "vision"
+    ],
+    "capability_count": 2,
+    "created": "2025-01-21T19:46:34.812663127-08:00",
+    "created_at": "2025-01-21",
+    "description": "Ollama LLAMA model - 13.0B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "coolhand/impossible_alt:13b",
+    "name": "coolhand/impossible_alt:13b",
+    "owned_by": "ollama",
+    "parameter_size": "13.0B",
+    "provider": "ollama",
+    "quantization": "Q4_0"
+  },
+  {
+    "capabilities": [
+      "text",
+      "vision"
+    ],
+    "capability_count": 2,
+    "created": "2025-01-21T16:37:45.90656466-08:00",
+    "created_at": "2025-01-21",
+    "description": "Ollama LLAMA model - 13B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "llava:13b",
+    "name": "llava:13b",
+    "owned_by": "ollama",
+    "parameter_size": "13B",
+    "provider": "ollama",
+    "quantization": "Q4_0"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2025-01-17T22:16:25.671205891-08:00",
+    "created_at": "2025-01-17",
+    "description": "Ollama LLAMA model - 8.0B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "llama3.1:8b",
+    "name": "llama3.1:8b",
+    "owned_by": "ollama",
+    "parameter_size": "8.0B",
+    "provider": "ollama",
+    "quantization": "Q4_K_M"
+  },
+  {
+    "capabilities": [
+      "text",
+      "vision"
+    ],
+    "capability_count": 2,
+    "created": "2024-12-18T11:25:34.127114861-08:00",
+    "created_at": "2024-12-18",
+    "description": "Ollama LLAMA model - 4B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "llava-phi3:latest",
+    "name": "llava-phi3:latest",
+    "owned_by": "ollama",
+    "parameter_size": "4B",
+    "provider": "ollama",
+    "quantization": "Q4_K_M"
+  },
+  {
+    "capabilities": [
+      "text",
+      "vision"
+    ],
+    "capability_count": 2,
+    "created": "2024-12-18T10:56:39.20536697-08:00",
+    "created_at": "2024-12-18",
+    "description": "Ollama LLAMA model - 8B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "llava-llama3:latest",
+    "name": "llava-llama3:latest",
+    "owned_by": "ollama",
+    "parameter_size": "8B",
+    "provider": "ollama",
+    "quantization": "Q4_K_M"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2024-12-18T03:36:29.8236256-08:00",
+    "created_at": "2024-12-18",
+    "description": "Ollama MLLAMA model - 9.8B parameters",
+    "family": "mllama",
+    "format": "gguf",
+    "id": "llama3.2-vision:11b",
+    "name": "llama3.2-vision:11b",
+    "owned_by": "ollama",
+    "parameter_size": "9.8B",
+    "provider": "ollama",
+    "quantization": "Q4_K_M"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2024-12-18T03:31:49.293376269-08:00",
+    "created_at": "2024-12-18",
+    "description": "Ollama LLAMA model - 3.2B parameters",
+    "family": "llama",
+    "format": "gguf",
+    "id": "llama3.2:3b",
+    "name": "llama3.2:3b",
+    "owned_by": "ollama",
+    "parameter_size": "3.2B",
+    "provider": "ollama",
+    "quantization": "Q4_K_M"
+  }
+]

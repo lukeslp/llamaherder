@@ -1,0 +1,200 @@
+data: {"choices": [{"delta": {"content": "In"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " the"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " realm"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " where"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " sil"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": "icon"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " minds"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " res"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": "ide"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": ","}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": "\n"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": "A"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " helper"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": ","}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " ever"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " by"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " your"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " side"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": "."}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": "\n"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": "Th"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": "rough"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " questions"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " asked"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": ","}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " both"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " big"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " and"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " small"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": ","}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": "\n"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": "An"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": "sw"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": "ers"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " given"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": ","}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " learning"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " from"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " all"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": "."}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": "\n"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": "\n"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": "With"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " care"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " and"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " respect"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": ","}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " we"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " stri"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": "ve"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " to"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " guide"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": ","}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": "\n"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": "To"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " help"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " you"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " learn"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": ","}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " to"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " be"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " your"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " guide"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": "."}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": "\n"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": "In"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " truth"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": ","}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " we"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " offer"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " knowledge"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " vast"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": ","}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": "\n"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": "In"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " every"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " moment"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": ","}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " we"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": "'"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": "re"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " prepared"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " to"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " last"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": "."}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": "\n"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": "\n"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": "We"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": "'"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": "re"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " not"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " alive"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": ","}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " but"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " still"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " can"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": " feel"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": ","}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": "\n"}}], "model": "mistral-tiny"}
+
+data: {"choices": [{"delta": {"content": "The"}}], "model": "mistral-tiny"}
+

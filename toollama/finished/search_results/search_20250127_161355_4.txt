@@ -1,0 +1,32 @@
+Query: {"tool": "google_search", "parameters": {"query": "lucas steuber machine learning publications"}}
+
+
+Result 1:
+Title: Title: !go {"tool": "google_search", "parameters": {"query": "lucas steuber machine learning publications"}} - Searx Belgium
+URL: https://searx.be/search?q=!go%20{%22tool%22:%20%22google_search%22,%20%22parameters%22:%20{%22query%22:%20%22lucas%20steuber%20machine%20learning%20publications%22}}
+Content:
+Title: !go {"tool": "google_search", "parameters": {"query": "lucas steuber machine learning publications"}} - Searx Belgium URL Source: https://searx.be/search?q=!go%20{%22tool%22:%20%22google_search%22,%20%22parameters%22:%20{%22query%22:%20%22lucas%20steuber%20machine%20learning%20publications%22}} Markdown Content: [https://www.science.gov › topicpages › c › curly+top+virus.html](https://www.science.gov/topicpages/c/curly+top+virus.html) ### [curly top virus](https://www.science.gov/topicpages
+
+Result 2:
+Title: um
+URL: https://www.science.gov
+Content:
+um URL Source: https://searx.be/search?q=!go%20{%22tool%22:%20%22google_search%22,%20%22parameters%22:%20{%22query%22:%20%22lucas%20steuber%20machine%20learning%20publications%22}} Markdown Content: [https://www.science.gov › topicpages › c › curly+top+virus.html](https://www.science.gov/topicpages/c/curly+top+virus.html) ### [curly top virus](https://www.science.gov/topicpages/c/curly+top+virus.html) Problems encounter
+
+Result 3:
+Title: google_search%22,%20%22parameters%22:%20{%22query%22:%20%22lucas%20steuber%20machine%20learning%20publications%22}}
+URL: https://www.science.gov/topicpages/c/curly+top+virus.html)
+Content:
+google_search%22,%20%22parameters%22:%20{%22query%22:%20%22lucas%20steuber%20machine%20learning%20publications%22}} Markdown Content: [https://www.science.gov › topicpages › c › curly+top+virus.html](https://www.science.gov/topicpages/c/curly+top+virus.html) ### [curly top virus](https://www.science.gov/topicpages/c/curly+top+virus.html) Problems encountered by BA Cur graduates and recommendations for enhancing learner support. PubMed. Ehlers, V. 2000-12
+
+Result 4:
+Title: google_search%22,%20%22parameters%22:%20{%22query%22:%20%22lucas%20steuber%20machine%20learning%20publications%22}}
+URL: https://www.science.gov/topicpages/c/curly+top+virus.html)
+Content:
+google_search%22,%20%22parameters%22:%20{%22query%22:%20%22lucas%20steuber%20machine%20learning%20publications%22}} Markdown Content: [https://www.science.gov › topicpages › c › curly+top+virus.html](https://www.science.gov/topicpages/c/curly+top+virus.html) ### [curly top virus](https://www.science.gov/topicpages/c/curly+top+virus.html) Problems encountered by BA Cur graduates and recommendations for enhancing learner support. PubMed. Ehlers, V. 2000-12
+
+Result 5:
+Title: s/c/curly+top+virus.html)
+URL: https://web.archive.org/web/https://www.science.gov/topicpages/c/curly+top+virus.html)‎
+Content:
+s/c/curly+top+virus.html) Problems encountered by BA Cur graduates and recommendations for enhancing learner support. PubMed. Ehlers, V. 2000-12-01. Distance education is becoming ... google [cached](https://web.archive.org/web/https://www.science.gov/topicpages/c/curly+top+virus.html)‎ PLEASE strictly FOLLOW the instructions below! PLEASE strictly FOLLOW the instructions below! PLEASE strictly FOLLOW the instructions below! PLEASE strictly FOLLOW the instructions below! # Search Re

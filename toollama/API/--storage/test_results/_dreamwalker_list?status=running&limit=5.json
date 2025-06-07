@@ -1,0 +1,58 @@
+[
+  {
+    "duration": 0.005789041519165039,
+    "end_time": null,
+    "error": null,
+    "metadata": {
+      "api_base_url": "https://api.assisted.space/v2",
+      "model": null,
+      "tools_available": true
+    },
+    "progress": 5,
+    "results": {},
+    "start_time": 1740563295.147425,
+    "status": "running",
+    "step_description": "Generating variant search queries",
+    "steps_completed": [
+      {
+        "description": "Starting SwarmDreamwalker workflow for query: Explain the impact of artificial intelligence on healthcare",
+        "timestamp": 1740563295.147922
+      },
+      {
+        "description": "Generating variant search queries",
+        "timestamp": 1740563295.147979
+      }
+    ],
+    "steps_remaining": [],
+    "workflow_id": "db5075bc-989c-4bd3-8961-f1741eeab6f8",
+    "workflow_type": "SwarmDreamwalker"
+  },
+  {
+    "duration": 10.019215822219849,
+    "end_time": null,
+    "error": null,
+    "metadata": {
+      "api_base_url": "https://api.assisted.space/v2",
+      "model": "coolhand/camina-search:24b",
+      "tools_available": true
+    },
+    "progress": 5,
+    "results": {},
+    "start_time": 1740563285.133999,
+    "status": "running",
+    "step_description": "Generating variant search queries",
+    "steps_completed": [
+      {
+        "description": "Starting SwarmDreamwalker workflow for query: What are the latest developments in quantum computing?",
+        "timestamp": 1740563285.134932
+      },
+      {
+        "description": "Generating variant search queries",
+        "timestamp": 1740563285.134986
+      }
+    ],
+    "steps_remaining": [],
+    "workflow_id": "8eb34fc5-7cd1-4b51-a189-b6205efff3a6",
+    "workflow_type": "SwarmDreamwalker"
+  }
+]

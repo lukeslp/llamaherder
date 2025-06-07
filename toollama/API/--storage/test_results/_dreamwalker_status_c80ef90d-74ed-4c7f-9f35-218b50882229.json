@@ -1,0 +1,64 @@
+{
+  "duration": 10.011553049087524,
+  "end_time": null,
+  "error": null,
+  "metadata": {
+    "api_base_url": "https://api.assisted.space/v2",
+    "model": "coolhand/camina-search:24b",
+    "tools_available": true
+  },
+  "progress": 38,
+  "results": {},
+  "start_time": 1740563229.2201338,
+  "status": "running",
+  "step_description": "Executing Google search for: Breakthroughs in quantum error correction",
+  "steps_completed": [
+    {
+      "description": "Starting SwarmDreamwalker workflow for query: What are the latest developments in quantum computing?",
+      "timestamp": 1740563229.2210639
+    },
+    {
+      "description": "Generating variant search queries",
+      "timestamp": 1740563229.2211342
+    },
+    {
+      "description": "Generated 5 variant search queries",
+      "timestamp": 1740563233.441157
+    },
+    {
+      "description": "Executing searches for variant queries",
+      "timestamp": 1740563233.441291
+    },
+    {
+      "description": "Executing Google search for: Recent advancements in quantum algorithms",
+      "timestamp": 1740563233.4413471
+    },
+    {
+      "description": "Completed search 1/5",
+      "timestamp": 1740563233.851538
+    },
+    {
+      "description": "Executing Google search for: Current trends in quantum hardware development",
+      "timestamp": 1740563233.85167
+    },
+    {
+      "description": "Completed search 2/5",
+      "timestamp": 1740563236.286904
+    },
+    {
+      "description": "Executing Google search for: Latest research in quantum cryptography",
+      "timestamp": 1740563236.287015
+    },
+    {
+      "description": "Completed search 3/5",
+      "timestamp": 1740563238.672632
+    },
+    {
+      "description": "Executing Google search for: Breakthroughs in quantum error correction",
+      "timestamp": 1740563238.672839
+    }
+  ],
+  "steps_remaining": [],
+  "workflow_id": "c80ef90d-74ed-4c7f-9f35-218b50882229",
+  "workflow_type": "SwarmDreamwalker"
+}

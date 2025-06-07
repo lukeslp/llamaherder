@@ -1,0 +1,30 @@
+[
+  {
+    "capabilities": [
+      "text",
+      "vision"
+    ],
+    "capability_count": 2,
+    "created": "2025-04-03",
+    "created_at": "2025-04-03",
+    "description": "Coze bot for generating alt text",
+    "id": "7462296933429346310",
+    "name": "Alt Text Generator",
+    "owned_by": "coze",
+    "provider": "coze"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "created": "2025-04-03",
+    "created_at": "2025-04-03",
+    "description": "Command R model through Coze integration",
+    "id": "command-r-plus-08-2024",
+    "name": "Command R+ (via Coze)",
+    "owned_by": "coze",
+    "provider": "coze"
+  }
+]

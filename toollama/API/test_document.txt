@@ -1,0 +1,1 @@
+This is a test document for analyzing with OpenAI's Responses API. We'll test web search, file search, and tool capabilities.

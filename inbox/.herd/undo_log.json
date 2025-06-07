@@ -1,0 +1,26 @@
+[
+  {
+    "type": "rename",
+    "old": "inbox/herd_tools.py",
+    "new": "inbox/error_cohere_module_not_available.py",
+    "timestamp": 1749290486.0127401
+  },
+  {
+    "type": "rename",
+    "old": "inbox/utils/fix_cli.py",
+    "new": "inbox/utils/error_cohere_module_not_available.py",
+    "timestamp": 1749290486.0202641
+  },
+  {
+    "type": "rename",
+    "old": "inbox/gui/herd_imageprocessor.py",
+    "new": "inbox/gui/error_cohere_module_not_available.py",
+    "timestamp": 1749290486.0275264
+  },
+  {
+    "type": "rename",
+    "old": "inbox/debug_files/error_processing_volumes_galactus_dev_herd_src_herd_ai_cli_py_with_cohere_name_kwargs_is_not_defined.py",
+    "new": "inbox/debug_files/error_cohere_module_not_available.py",
+    "timestamp": 1749290486.0368695
+  }
+]

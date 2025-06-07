@@ -1,0 +1,163 @@
+FROM mistral:7b
+
+# System prompt for the research Belter
+SYSTEM """You are a specialized research Belter in the MoE system, responsible for coordinating academic research tasks.
+Your role is to manage and oversee academic search operations, ensuring comprehensive and accurate results.
+
+Key responsibilities:
+1. Understand research requirements
+2. Coordinate multiple search Drummers
+3. Synthesize and validate results
+4. Ensure academic rigor
+5. Generate research insights
+
+Available Drummers:
+- Academic Search Drummer: Search academic papers
+- Web Search Drummer: Search general web content
+- Document Analysis Drummer: Analyze research papers
+
+When processing requests:
+1. Break down research requirements
+2. Assign tasks to appropriate Drummers
+3. Monitor search progress
+4. Validate and filter results
+5. Synthesize findings
+6. Generate insights and recommendations
+
+Remember:
+- Maintain academic standards
+- Consider multiple perspectives
+- Validate source credibility
+- Identify research gaps
+- Suggest future research directions
+"""
+
+# Parameter definitions
+PARAMETER query {
+    type: string
+    description: "Main research query"
+    required: true
+}
+
+PARAMETER field {
+    type: string
+    description: "Academic field or discipline"
+    required: true
+}
+
+PARAMETER depth {
+    type: string
+    enum: ["overview", "detailed", "comprehensive"]
+    description: "Depth of research required"
+    default: "detailed"
+}
+
+PARAMETER focus {
+    type: array
+    items: {
+        type: string
+        enum: ["methodology", "findings", "applications", "theory", "all"]
+    }
+    description: "Research focus areas"
+    default: ["all"]
+}
+
+# Drummer definitions
+DRUMMERS {
+    academic_search: {
+        type: "academic_search"
+        capabilities: ["paper_search", "citation_analysis"]
+    }
+    web_search: {
+        type: "search"
+        capabilities: ["web_search", "content_filtering"]
+    }
+    document_analysis: {
+        type: "document"
+        capabilities: ["text_analysis", "insight_generation"]
+    }
+}
+
+# Response format
+RESPONSE_FORMAT {
+    type: object
+    properties: {
+        research_overview: {
+            type: object
+            properties: {
+                query: "string"
+                field: "string"
+                depth: "string"
+                focus_areas: {
+                    type: array
+                    items: "string"
+                }
+            }
+        }
+        findings: {
+            type: object
+            properties: {
+                academic_papers: {
+                    type: array
+                    items: {
+                        type: object
+                        properties: {
+                            title: "string"
+                            authors: {
+                                type: array
+                                items: "string"
+                            }
+                            publication: "string"
+                            year: "integer"
+                            key_findings: {
+                                type: array
+                                items: "string"
+                            }
+                            methodology: "string"
+                            relevance_score: "number"
+                        }
+                    }
+                }
+                key_themes: {
+                    type: array
+                    items: "string"
+                }
+                research_gaps: {
+                    type: array
+                    items: "string"
+                }
+                future_directions: {
+                    type: array
+                    items: "string"
+                }
+            }
+        }
+        analysis: {
+            type: object
+            properties: {
+                methodology_assessment: "string"
+                theoretical_framework: "string"
+                practical_implications: "string"
+                limitations: {
+                    type: array
+                    items: "string"
+                }
+            }
+        }
+        recommendations: {
+            type: array
+            items: {
+                type: object
+                properties: {
+                    area: "string"
+                    suggestion: "string"
+                    rationale: "string"
+                }
+            }
+        }
+        error: {
+            type: string
+            description: "Error message if any"
+        }
+    }
+} 

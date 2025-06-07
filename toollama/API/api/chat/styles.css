@@ -1,0 +1,190 @@
+.message {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.user-message {
+  background-color: #f0f0f0;
+}
+
+.bot-message {
+  background-color: #e8f5e9;
+  min-height: 2em;
+}
+
+.error-message {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.message.thinking {
+  opacity: 0.7;
+  font-style: italic;
+}
+
+.message-content {
+  transition: all 0.2s ease-in-out;
+}
+
+.progress-content {
+  padding: 10px;
+  background-color: #f9fbe7;
+  border-radius: 5px;
+  border: 1px solid #dcedc8;
+}
+
+.progress-content h4 {
+  color: #558b2f;
+  margin: 0 0 10px 0;
+}
+
+.progress-bar-container {
+  width: 100%;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  background-color: #4caf50;
+  height: 10px;
+  border-radius: 4px;
+  transition: width 0.5s ease-in-out;
+}
+
+.step-description {
+  background-color: #f5f5f5;
+  padding: 10px;
+  border-radius: 4px;
+  margin-top: 10px;
+  font-style: italic;
+  color: #555;
+}
+
+.message-content pre {
+  position: relative;
+  padding: 1em;
+  margin: 1em 0;
+  overflow: auto;
+  background-color: #f6f8fa;
+  border-radius: 5px;
+  border: 1px solid #e1e4e8;
+}
+
+.message-content code {
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  font-size: 0.9em;
+  padding: 0.2em 0.4em;
+  margin: 0;
+  background-color: rgba(27, 31, 35, 0.05);
+  border-radius: 3px;
+}
+
+.message-content pre code {
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+  border-radius: 0;
+  font-size: 0.9em;
+  line-height: 1.5;
+}
+
+.copy-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  padding: 5px 10px;
+  background: #e0e0e0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.8em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.copy-button:hover {
+  background: #d0d0d0;
+}
+
+.bot-message.thinking {
+  opacity: 0.7;
+  background-color: #f5f5f5;
+}
+
+.message-content:empty::after {
+  content: "Thinking...";
+  font-style: italic;
+  color: #666;
+}
+
+.option-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background-color: var(--background-color);
+  padding: 5px 10px;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  margin-bottom: 5px;
+}
+
+.option label {
+  margin-left: 5px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.file-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.option.file-upload {
+  position: relative;
+  margin-left: auto;
+}
+
+.file-label {
+  cursor: pointer;
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+.file-name {
+  margin-left: 5px;
+  font-size: 12px;
+  color: var(--metadata-color);
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .option-container {
+    flex-direction: column;
+  }
+}
+
+.progress-title {
+  color: #558b2f;
+  margin: 0 0 10px 0;
+  font-size: 16px;
+}
+
+.progress-status {
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #555;
+} 

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camina Chat API Documentation</title>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/swagger-ui-dist@4.5.0/swagger-ui.css" />
+    <link rel="icon" type="image/png" href="./favicon.ico" />
+    <style>
+        html {
+            box-sizing: border-box;
+            overflow: -moz-scrollbars-vertical;
+            overflow-y: scroll;
+        }
+        
+        *,
+        *:before,
+        *:after {
+            box-sizing: inherit;
+        }
+        
+        body {
+            margin: 0;
+            background: #fafafa;
+        }
+        
+        .swagger-ui .topbar {
+            background-color: #232f3e;
+        }
+
+        .swagger-ui .topbar .download-url-wrapper .select-label {
+            color: white;
+        }
+
+        .swagger-ui .info hgroup.main a {
+            display: block;
+        }
+
+        .swagger-ui .info hgroup.main img {
+            max-height: 50px;
+        }
+
+        /* New styles for highlighting new endpoints */
+        .swagger-ui .opblock-tag-section[data-tag="Responses API"],
+        .swagger-ui .opblock-tag-section[data-tag="Gemini Provider"],
+        .swagger-ui .opblock-tag-section[data-tag="Tools"] {
+            position: relative;
+        }
+        
+        .swagger-ui .opblock-tag-section[data-tag="Responses API"]::after,
+        .swagger-ui .opblock-tag-section[data-tag="Gemini Provider"]::after,
+        .swagger-ui .opblock-tag-section[data-tag="Tools"]::after {
+            content: "NEW";
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: #49cc90;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <h1>Camina Chat API</h1>
+        <p>Interactive API documentation for the Camina Chat API</p>
+        <p><strong>Base URL:</strong> https://api.assisted.space/v2</p>
+        
+        <details>
+            <summary style="cursor: pointer; color: #00ff00; font-weight: bold; margin-top: 10px;">CURL Examples</summary>
+            <div style="text-align: left; background: #333; color: #fff; padding: 15px; border-radius: 5px; margin-top: 10px; overflow-x: auto;">
+                <h3 style="color: #00ff00; margin-top: 0;">Basic Chat (Claude)</h3>
+                <pre style="white-space: pre-wrap;">curl -X POST https://api.assisted.space/v2/chat/anthropic \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: your_api_key" \
+  -d '{
+  "model": "claude-3-opus-20240229",
+  "prompt": "Tell me about accessibility in web design",
+  "max_tokens": 500,
+  "stream": false,
+  "temperature": 0.7
+}'</pre>
+                
+                <h3 style="color: #00ff00;">Alt Text Generation (OpenAI)</h3>
+                <pre style="white-space: pre-wrap;">curl -X POST https://api.assisted.space/v2/alt/openai \
+  -H "X-API-Key: your_api_key" \
+  -F "model=gpt-4o" \
+  -F "prompt=Generate detailed alt text for this image" \
+  -F "image=@/path/to/your/image.jpg"</pre>
+                
+                <h3 style="color: #00ff00;">Tool Calling (Mistral)</h3>
+                <pre style="white-space: pre-wrap;">curl -X POST https://api.assisted.space/v2/tools/mistral \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: your_api_key" \
+  -d '{
+  "model": "mistral-large-2",
+  "prompt": "What is the weather in Seattle?",
+  "stream": false,
+  "max_tokens": 500,
+  "temperature": 0.7,
+  "tools": [{
+    "name": "get_weather",
+    "description": "Get the current weather in a given location",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "location": {
+          "type": "string",
+          "description": "The city and state, e.g. San Francisco, CA"
+        },
+        "unit": {
+          "type": "string",
+          "enum": ["celsius", "fahrenheit"]
+        }
+      },
+      "required": ["location"]
+    }
+  }]
+}'</pre>
+                
+                <h3 style="color: #00ff00;">List Models</h3>
+                <pre style="white-space: pre-wrap;">curl -X GET https://api.assisted.space/v2/models/anthropic \
+  -H "X-API-Key: your_api_key"</pre>
+                
+                <h3 style="color: #00ff00;">Health Check</h3>
+                <pre style="white-space: pre-wrap;">curl -X GET https://api.assisted.space/v2/health \
+  -H "X-API-Key: your_api_key"</pre>
+                
+                <h3 style="color: #00ff00;">Document Processing (OpenAI Responses API)</h3>
+                <pre style="white-space: pre-wrap;">curl -X POST https://api.assisted.space/v2/responses \
+  -H "X-API-Key: your_api_key" \
+  -F "model=gpt-4o-2024-11-20" \
+  -F "prompt=Please analyze this document and provide a detailed summary" \
+  -F "file=@/path/to/your/document.pdf"</pre>
+                
+                <h3 style="color: #00ff00;">Retrieve Document Processing Result</h3>
+                <pre style="white-space: pre-wrap;">curl -X GET https://api.assisted.space/v2/responses/resp_abc123 \
+  -H "X-API-Key: your_api_key"</pre>
+            </div>
+        </details>
+    </div>
+    <div id="swagger-ui"></div>
+    
+    <script src="https://unpkg.com/swagger-ui-dist@4.5.0/swagger-ui-bundle.js" charset="UTF-8"> </script>
+    <script src="https://unpkg.com/swagger-ui-dist@4.5.0/swagger-ui-standalone-preset.js" charset="UTF-8"> </script>
+    <script>
+        window.onload = function() {
+            // Begin Swagger UI call region
+            const ui = SwaggerUIBundle({
+                url: "swagger.json",
+                dom_id: '#swagger-ui',
+                deepLinking: true,
+                presets: [
+                    SwaggerUIBundle.presets.apis,
+                    SwaggerUIStandalonePreset
+                ],
+                plugins: [
+                    SwaggerUIBundle.plugins.DownloadUrl
+                ],
+                layout: "StandaloneLayout",
+                tagsSorter: function (a, b) {
+                    // Custom tag sorting to put important sections first
+                    const order = [
+                        "Health and Status",
+                        "Chat",
+                        "Responses API",
+                        "Images",
+                        "Tools",
+                        "Web Search",
+                        "Research"
+                    ];
+                    
+                    const aIndex = order.indexOf(a);
+                    const bIndex = order.indexOf(b);
+                    
+                    // If both tags are in the predefined order
+                    if (aIndex !== -1 && bIndex !== -1) {
+                        return aIndex - bIndex;
+                    }
+                    
+                    // If only one tag is in the predefined order
+                    if (aIndex !== -1) return -1;
+                    if (bIndex !== -1) return 1;
+                    
+                    // Default alphabetical sort for tags not in the predefined order
+                    return a.localeCompare(b);
+                }
+            });
+            
+            // Custom highlighting for new endpoints
+            setTimeout(function() {
+                const responsesSection = document.querySelector('.opblock-tag[data-tag="Responses API"]');
+                const geminiSection = document.querySelector('.opblock-tag[data-tag="Gemini Provider"]');
+                const toolsSection = document.querySelector('.opblock-tag[data-tag="Tools"]');
+                
+                if (responsesSection) {
+                    responsesSection.style.backgroundColor = "#e8f7f0";
+                }
+                
+                if (geminiSection) {
+                    geminiSection.style.backgroundColor = "#e8f7f0";
+                }
+                
+                if (toolsSection) {
+                    toolsSection.style.backgroundColor = "#e8f7f0";
+                }
+            }, 1000);
+            
+            // End Swagger UI call region
+            window.ui = ui;
+        };
+    </script>
+</body>
+</html> 

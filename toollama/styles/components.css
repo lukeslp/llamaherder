@@ -1,0 +1,171 @@
+/* Activity Indicator */
+.streaming-indicator {
+  position: fixed;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 99;
+  width: 48px;
+  height: 48px;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  pointer-events: none;
+  margin: 0;
+  padding: 0;
+}
+
+.streaming-indicator img {
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+  animation: pulse 2s ease-in-out infinite;
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+@media (max-width: 768px) {
+  .streaming-indicator {
+    bottom: 40px;
+  }
+}
+
+.chat-container.loading .streaming-indicator,
+.chat-container.streaming .streaming-indicator,
+.chat-container.model-loading .streaming-indicator {
+  opacity: 1;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.4); }
+  100% { transform: scale(1); }
+}
+
+/* Make chat container relative for absolute positioning */
+.chat-container {
+  position: relative;
+}
+
+/* Input Controls */
+.send-button {
+  display: flex;
+  align-items: center;
+}
+
+.send-button label {
+  display: flex;
+  align-items: center;
+  padding: 6px;
+  background: transparent;
+  cursor: pointer;
+  color: #9ccaff;
+  transition: var(--transition-standard);
+  font-size: var(--font-size-lg);
+  transform: rotate(0deg);
+}
+
+.send-button label:hover {
+  color: var(--color-primary);
+  transform: scale(1.1);
+}
+
+#sendButton {
+  display: none;
+  font-size: var(--font-size-md);
+  background: var(--gradient-border);
+  background-size: 200% 200%;
+  animation: gradientRotate 10s ease-in-out infinite;
+  color: #000;
+  font-weight: bold;
+}
+
+.message-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(29, 161, 242, 0.15);
+  /* backdrop-filter: blur(8px); */
+  border: 1px solid rgba(29, 161, 242, 0.2);
+  border-radius: 8px;
+  padding: 4px 8px;
+  flex: 1;
+}
+
+#messageInput {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--color-text-primary);
+  font-family: var(--font-family);
+  font-size: var(--font-size-md);
+  padding: 8px;
+}
+
+#messageInput:focus {
+  outline: none;
+}
+
+#messageInput::placeholder {
+  color: #9ccaff;
+  opacity: 0.8;
+}
+
+/* States */
+.loading .send-button label {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Model Display */
+.model-icon {
+  font-size: 16px;
+  margin-right: 8px;
+  width: 20px;
+  display: inline-block;
+  text-align: center;
+}
+
+.model-icon i {
+  color: var(--text-color);
+  opacity: 0.8;
+}
+
+.model-option:hover .model-icon i {
+  opacity: 1;
+}
+
+.token-count {
+  font-size: var(--font-size-sm);
+  text-align: left;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  margin-right: auto;
+  opacity: 0.4;
+  display: block;
+}
+
+.select2-selection__rendered {
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
+}
+
+.select2-selection__rendered .model-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  width: 20px;
+  margin-right: 4px;
+}
+
+.select2-selection__rendered .model-name {
+  font-weight: 500;
+}
+
+.select2-selection__rendered .model-size {
+  opacity: 0.7;
+  font-size: 14px;
+  margin-left: 4px;
+}

@@ -1,0 +1,16 @@
+{
+  "count": 2,
+  "query": "accessibility web design",
+  "results": [
+    {
+      "body": "Accessibility Principles \u2014 introduces the concepts behind the web accessibility requirements; How people with disabilities use the web \u2014 explores the impact of accessible design with real-life examples; Web Accessibility Tutorials \u2014 includes some guidance related to designing, for example, providing alternative text for images",
+      "href": "https://www.w3.org/WAI/tips/designing/",
+      "title": "Designing for Web Accessibility - Tips for Getting Started"
+    },
+    {
+      "body": "As shown in the previous section, accessible design improves overall user experience and satisfaction, especially in a variety of situations, across different devices, and for older users. Accessibility can enhance your brand, drive innovation, and extend your market reach. Web accessibility is required by law in many situations.",
+      "href": "https://www.w3.org/WAI/fundamentals/accessibility-intro/",
+      "title": "Introduction to Web Accessibility | Web Accessibility Initiative (WAI ..."
+    }
+  ]
+}

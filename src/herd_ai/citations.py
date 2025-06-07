@@ -1,18 +1,24 @@
-# =============================================================================
-# Herd AI - Idealized Citation Extraction and Management Module
-#
-# This module provides robust, accessible, and extensible tools for extracting,
-# enriching, and managing citations from academic papers and documents.
-# Features:
-#   - User can select output file format(s) (md, bib, txt, csv, etc.)
-#   - User can select citation style(s) to extract (APA, MLA, Chicago, IEEE, Vancouver)
-#   - Extracts in-text, reference list, and DOI citations from text and document files
-#   - Deduplicates citations by raw string/DOI
-#   - Enriches DOIs via CrossRef
-#   - Outputs master JSON and summary statistics
-#   - CLI and function API
-#   - Designed for accessibility and LLM workflows
-# =============================================================================
+#!/usr/bin/env python3
+"""
+Citations Extractor Module
+
+This module extracts citations from text files and documents, supporting multiple
+citation styles (APA, MLA, Chicago, IEEE, Vancouver) and output formats (Markdown,
+BibTeX, plain text, CSV). It can process individual files or entire directories
+recursively, with deduplication and DOI enrichment capabilities.
+
+Key Features:
+- Multi-style citation extraction (APA, MLA, Chicago, IEEE, Vancouver)
+- Multiple output formats (Markdown, BibTeX, plain text, CSV)
+- DOI enrichment via CrossRef API
+- Deduplication by raw string or DOI
+- Recursive directory processing
+- Comprehensive error handling and logging
+- Accessibility-focused output formatting
+
+Author: Luke Steuber
+License: MIT
+"""
 
 import os
 import json
@@ -24,9 +30,38 @@ import re
 from datetime import datetime
 import csv
 import argparse
-import bibtexparser
-from bibtexparser.bwriter import BibTexWriter
-from bibtexparser.bibdatabase import BibDatabase
+
+# Try to import bibtexparser, but provide fallback if not available
+try:
+    import bibtexparser
+    from bibtexparser.bwriter import BibTexWriter
+    from bibtexparser.bibdatabase import BibDatabase
+    BIBTEX_AVAILABLE = True
+except ImportError:
+    BIBTEX_AVAILABLE = False
+    # Fallback classes for when bibtexparser is not available
+    class BibDatabase:
+        def __init__(self):
+            self.entries = []
+    
+    class BibTexWriter:
+        def __init__(self):
+            self.indent = '    '
+        
+        def write(self, db):
+            # Simple BibTeX writer fallback
+            output = []
+            for entry in db.entries:
+                entry_type = entry.get('ENTRYTYPE', 'article')
+                entry_id = entry.get('ID', 'unknown')
+                output.append(f"@{entry_type}{{{entry_id},")
+                for key, value in entry.items():
+                    if key not in ['ENTRYTYPE', 'ID'] and value:
+                        output.append(f"    {key} = {{{value}}},")
+                output.append("}")
+                output.append("")
+            return "\n".join(output)
+
 from rich.progress import Progress, SpinnerColumn, TextColumn, BarColumn, TimeElapsedColumn
 from rich.console import Console
 from rich.panel import Panel
@@ -67,8 +102,8 @@ try:
                 from herd_ai.utils.file import get_file_text, is_ignored_file
                 from herd_ai.config import TEXT_EXTENSIONS, DOCUMENT_EXTENSIONS
 except Exception as e:
-    print(f"Error importing modules in citations.py: {e}")
-    print("Make sure you're running from the project directory or the package is installed.")
+    print(f"Warning: Some dependencies not available in citations.py: {e}")
+    print("Citations module will work with limited functionality.")
     # Fallback definitions
     TEXT_EXTENSIONS = {'.txt', '.md', '.rst', '.tex', '.json', '.yaml', '.yml', '.toml', '.xml', '.env', '.properties', '.conf', '.ini', '.sql', '.graphql', '.sh', '.bash', '.zsh', '.ps1', '.bat', '.cmd'}
     DOCUMENT_EXTENSIONS = {'.pdf', '.docx', '.doc', '.pptx', '.ppt', '.xlsx', '.xls', '.odt', '.ods', '.odp'}
@@ -376,6 +411,42 @@ def generate_markdown_citation_list(citations: List[Dict[str, Any]], directory: 
     return markdown
 
 def generate_bibtex_citations(citations: List[Dict[str, Any]]) -> str:
+    """Generate BibTeX formatted citations."""
+    if not BIBTEX_AVAILABLE:
+        # Fallback BibTeX generation when bibtexparser is not available
+        output = []
+        output.append("% BibTeX citations generated with fallback method")
+        output.append("% Install bibtexparser for enhanced BibTeX support")
+        output.append("")
+        
+        for ref in citations:
+            author_key = ref.get('authors', '').split(',')[0].strip() if ref.get('authors') else "Unknown"
+            year_key = ref.get('year', '')
+            entry_id = f"{author_key}_{year_key}".replace(' ', '_').replace('.', '')
+            
+            output.append(f"@article{{{entry_id},")
+            if ref.get("title"):
+                output.append(f"    title = {{{ref.get('title')}}},")
+            if ref.get("authors"):
+                output.append(f"    author = {{{ref.get('authors')}}},")
+            if ref.get("year"):
+                output.append(f"    year = {{{ref.get('year')}}},")
+            if ref.get("source"):
+                output.append(f"    journal = {{{ref.get('source')}}},")
+            if ref.get("volume"):
+                output.append(f"    volume = {{{ref.get('volume')}}},")
+            if ref.get("issue"):
+                output.append(f"    number = {{{ref.get('issue')}}},")
+            if ref.get("pages"):
+                output.append(f"    pages = {{{ref.get('pages')}}},")
+            if ref.get("doi"):
+                output.append(f"    doi = {{{ref.get('doi')}}},")
+            output.append("}")
+            output.append("")
+        
+        return "\n".join(output)
+    
+    # Use bibtexparser if available
     db = BibDatabase()
     db.entries = []
     for ref in citations:

@@ -1,0 +1,45 @@
+# Server Configuration for MoE System
+
+# Caminaå (Coordinator) Server
+caminaa:
+  host: "0.0.0.0"
+  port: 6000
+  model: "mistral-small:22b"
+  max_tokens: 512
+  temperature: 0.7
+  timeout: 30
+
+# Belters (File Manipulation) Server
+belters:
+  host: "0.0.0.0"
+  port: 6001
+  model: "mistral:7b"
+  max_tokens: 256
+  temperature: 0.6
+  timeout: 20
+
+# Drummers (Information Gathering) Server
+drummers:
+  host: "0.0.0.0"
+  port: 6002
+  model: "mistral:7b"
+  max_tokens: 256
+  temperature: 0.6
+  timeout: 20
+
+# DeepSeek (Background Reasoning) Server
+deepseek:
+  host: "0.0.0.0"
+  port: 6003
+  model: "deepseek-r1:7b"
+  max_tokens: 256
+  temperature: 0.5
+  timeout: 25
+
+# Global Settings
+global:
+  log_level: "INFO"
+  cors_origins: ["*"]  # Configure appropriately for production
+  request_timeout: 30
+  max_retries: 3
+  backoff_factor: 1.5 

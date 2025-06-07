@@ -1,0 +1,102 @@
+[
+  {
+    "duration": 0.8921482563018799,
+    "end_time": null,
+    "error": null,
+    "metadata": {
+      "api_base_url": "https://api.assisted.space/v2",
+      "model": null,
+      "tools_available": true
+    },
+    "progress": 20,
+    "results": {},
+    "start_time": 1743255592.8773718,
+    "status": "running",
+    "step_description": "Executing Google search for: Explain the impact of artificial intelligence on healthcare",
+    "steps_completed": [
+      {
+        "description": "Starting SwarmDreamwalker workflow for query: Explain the impact of artificial intelligence on healthcare",
+        "timestamp": 1743255592.886288
+      },
+      {
+        "description": "Generating variant search queries",
+        "timestamp": 1743255592.8924701
+      },
+      {
+        "description": "Executing searches for variant queries",
+        "timestamp": 1743255593.373706
+      },
+      {
+        "description": "Executing Google search for: Explain the impact of artificial intelligence on healthcare",
+        "timestamp": 1743255593.37385
+      }
+    ],
+    "steps_remaining": [],
+    "workflow_id": "5f9534b8-a523-40e9-88f7-0bd9b985f4fa",
+    "workflow_type": "SwarmDreamwalker"
+  },
+  {
+    "duration": 13.268183946609497,
+    "end_time": null,
+    "error": null,
+    "metadata": {
+      "api_base_url": "https://api.assisted.space/v2",
+      "model": "coolhand/camina-search:24b",
+      "tools_available": true
+    },
+    "progress": 38,
+    "results": {},
+    "start_time": 1743255580.50134,
+    "status": "running",
+    "step_description": "Executing Google search for: What are the latest developments in quantum computing? notable achievements",
+    "steps_completed": [
+      {
+        "description": "Starting SwarmDreamwalker workflow for query: What are the latest developments in quantum computing?",
+        "timestamp": 1743255580.842335
+      },
+      {
+        "description": "Generating variant search queries",
+        "timestamp": 1743255580.842491
+      },
+      {
+        "description": "Generated 5 variant search queries",
+        "timestamp": 1743255582.2558389
+      },
+      {
+        "description": "Executing searches for variant queries",
+        "timestamp": 1743255582.2562099
+      },
+      {
+        "description": "Executing Google search for: What are the latest developments in quantum computing?",
+        "timestamp": 1743255582.2563531
+      },
+      {
+        "description": "Completed search 1/5",
+        "timestamp": 1743255585.0777102
+      },
+      {
+        "description": "Executing Google search for: latest information about What are the latest developments in quantum computing?",
+        "timestamp": 1743255585.0779378
+      },
+      {
+        "description": "Completed search 2/5",
+        "timestamp": 1743255588.09745
+      },
+      {
+        "description": "Executing Google search for: What are the latest developments in quantum computing? background and history",
+        "timestamp": 1743255588.0976582
+      },
+      {
+        "description": "Completed search 3/5",
+        "timestamp": 1743255592.18157
+      },
+      {
+        "description": "Executing Google search for: What are the latest developments in quantum computing? notable achievements",
+        "timestamp": 1743255592.181947
+      }
+    ],
+    "steps_remaining": [],
+    "workflow_id": "f2e065f8-6ecf-4f00-937c-40b96026f302",
+    "workflow_type": "SwarmDreamwalker"
+  }
+]

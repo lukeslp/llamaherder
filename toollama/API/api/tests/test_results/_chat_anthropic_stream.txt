@@ -1,0 +1,13 @@
+{"type": "delta", "content": "Here"}
+{"type": "delta", "content": " is a short poem about AI:"}
+{"type": "delta", "content": "\n\nArtificial Intelligence,\nA technological"}
+{"type": "delta", "content": " brilliance,\nAlgorithms an"}
+{"type": "delta", "content": "d data,\nPowering the"}
+{"type": "delta", "content": " future.\n\nMachines that learn and grow"}
+{"type": "delta", "content": ",\nAdapting to our world's flow,"}
+{"type": "delta", "content": "\nAnalyzing, predicting, deciding,\nRevolut"}
+{"type": "delta", "content": "ionizing how we're living.\n\nExpanding"}
+{"type": "delta", "content": " human potential,\nUnlocking new"}
+{"type": "delta", "content": " potential,\nAI, a"}
+{"type": "delta", "content": " marvel of our time,\nShaping the digital"}
+{"type": "delta", "content": " clime"}

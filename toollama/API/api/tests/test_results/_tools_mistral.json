@@ -1,0 +1,7 @@
+{
+  "content": "Error calling tools: 400 Client Error: Bad Request for url: https://api.mistral.ai/v1/chat/completions",
+  "error": "400 Client Error: Bad Request for url: https://api.mistral.ai/v1/chat/completions",
+  "model": "mistral-small",
+  "provider": "mistral",
+  "tool_calls": []
+}

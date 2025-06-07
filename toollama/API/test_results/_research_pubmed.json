@@ -1,0 +1,67 @@
+{
+  "count": 2,
+  "query": "covid vaccination",
+  "results": [
+    {
+      "abstract": "",
+      "authors": [
+        "Mohamed K",
+        "Rzymski P",
+        "Islam MS",
+        "Makuku R",
+        "Mushtaq A",
+        "Khan A",
+        "Ivanovska M",
+        "Makka SA",
+        "Hashem F",
+        "Marquez L",
+        "Cseprekal O",
+        "Filgueiras IS",
+        "Fonseca DLM",
+        "Mickael E",
+        "Ling I",
+        "Arero AG",
+        "Cuschieri S",
+        "Minakova K",
+        "Rodr\u00edguez-Rom\u00e1n E",
+        "Abarikwu SO",
+        "Faten AB",
+        "Grancini G",
+        "Cabral-Marques O",
+        "Rezaei N"
+      ],
+      "doi": "doi: 10.1002/jmv.27487",
+      "id": "34845731",
+      "journal": "Journal of medical virology",
+      "pmid": "34845731",
+      "publication_date": "2022 Apr",
+      "publication_types": [
+        "Journal Article",
+        "Review"
+      ],
+      "source": "PubMed",
+      "title": "COVID-19 vaccinations: The unknowns, challenges, and hopes.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/34845731/"
+    },
+    {
+      "abstract": "",
+      "authors": [
+        "Rasmussen SA",
+        "Jamieson DJ"
+      ],
+      "doi": "doi: 10.1016/j.idc.2022.01.002",
+      "id": "35636908",
+      "journal": "Infectious disease clinics of North America",
+      "pmid": "35636908",
+      "publication_date": "2022 Jun",
+      "publication_types": [
+        "Journal Article",
+        "Review"
+      ],
+      "source": "PubMed",
+      "title": "COVID-19 and Pregnancy.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/35636908/"
+    }
+  ],
+  "total": 30389
+}

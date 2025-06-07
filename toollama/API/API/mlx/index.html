@@ -1,0 +1,212 @@
+    <div id="toast" class="toast"></div>
+
+    <div style="text-align: center; padding: 20px; max-width: 800px; margin: 0 auto; border-bottom: none;">
+      <h1 style="font-size: 42px; margin: 0; font-weight: 700; letter-spacing: -1px;">mlx</h1>
+      <h3 style="font-size: 24px; margin: 0; font-weight: 700; letter-spacing: -1px;">Llama 3.2 (3B) on Apple Silicon</h3>
+      <p style="margin-top: 10px; font-style: italic;">Powered by actuallyusefulai.com</p>
+    </div>
+
+    <div class="chat-container">
+      <ul class="messages" id="messages"></ul>
+    </div>
+    
+    <div class="input-container">
+      <input type="text" id="messageInput" placeholder="Type a message..." />
+      <button id="sendButton">Send</button>
+    </div>
+
+    <script>
+      const API_BASE_URL = "https://api.assisted.space/v2/chat/mlx";
+      const state = {
+        currentBotId: "7419082412887408645",
+        conversationId: null,
+        isFirstMessage: true,
+        md: window.markdownit(),
+      };
+
+      function showToast(message, duration = 3000) {
+        const toast = document.getElementById('toast');
+        toast.textContent = message;
+        toast.classList.add('show');
+        
+        setTimeout(() => {
+          toast.classList.remove('show');
+        }, duration);
+      }
+
+      function processMessageContent(content) {
+        console.log("Processing message content:", content);
+        const parsedContent = state.md.render(content);
+        const container = document.createElement("div");
+        container.className = "markdown-body message-content";
+        container.innerHTML = parsedContent;
+
+        container.querySelectorAll("pre code").forEach((block) => {
+          hljs.highlightElement(block);
+        });
+
+        console.log("Processed message container:", container.outerHTML);
+        return container.outerHTML;
+      }
+
+      function createMessageItem(content, type) {
+        console.log(`Creating message item: {content: '${content}', type: '${type}'}`);
+        const messageEl = document.createElement("li");
+        messageEl.className = `message ${type}`;
+      
+        // Create container for the main content
+        const contentEl = document.createElement("div");
+        contentEl.className = "message-content";
+        contentEl.innerHTML = content ? processMessageContent(content) : "";
+        messageEl.appendChild(contentEl);
+      
+        // Create container for metadata (model name, token count)
+        const metaEl = document.createElement("div");
+        metaEl.className = "message-meta";
+      
+        // Add model name for bot messages
+        const modelNameEl = document.createElement("span");
+        modelNameEl.className = "model-name";
+        if (type === "bot-message") {
+          modelNameEl.textContent = "Llama 3.2 (3B)";
+        }
+        metaEl.appendChild(modelNameEl);
+      
+        // Add token count element (to be populated later)
+        const tokenCountEl = document.createElement("span");
+        tokenCountEl.className = "token-count";
+        metaEl.appendChild(tokenCountEl);
+      
+        messageEl.appendChild(metaEl);
+      
+        return { messageEl, contentEl, tokenCountEl, modelNameEl };
+      }
+
+      function autoScroll() {
+        console.log("Auto-scrolling chat container");
+        const container = document.querySelector(".chat-container");
+        container.scrollTop = container.scrollHeight;
+      }
+
+      async function sendMessage() {
+        const messageInput = document.getElementById("messageInput");
+        const message = messageInput.value.trim();
+        if (!message) return;
+
+        // Clear input
+        messageInput.value = '';
+
+        // Get the messages container
+        const messagesContainer = document.getElementById("messages");
+
+        // Add user message to chat
+        const { messageEl } = createMessageItem(message, "user-message");
+        messagesContainer.appendChild(messageEl);
+
+        // Add bot message placeholder
+        const { messageEl: botMessageEl, contentEl: botContentEl } = 
+            createMessageItem("", "bot-message");
+        messagesContainer.appendChild(botMessageEl);
+
+        // Auto scroll
+        autoScroll();
+
+        // Use XMLHttpRequest instead of fetch for better browser compatibility
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', API_BASE_URL, true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.setRequestHeader('Accept', 'application/json');
+        xhr.withCredentials = true;
+        
+        // Setup event handlers
+        xhr.onload = function() {
+            console.log("XHR response status:", xhr.status);
+            
+            if (xhr.status >= 200 && xhr.status < 300) {
+                try {
+                    const data = JSON.parse(xhr.responseText);
+                    console.log("Parsed response data:", data);
+                    
+                    if (data.error) {
+                        const errorMessage = data.error;
+                        console.error("Server returned error:", errorMessage);
+                        showToast("Error from server", 5000);
+                        
+                        // Format error message for display
+                        let displayError = errorMessage;
+                        if (errorMessage.includes("cannot import name") || errorMessage.includes("ImportError")) {
+                            displayError = "Server dependency error. Please try again later.";
+                        } else if (errorMessage.includes("mlx_lm.generate")) {
+                            displayError = "Error with MLX model. Try again later.";
+                        }
+                        
+                        botContentEl.innerHTML = processMessageContent(`Error: ${displayError}`);
+                    } else if (data.message && data.message.content) {
+                        botContentEl.innerHTML = processMessageContent(data.message.content);
+                        autoScroll();
+                    } else if (data.content) {
+                        botContentEl.innerHTML = processMessageContent(data.content);
+                        autoScroll();
+                    }
+                } catch (e) {
+                    console.error("Error parsing JSON response:", e);
+                    botContentEl.innerHTML = processMessageContent('Error parsing response from server');
+                }
+            } else {
+                console.error("Server error:", xhr.status);
+                
+                try {
+                    const errorData = JSON.parse(xhr.responseText);
+                    let errorMessage = errorData.error || "Internal Server Error";
+                    
+                    // Simplify the error message for display
+                    if (errorMessage.includes("cannot import name") || errorMessage.includes("ImportError")) {
+                        errorMessage = "Server dependency error. The MLX model is experiencing technical difficulties.";
+                    }
+                    
+                    botContentEl.innerHTML = processMessageContent(`Error: ${errorMessage}`);
+                } catch (e) {
+                    // If we can't parse the error JSON, show a generic error message
+                    if (xhr.status === 503) {
+                        botContentEl.innerHTML = processMessageContent('Error: MLX provider not available. Please try again later.');
+                    } else if (xhr.status === 500) {
+                        botContentEl.innerHTML = processMessageContent('Error: The MLX model is experiencing technical difficulties.');
+                    } else {
+                        botContentEl.innerHTML = processMessageContent(`Error: Server returned status ${xhr.status}`);
+                    }
+                }
+            }
+        };
+        
+        xhr.onerror = function() {
+            console.error("Network error occurred");
+            botContentEl.innerHTML = processMessageContent('Network error: Could not connect to the server');
+            showToast("Network error. Please check your connection.", 5000);
+        };
+        
+        // Log all headers received
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                console.log("All response headers:", xhr.getAllResponseHeaders());
+            }
+        };
+        
+        // Send the request
+        const payload = JSON.stringify({
+            message: message,
+            model: 'llama3.2:3b',
+            max_tokens: 4096
+        });
+        
+        console.log("Sending payload:", payload);
+        xhr.send(payload);
+      }
+
+      // Event listeners
+      document.getElementById('sendButton').addEventListener('click', sendMessage);
+      document.getElementById('messageInput').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+          sendMessage();
+        }
+      });
+    </script> 

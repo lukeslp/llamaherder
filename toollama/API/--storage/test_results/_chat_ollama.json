@@ -1,0 +1,5 @@
+{
+  "content": "I'm doing well, thank you for asking. Is there anything I can help you with or talk about today?",
+  "model": "llama3.2:1b",
+  "provider": "ollama"
+}

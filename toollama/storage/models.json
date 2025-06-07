@@ -1,0 +1,345 @@
+{
+  "categories": [
+    {
+      "label": "Dreamwalker Models",
+      "models": [
+        {
+          "value": "camina:latest",
+          "text": "camina",
+          "data-size": "4.1GB",
+          "data-info": "Dreamwalker coordinator - routes requests to specialized models while providing direct assistance",
+          "selected": true
+        },
+        {
+          "value": "drummer-arxiv:latest",
+          "text": "drummer-arxiv",
+          "data-size": "4.1GB",
+          "data-info": "Research paper analysis"
+        },
+        {
+          "value": "drummer-code:latest",
+          "text": "drummer-code",
+          "data-size": "4.1GB",
+          "data-info": "Specialized code synthesis"
+        },
+        {
+          "value": "drummer-dataproc:latest",
+          "text": "drummer-dataproc",
+          "data-size": "4.1GB",
+          "data-info": "Data processing and analysis"
+        },
+        {
+          "value": "drummer-document:latest",
+          "text": "drummer-document",
+          "data-size": "4.1GB",
+          "data-info": "Document analysis and processing"
+        },
+        {
+          "value": "drummer-finance:latest",
+          "text": "drummer-finance",
+          "data-size": "4.1GB",
+          "data-info": "Financial analysis"
+        },
+        {
+          "value": "drummer-infinite:latest",
+          "text": "drummer-infinite",
+          "data-size": "4.1GB",
+          "data-info": "Internet search integration"
+        },
+        {
+          "value": "drummer-knowledge:latest",
+          "text": "drummer-knowledge",
+          "data-size": "4.1GB",
+          "data-info": "Knowledge base integration"
+        },
+        {
+          "value": "drummer-scrape:3b",
+          "text": "drummer-scrape:3b",
+          "data-size": "2.0GB",
+          "data-info": "Web content extraction"
+        },
+        {
+          "value": "drummer-scrape:latest",
+          "text": "drummer-scrape",
+          "data-size": "4.1GB",
+          "data-info": "Web content extraction"
+        },
+        {
+          "value": "drummer-timecalc:latest",
+          "text": "drummer-timecalc",
+          "data-size": "4.1GB",
+          "data-info": "Time-based calculations"
+        },
+        {
+          "value": "drummer-wayback:latest",
+          "text": "drummer-wayback",
+          "data-size": "4.1GB",
+          "data-info": "Historical web access"
+        }
+      ]
+    },
+    {
+      "label": "Code Models",
+      "models": [
+        {
+          "value": "StarCoder2:latest",
+          "text": "StarCoder2",
+          "data-size": "4.1GB",
+          "data-info": "Multi-language code generation"
+        },
+        {
+          "value": "codellama:7b",
+          "text": "codellama:7b",
+          "data-size": "4.7GB",
+          "data-info": "Code completion and generation"
+        },
+        {
+          "value": "opencoder:8b",
+          "text": "opencoder:8b",
+          "data-size": "4.9GB",
+          "data-info": "General code understanding"
+        },
+        {
+          "value": "qwen2.5-coder:7b",
+          "text": "qwen2.5-coder:7b",
+          "data-size": "4.7GB",
+          "data-info": "Specialized code synthesis"
+        }
+      ]
+    },
+    {
+      "label": "Experimental Models",
+      "models": [
+        {
+          "value": "coolhand/impossible_alt:13b",
+          "text": "impossible_alt:13b",
+          "data-size": "8.0GB",
+          "data-info": "Creative problem solving"
+        },
+        {
+          "value": "falcon3:10b",
+          "text": "falcon3:10b",
+          "data-size": "4.1GB",
+          "data-info": "Advanced language model"
+        },
+        {
+          "value": "gemma2:latest",
+          "text": "gemma2",
+          "data-size": "4.1GB",
+          "data-info": "Advanced language understanding"
+        }
+      ]
+    },
+    {
+      "label": "Foundation Models",
+      "models": [
+        {
+          "value": "deepseek-r1:1.5b",
+          "text": "deepseek-r1:1.5b",
+          "data-size": "1.1GB",
+          "data-info": "Foundation model for general tasks"
+        },
+        {
+          "value": "deepseek-r1:14b",
+          "text": "deepseek-r1:14b",
+          "data-size": "8.0GB",
+          "data-info": "Foundation model for general tasks"
+        },
+        {
+          "value": "deepseek-r1:7b",
+          "text": "deepseek-r1:7b",
+          "data-size": "4.7GB",
+          "data-info": "Foundation model for general tasks"
+        },
+        {
+          "value": "deepseek-r1:8b",
+          "text": "deepseek-r1:8b",
+          "data-size": "4.9GB",
+          "data-info": "Foundation model for general tasks"
+        },
+        {
+          "value": "granite3-dense:latest",
+          "text": "granite3-dense",
+          "data-size": "4.1GB",
+          "data-info": "General purpose model"
+        },
+        {
+          "value": "granite3.1-dense:8b",
+          "text": "granite3.1-dense:8b",
+          "data-size": "4.9GB",
+          "data-info": "Dense transformer architecture"
+        },
+        {
+          "value": "granite3.1-moe:latest",
+          "text": "granite3.1-moe",
+          "data-size": "4.1GB",
+          "data-info": "Sparse MoE architecture with conditional routing"
+        },
+        {
+          "value": "olmo2:13b",
+          "text": "olmo2:13b",
+          "data-size": "8.0GB",
+          "data-info": "General purpose foundation model"
+        },
+        {
+          "value": "olmo2:7b",
+          "text": "olmo2:7b",
+          "data-size": "4.7GB",
+          "data-info": "General purpose foundation model"
+        }
+      ]
+    },
+    {
+      "label": "Llama Models",
+      "models": [
+        {
+          "value": "llama2-uncensored:7b",
+          "text": "llama2-uncensored:7b",
+          "data-size": "4.7GB",
+          "data-info": "General purpose model"
+        },
+        {
+          "value": "llama3.1:8b",
+          "text": "llama3.1:8b",
+          "data-size": "4.9GB",
+          "data-info": "General purpose model"
+        },
+        {
+          "value": "llama3.2:1b",
+          "text": "llama3.2:1b",
+          "data-size": "1.3GB",
+          "data-info": "General purpose model"
+        },
+        {
+          "value": "llama3.2:3b",
+          "text": "llama3.2:3b",
+          "data-size": "2.0GB",
+          "data-info": "General purpose model"
+        }
+      ]
+    },
+    {
+      "label": "Mistral Models",
+      "models": [
+        {
+          "value": "mistral:7b",
+          "text": "mistral:7b",
+          "data-size": "4.7GB",
+          "data-info": "General-purpose foundation model"
+        },
+        {
+          "value": "mistral:latest",
+          "text": "mistral",
+          "data-size": "4.1GB",
+          "data-info": "General-purpose foundation model"
+        }
+      ]
+    },
+    {
+      "label": "Small & Fast Models",
+      "models": [
+        {
+          "value": "dolphin3:latest",
+          "text": "dolphin3",
+          "data-size": "4.1GB",
+          "data-info": "Enhanced conversational model"
+        },
+        {
+          "value": "nemotron-mini:latest",
+          "text": "nemotron-mini",
+          "data-size": "4.1GB",
+          "data-info": "Efficient general-purpose model"
+        },
+        {
+          "value": "phi3.5:latest",
+          "text": "phi3.5",
+          "data-size": "4.1GB",
+          "data-info": "Mathematical and logical tasks"
+        },
+        {
+          "value": "phi3:latest",
+          "text": "phi3",
+          "data-size": "4.1GB",
+          "data-info": "Mathematical and logical tasks"
+        },
+        {
+          "value": "phi4:latest",
+          "text": "phi4",
+          "data-size": "4.1GB",
+          "data-info": "Advanced reasoning model"
+        },
+        {
+          "value": "smollm2:135m",
+          "text": "smollm2:135m",
+          "data-size": "270MB",
+          "data-info": "General purpose model"
+        },
+        {
+          "value": "smollm2:360m",
+          "text": "smollm2:360m",
+          "data-size": "725MB",
+          "data-info": "General purpose model"
+        },
+        {
+          "value": "smollm:1.7b",
+          "text": "smollm:1.7b",
+          "data-size": "4.7GB",
+          "data-info": "General purpose model"
+        }
+      ]
+    },
+    {
+      "label": "Vision Models",
+      "models": [
+        {
+          "value": "bakllava:latest",
+          "text": "bakllava",
+          "data-size": "4.1GB",
+          "data-info": "Multimodal vision-language model"
+        },
+        {
+          "value": "llama3.2-vision:11b",
+          "text": "llama3.2-vision:11b",
+          "data-size": "1.3GB",
+          "data-info": "General purpose model"
+        },
+        {
+          "value": "llava-llama3:latest",
+          "text": "llava-llama3",
+          "data-size": "4.1GB",
+          "data-info": "Multimodal vision-language model"
+        },
+        {
+          "value": "llava-phi3:latest",
+          "text": "llava-phi3",
+          "data-size": "4.1GB",
+          "data-info": "Multimodal vision-language model"
+        },
+        {
+          "value": "llava:13b",
+          "text": "llava:13b",
+          "data-size": "8.0GB",
+          "data-info": "Multimodal vision-language model"
+        },
+        {
+          "value": "llava:7b",
+          "text": "llava:7b",
+          "data-size": "4.7GB",
+          "data-info": "Multimodal vision-language model"
+        },
+        {
+          "value": "minicpm-v:latest",
+          "text": "minicpm-v",
+          "data-size": "4.1GB",
+          "data-info": "Optimized vision-language model"
+        },
+        {
+          "value": "moondream:latest",
+          "text": "moondream",
+          "data-size": "4.1GB",
+          "data-info": "Lightweight vision model"
+        }
+      ]
+    }
+  ]
+}

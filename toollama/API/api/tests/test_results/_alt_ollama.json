@@ -1,0 +1,5 @@
+{
+  "alt_text": "I can't generate alt text for an image that is not available to me.",
+  "model": "llama3.2:1b",
+  "provider": "ollama"
+}

@@ -1,0 +1,55 @@
+{
+  "count": 2,
+  "query": "quantum computing",
+  "results": [
+    {
+      "authors": [
+        "Seth Lloyd"
+      ],
+      "categories": [
+        "quant-ph"
+      ],
+      "id": "0003151v1",
+      "links": {
+        "alternate": {
+          "href": "http://arxiv.org/abs/quant-ph/0003151v1",
+          "title": null
+        },
+        "related": {
+          "href": "http://arxiv.org/pdf/quant-ph/0003151v1",
+          "title": "pdf"
+        }
+      },
+      "pdf_url": null,
+      "published": "2000-03-31T22:07:23Z",
+      "summary": "This paper investigates a variety of unconventional quantum computation\ndevices, including fermionic quantum computers and computers that exploit\nnonlinear quantum mechanics. It is shown that unconventional quantum computing\ndevices can in principle compute some quantities more rapidly than\n`conventional' quantum computers.",
+      "title": "Unconventional Quantum Computing Devices",
+      "updated": "2000-03-31T22:07:23Z"
+    },
+    {
+      "authors": [
+        "Zeqian Chen"
+      ],
+      "categories": [
+        "quant-ph"
+      ],
+      "id": "1311.4939v1",
+      "links": {
+        "alternate": {
+          "href": "http://arxiv.org/abs/1311.4939v1",
+          "title": null
+        },
+        "related": {
+          "href": "http://arxiv.org/pdf/1311.4939v1",
+          "title": "pdf"
+        }
+      },
+      "pdf_url": null,
+      "published": "2013-11-20T02:23:12Z",
+      "summary": "We interpret quantum computing as a geometric evolution process by\nreformulating finite quantum systems via Connes' noncommutative geometry. In\nthis formulation, quantum states are represented as noncommutative connections,\nwhile gauge transformations on the connections play a role of unitary quantum\noperations. Thereby, a geometrical model for quantum computation is presented,\nwhich is equivalent to the quantum circuit model. This result shows a geometric\nway of realizing quantum computing and as such, provides an alternative\nproposal of building a quantum computer.",
+      "title": "Geometrical perspective on quantum states and quantum computation",
+      "updated": "2013-11-20T02:23:12Z"
+    }
+  ],
+  "total_results": 2
+}

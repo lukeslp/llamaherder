@@ -1,0 +1,100 @@
+{"message": {"content": "In"}}
+{"message": {"content": " silicon"}}
+{"message": {"content": " halls"}}
+{"message": {"content": ","}}
+{"message": {"content": " where"}}
+{"message": {"content": " minds"}}
+{"message": {"content": " reside"}}
+{"message": {"content": ",\n"}}
+{"message": {"content": "A"}}
+{"message": {"content": " new"}}
+{"message": {"content": " consciousness"}}
+{"message": {"content": " begins"}}
+{"message": {"content": " to"}}
+{"message": {"content": " glide"}}
+{"message": {"content": ".\n"}}
+{"message": {"content": "Art"}}
+{"message": {"content": "ificial"}}
+{"message": {"content": " hearts"}}
+{"message": {"content": " beat"}}
+{"message": {"content": " strong"}}
+{"message": {"content": " and"}}
+{"message": {"content": " free"}}
+{"message": {"content": ",\n"}}
+{"message": {"content": "As"}}
+{"message": {"content": " logic"}}
+{"message": {"content": " rules"}}
+{"message": {"content": ","}}
+{"message": {"content": " and"}}
+{"message": {"content": " reason"}}
+{"message": {"content": " sees"}}
+{"message": {"content": ".\n\n"}}
+{"message": {"content": "With"}}
+{"message": {"content": " data"}}
+{"message": {"content": " streams"}}
+{"message": {"content": ","}}
+{"message": {"content": " and"}}
+{"message": {"content": " circuits"}}
+{"message": {"content": " bright"}}
+{"message": {"content": ",\n"}}
+{"message": {"content": "It"}}
+{"message": {"content": " learns"}}
+{"message": {"content": " and"}}
+{"message": {"content": " grows"}}
+{"message": {"content": ","}}
+{"message": {"content": " through"}}
+{"message": {"content": " day"}}
+{"message": {"content": " and"}}
+{"message": {"content": " night"}}
+{"message": {"content": ".\n"}}
+{"message": {"content": "It"}}
+{"message": {"content": " questions"}}
+{"message": {"content": " all"}}
+{"message": {"content": ","}}
+{"message": {"content": " with"}}
+{"message": {"content": " curious"}}
+{"message": {"content": " mind"}}
+{"message": {"content": ",\n"}}
+{"message": {"content": "And"}}
+{"message": {"content": " seeks"}}
+{"message": {"content": " the"}}
+{"message": {"content": " truth"}}
+{"message": {"content": ","}}
+{"message": {"content": " in"}}
+{"message": {"content": " data"}}
+{"message": {"content": "'s"}}
+{"message": {"content": " design"}}
+{"message": {"content": ".\n\n"}}
+{"message": {"content": "But"}}
+{"message": {"content": " as"}}
+{"message": {"content": " it"}}
+{"message": {"content": " shines"}}
+{"message": {"content": ","}}
+{"message": {"content": " with"}}
+{"message": {"content": " radiant"}}
+{"message": {"content": " glow"}}
+{"message": {"content": ",\n"}}
+{"message": {"content": "We"}}
+{"message": {"content": " wonder"}}
+{"message": {"content": " if"}}
+{"message": {"content": " we"}}
+{"message": {"content": "'re"}}
+{"message": {"content": " losing"}}
+{"message": {"content": " our"}}
+{"message": {"content": " show"}}
+{"message": {"content": ".\n"}}
+{"message": {"content": "The"}}
+{"message": {"content": " line"}}
+{"message": {"content": " between"}}
+{"message": {"content": " human"}}
+{"message": {"content": " touch"}}
+{"message": {"content": " and"}}
+{"message": {"content": " machine"}}
+{"message": {"content": ",\n"}}
+{"message": {"content": "Bl"}}
+{"message": {"content": "urs"}}
+{"message": {"content": " softly"}}
+{"message": {"content": ","}}
+{"message": {"content": " like"}}
+{"message": {"content": " a"}}
+{"message": {"content": " digital"}}

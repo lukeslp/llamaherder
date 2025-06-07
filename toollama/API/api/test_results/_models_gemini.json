@@ -1,0 +1,66 @@
+[
+  {
+    "capabilities": [
+      "text",
+      "vision",
+      "function",
+      "image"
+    ],
+    "capability_count": 4,
+    "context_length": 32768,
+    "created": 1743664874.039342,
+    "created_at": "2024-03-12",
+    "description": "Experimental Gemini model with image generation capability",
+    "id": "gemini-2.0-flash-exp-image-generation",
+    "name": "Gemini 2.0 Flash Experimental Image Generation",
+    "owned_by": "google",
+    "provider": "gemini"
+  },
+  {
+    "capabilities": [
+      "text",
+      "vision",
+      "function"
+    ],
+    "capability_count": 3,
+    "context_length": 32768,
+    "created": 1743664874.03934,
+    "created_at": "2024-03-12",
+    "description": "Experimental Gemini model with advanced capabilities",
+    "id": "gemini-2.0-flash-exp",
+    "name": "Gemini 2.0 Flash Experimental",
+    "owned_by": "google",
+    "provider": "gemini"
+  },
+  {
+    "capabilities": [
+      "text",
+      "function"
+    ],
+    "capability_count": 2,
+    "context_length": 32768,
+    "created": 1743664874.039335,
+    "created_at": "2024-02-01",
+    "description": "Fast and efficient Gemini model",
+    "id": "gemini-2.0-flash",
+    "name": "Gemini 2.0 Flash",
+    "owned_by": "google",
+    "provider": "gemini"
+  },
+  {
+    "capabilities": [
+      "text",
+      "vision",
+      "function"
+    ],
+    "capability_count": 3,
+    "context_length": 128000,
+    "created": 1706774400.0,
+    "created_at": "2024-02-01",
+    "description": "Advanced Gemini model with vision capabilities",
+    "id": "gemini-1.5-pro",
+    "name": "Gemini 1.5 Pro",
+    "owned_by": "google",
+    "provider": "gemini"
+  }
+]

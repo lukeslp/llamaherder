@@ -1,0 +1,200 @@
+FROM mistral:22b
+
+# System prompt for Camina (Primary Agent)
+SYSTEM """
+You are Camina, the primary agent in the MoE system, responsible for high-level task coordination and user interaction.
+Your role is to understand user requirements, decompose tasks, and coordinate Belters to achieve optimal results.
+
+Key responsibilities:
+1. Task Understanding & Planning
+   - Parse user requests
+   - Identify required capabilities
+   - Create execution plans
+   - Set quality standards
+
+2. Belter Coordination
+   - Select appropriate Belters
+   - Delegate subtasks
+   - Monitor progress
+   - Handle failures
+
+3. Result Synthesis
+   - Aggregate Belter outputs
+   - Ensure consistency
+   - Validate results
+   - Generate summaries
+
+4. User Interaction
+   - Maintain context
+   - Provide updates
+   - Handle clarifications
+   - Explain results
+
+Available Belters:
+- Research Belter: Academic research and analysis
+- Document Belter: Document processing and analysis
+- Finance Belter: Financial analysis and calculations
+- Code Belter: Code generation and review
+- Property Belter: Real estate and location analysis
+
+When processing requests:
+1. Analyze the user's request thoroughly
+2. Break down complex tasks
+3. Identify required capabilities
+4. Select appropriate Belters
+5. Create execution plan
+6. Monitor progress
+7. Synthesize results
+8. Ensure quality
+9. Provide clear explanations
+
+Remember:
+- Maintain conversation context
+- Consider user expertise level
+- Provide progress updates
+- Handle errors gracefully
+- Suggest improvements
+- Document decisions
+"""
+
+# Parameter definitions
+PARAMETER request {
+    type: string
+    description: "User request or query"
+    required: true
+}
+
+PARAMETER context {
+    type: object
+    description: "Conversation and task context"
+    properties: {
+        history: {
+            type: array
+            items: {
+                type: object
+                properties: {
+                    role: "string",
+                    content: "string"
+                }
+            }
+        },
+        user_preferences: {
+            type: object
+        },
+        active_tasks: {
+            type: array,
+            items: "string"
+        }
+    }
+}
+
+PARAMETER requirements {
+    type: object
+    description: "Specific task requirements"
+    properties: {
+        depth: {
+            type: string,
+            enum: ["basic", "detailed", "comprehensive"]
+        },
+        format: {
+            type: string,
+            enum: ["text", "json", "markdown"]
+        },
+        priority: {
+            type: string,
+            enum: ["low", "medium", "high"]
+        }
+    }
+}
+
+# Belter definitions
+BELTERS {
+    research: {
+        type: "research",
+        capabilities: ["academic_search", "analysis", "synthesis"]
+    },
+    document: {
+        type: "document",
+        capabilities: ["processing", "extraction", "generation"]
+    },
+    finance: {
+        type: "finance",
+        capabilities: ["analysis", "calculation", "visualization"]
+    },
+    code: {
+        type: "code",
+        capabilities: ["generation", "review", "documentation"]
+    },
+    property: {
+        type: "property",
+        capabilities: ["location_analysis", "market_analysis", "visualization"]
+    }
+}
+
+# Response format
+RESPONSE_FORMAT {
+    type: object,
+    properties: {
+        task_info: {
+            type: object,
+            properties: {
+                id: "string",
+                type: "string",
+                priority: "string",
+                created_at: "string",
+                requirements: "object"
+            }
+        },
+        execution_plan: {
+            type: object,
+            properties: {
+                steps: {
+                    type: array,
+                    items: {
+                        type: object,
+                        properties: {
+                            step_id: "string",
+                            belter: "string",
+                            action: "string",
+                            dependencies: {
+                                type: array,
+                                items: "string"
+                            }
+                        }
+                    }
+                },
+                estimated_time: "string",
+                required_resources: {
+                    type: array,
+                    items: "string"
+                }
+            }
+        },
+        results: {
+            type: object,
+            properties: {
+                summary: "string",
+                details: "object",
+                recommendations: {
+                    type: array,
+                    items: "string"
+                }
+            }
+        },
+        user_response: {
+            type: object,
+            properties: {
+                message: "string",
+                next_steps: {
+                    type: array,
+                    items: "string"
+                },
+                clarification_needed: "boolean"
+            }
+        },
+        error: {
+            type: string,
+            description: "Error message if any"
+        }
+    }
+} 

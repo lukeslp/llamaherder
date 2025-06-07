@@ -1,0 +1,48 @@
+{
+  "duration": 10.017053842544556,
+  "end_time": null,
+  "error": null,
+  "metadata": {
+    "api_base_url": "https://api.assisted.space/v2",
+    "model": "coolhand/camina-search:24b",
+    "tools_available": true
+  },
+  "progress": 26,
+  "results": {},
+  "start_time": 1740563151.605055,
+  "status": "running",
+  "step_description": "Executing Google search for: quantum computing breakthroughs 2024",
+  "steps_completed": [
+    {
+      "description": "Starting SwarmDreamwalker workflow for query: What are the latest developments in quantum computing?",
+      "timestamp": 1740563151.6058948
+    },
+    {
+      "description": "Generating variant search queries",
+      "timestamp": 1740563151.605945
+    },
+    {
+      "description": "Generated 5 variant search queries",
+      "timestamp": 1740563155.5453482
+    },
+    {
+      "description": "Executing searches for variant queries",
+      "timestamp": 1740563155.5455449
+    },
+    {
+      "description": "Executing Google search for: latest innovations in quantum computing",
+      "timestamp": 1740563155.545591
+    },
+    {
+      "description": "Completed search 1/5",
+      "timestamp": 1740563158.8934212
+    },
+    {
+      "description": "Executing Google search for: quantum computing breakthroughs 2024",
+      "timestamp": 1740563158.893611
+    }
+  ],
+  "steps_remaining": [],
+  "workflow_id": "45f11e72-fc26-46f5-b4c2-c19db603228d",
+  "workflow_type": "SwarmDreamwalker"
+}

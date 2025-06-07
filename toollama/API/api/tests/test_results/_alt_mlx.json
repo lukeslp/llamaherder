@@ -1,0 +1,5 @@
+{
+  "alt_text": "",
+  "model": "qwen:7b",
+  "provider": "mlx"
+}

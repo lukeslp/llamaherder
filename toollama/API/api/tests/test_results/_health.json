@@ -1,0 +1,17 @@
+{
+  "providers": {
+    "anthropic": true,
+    "cohere": true,
+    "coze": true,
+    "gemini": true,
+    "lmstudio": true,
+    "mistral": true,
+    "mlx": true,
+    "ollama": true,
+    "openai": true,
+    "perplexity": true,
+    "xai": true
+  },
+  "status": "ok",
+  "timestamp": 1743523066.509745
+}

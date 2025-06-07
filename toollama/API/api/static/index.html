@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Test - Assisted.Space</title>
+    <style>
+        :root {
+            --primary-color: #4a6eb5;
+            --secondary-color: #e0e7ff;
+            --background-color: #f8f9fa;
+            --text-color: #333;
+            --border-color: #dee2e6;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --primary-color: #5d87d6;
+                --secondary-color: #2d3748;
+                --background-color: #1a202c;
+                --text-color: #e2e8f0;
+                --border-color: #4a5568;
+            }
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .tab.active {
+            border-bottom-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 70vh;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .settings-panel {
+            background-color: var(--secondary-color);
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        select, input, textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+        
+        #chat-history {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            max-width: 80%;
+        }
+        
+        .user {
+            background-color: var(--primary-color);
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 0;
+        }
+        
+        .assistant {
+            background-color: var(--secondary-color);
+            margin-right: auto;
+            border-bottom-left-radius: 0;
+        }
+        
+        .input-area {
+            display: flex;
+            padding: 15px;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        #message-input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            margin-right: 10px;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+        
+        button {
+            padding: 10px 15px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .alt-text-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .image-area {
+            border: 2px dashed var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .image-area img {
+            max-width: 100%;
+            max-height: 250px;
+            display: none;
+        }
+        
+        .image-area p {
+            margin-top: 10px;
+        }
+        
+        .image-area.has-image img {
+            display: block;
+        }
+        
+        .image-area.has-image .upload-text {
+            display: none;
+        }
+        
+        #file-input {
+            display: none;
+        }
+        
+        .alt-text-output {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            min-height: 300px;
+        }
+        
+        .tools-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        
+        .tool-definition {
+            font-family: monospace;
+            width: 100%;
+            height: 200px;
+        }
+        
+        .tool-output {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            min-height: 200px;
+            white-space: pre-wrap;
+            font-family: monospace;
+        }
+        
+        @media (max-width: 768px) {
+            .alt-text-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .message.assistant {
+            background-color: var(--secondary-color);
+            margin-right: auto;
+            border-bottom-left-radius: 0;
+        }
+        
+        .info-text {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.05);
+            border-radius: 4px;
+            font-size: 0.9em;
+            border-left: 4px solid var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Assisted.Space API Test</h1>
+            <p>Test the API implementation with different AI providers</p>
+            <p><strong>Base URL: </strong><code>https://api.assisted.space/v2</code></p>
+        </header>
+        
+        <!-- CURL Examples Section -->
+        <div class="curl-examples" style="margin-bottom: 30px; background-color: var(--secondary-color); padding: 20px; border-radius: 8px;">
+            <details>
+                <summary style="font-weight: 600; cursor: pointer; margin-bottom: 10px;">CURL Examples (Click to expand)</summary>
+                <div style="font-family: monospace; white-space: pre-wrap; font-size: 14px;">
+                    <h3>Basic Chat</h3>
+<pre>curl -X POST https://api.assisted.space/v2/chat/anthropic \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: your_api_key" \
+  -d '{
+    "model": "claude-3-haiku-20240307",
+    "prompt": "Explain quantum computing in simple terms",
+    "max_tokens": 1024,
+    "stream": false,
+    "temperature": 0.7
+  }'</pre>
+
+                    <h3>Streaming Chat</h3>
+<pre>curl -X POST https://api.assisted.space/v2/chat/openai \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: your_api_key" \
+  -N \
+  -d '{
+    "model": "gpt-4o",
+    "prompt": "Write a short poem about APIs",
+    "max_tokens": 1024,
+    "stream": true,
+    "temperature": 0.7
+  }'</pre>
+
+                    <h3>Alt Text Generation</h3>
+<pre>curl -X POST https://api.assisted.space/v2/alt/openai \
+  -H "X-API-Key: your_api_key" \
+  -F "model=gpt-4o" \
+  -F "prompt=Generate detailed alt text for this image" \
+  -F "image=@/path/to/your/image.jpg"</pre>
+
+                    <h3>Tool Calling</h3>
+<pre>curl -X POST https://api.assisted.space/v2/tools/mistral \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: your_api_key" \
+  -d '{
+    "model": "mistral-medium",
+    "prompt": "What is the weather in Seattle?",
+    "max_tokens": 1024,
+    "tools": [{
+      "type": "function",
+      "function": {
+        "name": "get_weather",
+        "description": "Get the current weather in a location",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "location": {
+              "type": "string",
+              "description": "The city and state, e.g. San Francisco, CA"
+            },
+            "unit": {
+              "type": "string",
+              "enum": ["celsius", "fahrenheit"],
+              "description": "The unit of temperature to use"
+            }
+          },
+          "required": ["location"]
+        }
+      }
+    }]
+  }'</pre>
+
+                    <h3>Model Listing</h3>
+<pre>curl -X GET "https://api.assisted.space/v2/models/anthropic?sort_by=created&capability=vision" \
+  -H "X-API-Key: your_api_key"</pre>
+
+                    <h3>Health Check</h3>
+<pre>curl -X GET https://api.assisted.space/v2/health \
+  -H "X-API-Key: your_api_key"</pre>
+                </div>
+            </details>
+        </div>
+        
+        <!-- Toast notification system -->
+        <div id="toast-container" style="position: fixed; top: 20px; right: 20px; z-index: 1000; max-width: 300px;"></div>
+        
+        <div class="tabs">
+            <div class="tab active" data-tab="chat">Chat</div>
+            <div class="tab" data-tab="alt-text">Alt Text</div>
+            <div class="tab" data-tab="tools">Tools</div>
+        </div>
+        
+        <!-- Chat Tab -->
+        <div id="chat" class="tab-content active">
+            <div class="chat-container">
+                <div class="settings-panel">
+                    <div class="form-group">
+                        <label for="provider-select">Provider:</label>
+                        <select id="provider-select">
+                            <option value="anthropic">Anthropic</option>
+                            <option value="cohere">Cohere</option>
+                            <option value="coze">Coze</option>
+                            <option value="mistral">Mistral</option>
+                            <option value="mlx">MLX (Apple Silicon)</option>
+                            <option value="ollama">Ollama</option>
+                            <option value="openai">OpenAI</option>
+                            <option value="perplexity">Perplexity</option>
+                            <option value="xai">X.AI (Grok)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="model-select">Model:</label>
+                        <select id="model-select">
+                            <!-- Models will be populated via JavaScript -->
+                        </select>
+                    </div>
+                    <div id="chat-info-text" class="info-text"></div>
+                    <button id="clear-chat">Clear Chat</button>
+                </div>
+                <div id="chat-history"></div>
+                <div class="input-area">
+                    <textarea id="message-input" placeholder="Type your message here..."></textarea>
+                    <button id="send-message">Send</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Alt Text Tab -->
+        <div id="alt-text" class="tab-content">
+            <div class="settings-panel">
+                <div class="form-group">
+                    <label for="alt-provider-select">Provider:</label>
+                    <select id="alt-provider-select">
+                        <option value="anthropic">Anthropic</option>
+                        <option value="coze">Coze</option>
+                        <option value="mistral">Mistral</option>
+                        <option value="ollama">Ollama</option>
+                        <option value="openai">OpenAI</option>
+                        <option value="xai">X.AI (Grok)</option>
+                    </select>
+                </div>
+                <div class="form-group" id="alt-model-select-container">
+                    <label for="alt-model-select">Model:</label>
+                    <select id="alt-model-select">
+                        <!-- Models will be populated via JavaScript -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="alt-prompt">Custom Prompt:</label>
+                    <textarea id="alt-prompt">Generate descriptive alt text for the visually impaired for social media</textarea>
+                </div>
+                <div id="alt-info-text" class="info-text"></div>
+            </div>
+            <div class="alt-text-container">
+                <div class="image-area" id="image-area">
+                    <div class="upload-text">
+                        <p>Click to upload an image or drag and drop</p>
+                    </div>
+                    <img id="image-preview" alt="Preview">
+                    <input type="file" id="file-input" accept="image/*">
+                </div>
+                <div class="alt-text-output">
+                    <h3>Generated Alt Text:</h3>
+                    <div id="alt-text-result"></div>
+                    <button id="generate-alt" style="margin-top: 15px;" disabled>Generate Alt Text</button>
+                    <button id="copy-alt" style="margin-top: 15px; background-color: #6c757d;" disabled>Copy to Clipboard</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tools Tab -->
+        <div id="tools" class="tab-content">
+            <div class="settings-panel">
+                <div class="form-group">
+                    <label for="tool-provider-select">Provider:</label>
+                    <select id="tool-provider-select">
+                        <option value="anthropic">Anthropic</option>
+                        <option value="cohere">Cohere</option>
+                        <option value="mistral">Mistral</option>
+                        <option value="mlx">MLX (Apple Silicon)</option>
+                        <option value="ollama">Ollama</option>
+                        <option value="openai">OpenAI</option>
+                        <option value="perplexity">Perplexity</option>
+                        <option value="xai">X.AI (Grok)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="tool-model-select">Model:</label>
+                    <select id="tool-model-select">
+                        <!-- Models will be populated via JavaScript -->
+                    </select>
+                </div>
+                <div id="tool-info-text" class="info-text"></div>
+            </div>
+            <div class="tools-container">
+                <div class="form-group">
+                    <label for="tool-prompt">Prompt:</label>
+                    <textarea id="tool-prompt">What's the weather like in San Francisco?</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="tool-definition">Tool Definition:</label>
+                    <textarea id="tool-definition" class="tool-definition">[
+  {
+    "type": "function",
+    "function": {
+      "name": "get_weather",
+      "description": "Get the current weather in a location",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "location": {
+            "type": "string",
+            "description": "The city and state, e.g. San Francisco, CA"
+          },
+          "unit": {
+            "type": "string",
+            "enum": ["celsius", "fahrenheit"],
+            "description": "The unit of temperature"
+          }
+        },
+        "required": ["location"]
+      }
+    }
+  }
+]</textarea>
+                </div>
+                <button id="call-tool">Call Tool</button>
+                <div class="tool-output" id="tool-output">
+                    Tool response will appear here...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get provider select elements
+            const providerSelect = document.getElementById('provider-select');
+            const altProviderSelect = document.getElementById('alt-provider-select');
+            const toolProviderSelect = document.getElementById('tool-provider-select');
+            
+            // Get model select elements
+            const modelSelect = document.getElementById('model-select');
+            const altModelSelect = document.getElementById('alt-model-select');
+            const toolModelSelect = document.getElementById('tool-model-select');
+            
+            // Toast notification function for accessibility
+            function showToast(message, type = 'info') {
+                const toastContainer = document.getElementById('toast-container');
+                const toast = document.createElement('div');
+                toast.setAttribute('role', 'alert');
+                toast.setAttribute('aria-live', 'assertive');
+                toast.style.padding = '12px 16px';
+                toast.style.marginBottom = '10px';
+                toast.style.borderRadius = '4px';
+                toast.style.boxShadow = '0 2px 5px rgba(0,0,0,0.2)';
+                toast.style.transition = 'opacity 0.3s ease';
+                
+                // Set color based on type
+                if (type === 'warning') {
+                    toast.style.backgroundColor = '#fff3cd';
+                    toast.style.color = '#856404';
+                    toast.style.borderLeft = '4px solid #ffeeba';
+                } else if (type === 'error') {
+                    toast.style.backgroundColor = '#f8d7da';
+                    toast.style.color = '#721c24';
+                    toast.style.borderLeft = '4px solid #f5c6cb';
+                } else if (type === 'success') {
+                    toast.style.backgroundColor = '#d4edda';
+                    toast.style.color = '#155724';
+                    toast.style.borderLeft = '4px solid #c3e6cb';
+                } else {
+                    toast.style.backgroundColor = '#d1ecf1';
+                    toast.style.color = '#0c5460';
+                    toast.style.borderLeft = '4px solid #bee5eb';
+                }
+                
+                toast.textContent = message;
+                toastContainer.appendChild(toast);
+                
+                // Remove toast after 5 seconds
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    setTimeout(() => {
+                        toastContainer.removeChild(toast);
+                    }, 300);
+                }, 5000);
+            }
+            
+            // Add event listeners to provider selects to update models when changed
+            providerSelect.addEventListener('change', () => {
+                fetchModels(providerSelect.value);
+                updateProviderSpecificUI('chat', providerSelect.value);
+            });
+            altProviderSelect.addEventListener('change', () => {
+                // Prevent Cohere from being used for alt text since it doesn't support vision
+                if (altProviderSelect.value === 'cohere') {
+                    showToast('Cohere does not support vision capabilities. Switching to Anthropic instead.', 'warning');
+                    altProviderSelect.value = 'anthropic';
+                }
+                // For Coze, show a message about using the alt text bot
+                else if (altProviderSelect.value === 'coze') {
+                    showToast('Coze will use the specialized Alt Text Generator bot regardless of model selection.', 'info');
+                }
+                fetchModels(altProviderSelect.value);
+                updateProviderSpecificUI('alt', altProviderSelect.value);
+            });
+            toolProviderSelect.addEventListener('change', () => {
+                fetchModels(toolProviderSelect.value);
+                updateProviderSpecificUI('tool', toolProviderSelect.value);
+            });
+            
+            // Fetch available models when page loads
+            fetchModels(providerSelect.value);
+            updateProviderSpecificUI('chat', providerSelect.value);
+            updateProviderSpecificUI('alt', altProviderSelect.value);
+            updateProviderSpecificUI('tool', toolProviderSelect.value);
+            
+            // Tab switching
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Remove active class from all tabs and content
+                    tabs.forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                    
+                    // Add active class to clicked tab and corresponding content
+                    tab.classList.add('active');
+                    const tabId = tab.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+            
+            // Chat functionality
+            const chatHistory = document.getElementById('chat-history');
+            const messageInput = document.getElementById('message-input');
+            const sendButton = document.getElementById('send-message');
+            const clearChatButton = document.getElementById('clear-chat');
+            
+            // Add a welcome message
+            addMessage('Welcome! I\'m Claude. How can I help you today?', 'assistant');
+            
+            // Send message on button click
+            sendButton.addEventListener('click', sendMessage);
+            
+            // Send message on Enter (but allow Shift+Enter for new lines)
+            messageInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+            
+            // Clear chat history
+            clearChatButton.addEventListener('click', clearChat);
+            
+            // Function to fetch available models from API
+            async function fetchModels(provider) {
+                try {
+                    const response = await fetch(`/v2/models/${provider}`);
+                    if (!response.ok) {
+                        throw new Error(`API request failed with status ${response.status}`);
+                    }
+                    
+                    const models = await response.json();
+                    
+                    // Populate model select dropdowns (only if provider matches)
+                    if (providerSelect.value === provider) {
+                        populateModelSelect(modelSelect, models);
+                    }
+                    if (altProviderSelect.value === provider) {
+                        populateModelSelect(altModelSelect, models);
+                    }
+                    if (toolProviderSelect.value === provider) {
+                        populateModelSelect(toolModelSelect, models);
+                    }
+                    
+                    console.log(`Loaded ${models.length} models from ${provider} API`);
+                } catch (error) {
+                    console.error(`Error fetching ${provider} models:`, error);
+                    // If API fails, fall back to hardcoded models
+                    let fallbackModels = [];
+                    
+                    if (provider === 'anthropic') {
+                        fallbackModels = [
+                            { id: "claude-3-opus-20240229", name: "Claude 3 Opus" },
+                            { id: "claude-3-sonnet-20240229", name: "Claude 3 Sonnet" },
+                            { id: "claude-3-haiku-20240307", name: "Claude 3 Haiku" }
+                        ];
+                    } else if (provider === 'mistral') {
+                        fallbackModels = [
+                            { id: "mistral-tiny", name: "Mistral Tiny" },
+                            { id: "mistral-small", name: "Mistral Small" },
+                            { id: "mistral-medium", name: "Mistral Medium" }
+                        ];
+                    } else if (provider === 'ollama') {
+                        fallbackModels = [
+                            { id: "llama3", name: "Llama 3" },
+                            { id: "llava", name: "LLaVA (Vision)" },
+                            { id: "mistral", name: "Mistral" },
+                            { id: "llama2", name: "Llama 2" },
+                            { id: "codellama", name: "Code Llama" },
+                            { id: "phi3", name: "Phi-3" },
+                            { id: "coolhand/camina:22b", name: "Camina 22B" }
+                        ];
+                    } else if (provider === 'openai') {
+                        fallbackModels = [
+                            { id: "gpt-4o-2024-11-20", name: "GPT-4 Omega" },
+                            { id: "gpt-4-vision-preview", name: "GPT-4 Vision" },
+                            { id: "gpt-4-0125-preview", name: "GPT-4 Turbo" },
+                            { id: "gpt-4o-mini", name: "GPT-4o Mini" },
+                            { id: "gpt-3.5-turbo-0125", name: "GPT-3.5 Turbo" }
+                        ];
+                    } else if (provider === 'cohere') {
+                        fallbackModels = [
+                            { id: "command-r-plus-08-2024", name: "Command-R Plus" },
+                            { id: "command-light", name: "Command Light" },
+                            { id: "command", name: "Command" }
+                        ];
+                    } else if (provider === 'xai') {
+                        fallbackModels = [
+                            { id: "grok-2-latest", name: "Grok 2 Latest", capabilities: ["text", "function", "vision"] },
+                            { id: "grok-1", name: "Grok 1", capabilities: ["text", "function"] }
+                        ];
+                    } else if (provider === 'coze') {
+                        fallbackModels = [
+                            { id: "7462296933429346310", name: "Alt Text Generator Bot", capabilities: ["text", "vision"] },
+                            { id: "7463319430379470854", name: "TTS Generator Bot", capabilities: ["text", "audio"] }
+                        ];
+                    } else if (provider === 'perplexity') {
+                        fallbackModels = [
+                            { id: "sonar-deep-research", name: "Sonar Deep Research", capabilities: ["chat", "web_search", "research"] },
+                            { id: "sonar-reasoning-pro", name: "Sonar Reasoning Pro", capabilities: ["chat", "web_search", "reasoning"] },
+                            { id: "sonar-reasoning", name: "Sonar Reasoning", capabilities: ["chat", "web_search", "reasoning"] },
+                            { id: "sonar-pro", name: "Sonar Pro", capabilities: ["chat", "web_search"] },
+                            { id: "sonar", name: "Sonar", capabilities: ["chat", "web_search"] },
+                            { id: "r1-1776", name: "R1-1776", capabilities: ["chat"] }
+                        ];
+                    } else if (provider === 'mlx') {
+                        fallbackModels = [
+                            { id: "qwen:7b", name: "Qwen2 7B", capabilities: ["text", "chat"] },
+                            { id: "mistral:7b", name: "Mistral 7B", capabilities: ["text", "chat"] },
+                            { id: "nemo:7b", name: "Mistral Nemo 7B", capabilities: ["text", "chat"] },
+                            { id: "deepseek:7b", name: "DeepSeek R1 7B", capabilities: ["text", "chat"] },
+                            { id: "mistral-small:24b", name: "Mistral Small 24B", capabilities: ["text", "chat"] },
+                            { id: "deepseek:32b", name: "DeepSeek R1 32B", capabilities: ["text", "chat"] }
+                        ];
+                    }
+                    
+                    // Populate based on current provider
+                    if (providerSelect.value === provider) {
+                        populateModelSelect(modelSelect, fallbackModels);
+                    }
+                    if (altProviderSelect.value === provider) {
+                        populateModelSelect(altModelSelect, fallbackModels);
+                    }
+                    if (toolProviderSelect.value === provider) {
+                        populateModelSelect(toolModelSelect, fallbackModels);
+                    }
+                    
+                    console.log(`Using fallback model list for ${provider} due to API error`);
+                }
+            }
+            
+            // Helper to populate model select dropdowns
+            function populateModelSelect(selectElement, models) {
+                // Clear existing options
+                selectElement.innerHTML = '';
+                
+                // Add options for each model, sorted with newer models first
+                // This handles both 'created_at' and 'created' fields
+                const sortedModels = [...models].sort((a, b) => {
+                    const dateA = new Date(a.created_at || a.created || '2023-01-01');
+                    const dateB = new Date(b.created_at || b.created || '2023-01-01');
+                    return dateB - dateA;
+                });
+                
+                // Add options for each sorted model
+                sortedModels.forEach((model, index) => {
+                    const option = document.createElement('option');
+                    option.value = model.id;
+                    option.textContent = model.name || model.id;
+                    
+                    // Select the newest model (first in the sorted list) by default
+                    if (index === 0) {
+                        option.selected = true;
+                    }
+                    
+                    selectElement.appendChild(option);
+                });
+                
+                // If no models were found, add a default option
+                if (sortedModels.length === 0) {
+                    const option = document.createElement('option');
+                    option.value = "claude-3-sonnet-20240229";
+                    option.textContent = "Claude 3 Sonnet";
+                    option.selected = true;
+                    selectElement.appendChild(option);
+                }
+                
+                console.log(`Populated select with ${sortedModels.length} models, newest: ${sortedModels.length > 0 ? sortedModels[0].id : 'none'}`);
+            }
+            
+            function sendMessage() {
+                const message = messageInput.value.trim();
+                if (!message) return;
+                
+                // Add user message to chat
+                addMessage(message, 'user');
+                
+                // Clear input
+                messageInput.value = '';
+                
+                // Get provider and model
+                const provider = providerSelect.value;
+                const model = modelSelect.value;
+                
+                fetch(`/v2/chat/${provider}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-API-Key': 'test_api_key'
+                    },
+                    body: JSON.stringify({
+                        model: model,
+                        prompt: message,
+                        max_tokens: 1024,
+                        stream: true
+                    })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`API request failed with status ${response.status}`);
+                    }
+                    
+                    // Create a placeholder for the assistant's response
+                    const assistantMessage = document.createElement('div');
+                    assistantMessage.classList.add('message', 'assistant');
+                    chatHistory.appendChild(assistantMessage);
+                    chatHistory.scrollTop = chatHistory.scrollHeight;
+                    
+                    // Set up streaming
+                    const reader = response.body.getReader();
+                    const decoder = new TextDecoder();
+                    let buffer = '';
+                    
+                    return new ReadableStream({
+                        start(controller) {
+                            function push() {
+                                return reader.read().then(({ done, value }) => {
+                                    if (done) {
+                                        controller.close();
+                                        return;
+                                    }
+                                    
+                                    buffer += decoder.decode(value, { stream: true });
+                                    const lines = buffer.split('\n');
+                                    buffer = lines.pop(); // Keep the last incomplete line in the buffer
+                                    
+                                    for (const line of lines) {
+                                        if (line.trim()) {
+                                            try {
+                                                // Check if line is SSE format (starts with "data: ")
+                                                let jsonData = line;
+                                                if (line.startsWith('data: ')) {
+                                                    jsonData = line.substring(6); // Remove the "data: " prefix
+                                                }
+                                                
+                                                const data = JSON.parse(jsonData);
+                                                
+                                                // Handle different response formats
+                                                if (data.type === 'delta' && data.content) {
+                                                    assistantMessage.textContent += data.content;
+                                                } else if (data.message && data.message.content) {
+                                                    assistantMessage.textContent += data.message.content;
+                                                } else if (data.choices && data.choices[0] && data.choices[0].delta && data.choices[0].delta.content) {
+                                                    // OpenAI style format
+                                                    assistantMessage.textContent += data.choices[0].delta.content;
+                                                } else if (data.content) {
+                                                    // Simple content field
+                                                    assistantMessage.textContent += data.content;
+                                                } else if (typeof data === 'string') {
+                                                    assistantMessage.textContent += data;
+                                                }
+                                                
+                                                chatHistory.scrollTop = chatHistory.scrollHeight;
+                                            } catch (e) {
+                                                console.error('Error parsing streaming response:', e, 'Line:', line);
+                                                // Try to display the raw line if it's not JSON
+                                                if (line.startsWith('data: ')) {
+                                                    const rawContent = line.substring(6);
+                                                    if (rawContent && !rawContent.includes('{') && !rawContent.includes('[')) {
+                                                        assistantMessage.textContent += rawContent;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    
+                                    controller.enqueue(value);
+                                    return push();
+                                });
+                            }
+                            
+                            return push();
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    let errorMessage = `Error: ${error.message}`;
+                    
+                    // Custom error messages for Ollama connection issues
+                    if (provider === 'ollama' && error.message.includes('failed') && error.message.includes('fetch')) {
+                        errorMessage = 'Error: Cannot connect to Ollama. Please ensure Ollama is installed and running on your system (http://localhost:11434).';
+                    }
+                    // Custom error messages for OpenAI connection issues
+                    else if (provider === 'openai' && error.message.includes('API')) {
+                        errorMessage = 'Error: Issue connecting to OpenAI API. Please check your API key configuration.';
+                    }
+                    // Custom error messages for Cohere connection issues
+                    else if (provider === 'cohere' && error.message.includes('API')) {
+                        errorMessage = 'Error: Issue connecting to Cohere API. Please check your API key configuration. For testing, you can use "demo" as the API key for limited functionality.';
+                    }
+                    // Custom error messages for Coze connection issues
+                    else if (provider === 'coze' && error.message.includes('API')) {
+                        errorMessage = 'Error: Issue connecting to Coze API. Please check your API key configuration. Make sure the API key is correct and has access to the Coze platform.';
+                    }
+                    else if (provider === 'coze' && error.message.includes('file')) {
+                        errorMessage = 'Error: Issue uploading image to Coze API. The Coze API requires uploading the image first before processing it. Please try a smaller image or a different format.';
+                    }
+                    // Custom error messages for Perplexity connection issues
+                    else if (provider === 'perplexity' && error.message.includes('API')) {
+                        errorMessage = 'Error: Issue connecting to Perplexity API. Please check your API key configuration. Make sure the API key is correct and has access to the Perplexity platform.';
+                    }
+                    
+                    // Add MLX-specific error handling in the chat function
+                    if (provider === 'mlx' && error.message.includes('command')) {
+                        errorMessage = 'Error: MLX command-line tools not found or failed to execute. Please ensure MLX is properly installed on your Apple Silicon Mac.';
+                    }
+                    
+                    addMessage(errorMessage, 'assistant');
+                });
+            }
+            
+            function addMessage(content, sender) {
+                const message = document.createElement('div');
+                message.classList.add('message', sender);
+                message.textContent = content;
+                chatHistory.appendChild(message);
+                chatHistory.scrollTop = chatHistory.scrollHeight;
+            }
+            
+            function clearChat() {
+                // Clear UI
+                chatHistory.innerHTML = '';
+                addMessage('Conversation cleared', 'assistant');
+                
+                // Get current provider
+                const provider = providerSelect.value;
+                
+                // Call API to clear conversation
+                fetch(`/v2/chat/${provider}/clear`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-API-Key': 'test_api_key'
+                    },
+                    body: JSON.stringify({})
+                })
+                .catch(error => {
+                    console.error('Error clearing conversation:', error);
+                });
+            }
+            
+            // Alt Text functionality
+            const imageArea = document.getElementById('image-area');
+            const fileInput = document.getElementById('file-input');
+            const imagePreview = document.getElementById('image-preview');
+            const generateAltButton = document.getElementById('generate-alt');
+            const altTextResult = document.getElementById('alt-text-result');
+            const altPrompt = document.getElementById('alt-prompt');
+            const copyAltButton = document.getElementById('copy-alt');
+            
+            let selectedFile = null;
+            
+            // Open file dialog when clicking the image area
+            imageArea.addEventListener('click', () => {
+                fileInput.click();
+            });
+            
+            // Handle file selection
+            fileInput.addEventListener('change', (e) => {
+                selectedFile = e.target.files[0];
+                if (!selectedFile) return;
+                
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    imagePreview.src = event.target.result;
+                    imageArea.classList.add('has-image');
+                    generateAltButton.disabled = false;
+                };
+                reader.readAsDataURL(selectedFile);
+            });
+            
+            // Handle drag and drop
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                imageArea.addEventListener(eventName, preventDefaults, false);
+            });
+            
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            
+            imageArea.addEventListener('drop', handleDrop, false);
+            
+            function handleDrop(e) {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                
+                if (files.length) {
+                    selectedFile = files[0];
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        imagePreview.src = event.target.result;
+                        imageArea.classList.add('has-image');
+                        generateAltButton.disabled = false;
+                    };
+                    reader.readAsDataURL(selectedFile);
+                }
+            }
+            
+            // Generate alt text
+            generateAltButton.addEventListener('click', () => {
+                if (!selectedFile) return;
+                
+                const provider = altProviderSelect.value;
+                const model = altModelSelect.value;
+                const prompt = altPrompt.value;
+                
+                altTextResult.textContent = 'Generating...';
+                
+                const formData = new FormData();
+                formData.append('image', selectedFile);
+                formData.append('model', model);
+                formData.append('prompt', prompt);
+                formData.append('stream', 'false');
+                
+                // For Ollama, make sure we use a vision-capable model
+                if (provider === 'ollama') {
+                    // Define known vision-capable models for Ollama but allow any model to be used
+                    const ollamaVisionModels = ['llava', 'bakllava', 'llava-llama2', 'llava-llama3'];
+                    let modelToUse = model;
+                    
+                    // Allow any selected model to be used without restriction
+                    formData.set('model', modelToUse);
+                }
+                // For OpenAI, just use the selected model (all modern models support vision now)
+                else if (provider === 'openai') {
+                    // Use the selected model (all GPT-4 models now support vision)
+                    let modelToUse = model;
+                    
+                    // No need to override anymore, as all modern GPT models support vision
+                    console.log('Using selected OpenAI model:', modelToUse);
+                    formData.set('model', modelToUse);
+                }
+                // For Coze, always use the alt text bot ID
+                else if (provider === 'coze') {
+                    // Hard code the alt text bot ID for Coze
+                    const cozeAltTextBotId = "7462296933429346310";
+                    console.log('Using Coze alt text bot ID:', cozeAltTextBotId);
+                    formData.set('model', cozeAltTextBotId);
+                }
+                
+                fetch(`/v2/alt/${provider}`, {
+                    method: 'POST',
+                    headers: {
+                        'X-API-Key': 'test_api_key'
+                    },
+                    body: formData
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`API request failed with status ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    altTextResult.textContent = data.alt_text;
+                    copyAltButton.disabled = false;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    let errorMessage = `Error: ${error.message}`;
+                    
+                    // Prevent Cohere from being used for alt text generation
+                    if (provider === 'cohere') {
+                        errorMessage = 'Error: Cohere does not support vision or image analysis features. Please select a different provider for alt text generation.';
+                    }
+                    // Custom error messages for Ollama connection issues
+                    else if (provider === 'ollama' && error.message.includes('failed') && error.message.includes('fetch')) {
+                        errorMessage = 'Error: Cannot connect to Ollama. Please ensure Ollama is installed and running on your system (http://localhost:11434).';
+                    }
+                    // Custom error messages for OpenAI connection issues
+                    else if (provider === 'openai' && error.message.includes('API')) {
+                        errorMessage = 'Error: Issue connecting to OpenAI API. Please check your API key configuration.';
+                    }
+                    // Custom error messages for Cohere connection issues
+                    else if (provider === 'cohere' && error.message.includes('API')) {
+                        errorMessage = 'Error: Issue connecting to Cohere API. Please check your API key configuration. For testing, you can use "demo" as the API key for limited functionality.';
+                    }
+                    // Custom error messages for Coze connection issues
+                    else if (provider === 'coze' && error.message.includes('API')) {
+                        errorMessage = 'Error: Issue connecting to Coze API. Please check your API key configuration. Make sure the API key is correct and has access to the Coze platform.';
+                    }
+                    else if (provider === 'coze' && error.message.includes('file')) {
+                        errorMessage = 'Error: Issue uploading image to Coze API. The Coze API requires uploading the image first before processing it. Please try a smaller image or a different format.';
+                    }
+                    
+                    // Add MLX-specific error handling in the alt text function
+                    if (provider === 'mlx' && error.message.includes('command')) {
+                        errorMessage = 'Error: MLX command-line tools not found or failed to execute. Please ensure MLX is properly installed on your Apple Silicon Mac.';
+                    }
+                    
+                    altTextResult.textContent = errorMessage;
+                });
+            });
+            
+            // Copy alt text to clipboard
+            copyAltButton.addEventListener('click', () => {
+                const text = altTextResult.textContent;
+                navigator.clipboard.writeText(text)
+                    .then(() => {
+                        const originalText = copyAltButton.textContent;
+                        copyAltButton.textContent = 'Copied!';
+                        setTimeout(() => {
+                            copyAltButton.textContent = originalText;
+                        }, 2000);
+                    })
+                    .catch(err => {
+                        console.error('Could not copy text: ', err);
+                    });
+            });
+            
+            // Tools functionality
+            const toolPrompt = document.getElementById('tool-prompt');
+            const toolDefinition = document.getElementById('tool-definition');
+            const callToolButton = document.getElementById('call-tool');
+            const toolOutput = document.getElementById('tool-output');
+            
+            callToolButton.addEventListener('click', () => {
+                const prompt = toolPrompt.value;
+                const provider = toolProviderSelect.value;
+                const model = toolModelSelect.value;
+                
+                let tools;
+                try {
+                    tools = JSON.parse(toolDefinition.value);
+                } catch (e) {
+                    toolOutput.textContent = `Error parsing tool definition: ${e.message}`;
+                    return;
+                }
+                
+                toolOutput.textContent = 'Calling tool...';
+                
+                fetch(`/v2/tools/${provider}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-API-Key': 'test_api_key'
+                    },
+                    body: JSON.stringify({
+                        model: model,
+                        prompt: prompt,
+                        tools: tools
+                    })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`API request failed with status ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Format the output nicely
+                    let output = `Response:\n${data.content}\n\n`;
+                    
+                    if (data.tool_calls && data.tool_calls.length > 0) {
+                        output += 'Tool Calls:\n';
+                        data.tool_calls.forEach((call, index) => {
+                            output += `\n[${index + 1}] ${call.function.name}\n`;
+                            output += `Arguments: ${JSON.stringify(call.function.arguments, null, 2)}\n`;
+                        });
+                    }
+                    
+                    toolOutput.textContent = output;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    let errorMessage = `Error: ${error.message}`;
+                    
+                    // Custom error messages for specific providers
+                    if (provider === 'ollama' && error.message.includes('failed') && error.message.includes('fetch')) {
+                        errorMessage = 'Error: Cannot connect to Ollama. Please ensure Ollama is installed and running on your system (http://localhost:11434).';
+                    } else if (provider === 'openai' && error.message.includes('API')) {
+                        errorMessage = 'Error: Issue connecting to OpenAI API. Please check your API key configuration.';
+                    } else if (provider === 'cohere' && error.message.includes('API')) {
+                        errorMessage = 'Error: Issue connecting to Cohere API. Please check your API key configuration.';
+                    } else if (provider === 'mlx' && error.message.includes('command')) {
+                        errorMessage = 'Error: MLX command-line tools not found or failed to execute. Please ensure MLX is properly installed on your Apple Silicon Mac.';
+                    }
+                    
+                    toolOutput.textContent = errorMessage;
+                });
+            });
+            
+            // Function to update UI elements based on selected provider
+            function updateProviderSpecificUI(section, provider) {
+                // Handle alt text section provider-specific UI updates
+                if (section === 'alt') {
+                    const altModelSelectContainer = document.getElementById('alt-model-select-container');
+                    const altPrompt = document.getElementById('alt-prompt');
+                    const altInfoText = document.getElementById('alt-info-text');
+                    
+                    // Reset info text
+                    altInfoText.textContent = '';
+                    
+                    if (provider === 'ollama') {
+                        // Show model select for Ollama
+                        altModelSelectContainer.style.display = 'block';
+                        altPrompt.placeholder = 'Describe this image in detail';
+                        altInfoText.textContent = 'Ollama vision models can generate detailed image descriptions locally.';
+                    } else if (provider === 'xai') {
+                        // Show model select for X.AI
+                        altModelSelectContainer.style.display = 'block';
+                        altPrompt.placeholder = 'Describe what you see in this image';
+                        altInfoText.textContent = 'X.AI (Grok) models can analyze images and provide detailed descriptions.';
+                    } else if (provider === 'coze') {
+                        // Hide model select for Coze (uses bot ID directly)
+                        altModelSelectContainer.style.display = 'none';
+                        altPrompt.placeholder = 'Generate alt text for this image';
+                        altInfoText.textContent = 'Coze bots are specialized for specific tasks like alt text generation.';
+                    } else if (provider === 'mlx') {
+                        // Show model select for MLX
+                        altModelSelectContainer.style.display = 'block';
+                        altPrompt.placeholder = 'Describe this image (Note: MLX models do not currently support vision capabilities)';
+                        altInfoText.textContent = 'MLX models run locally on Apple Silicon but do not currently support vision capabilities.';
+                    } else {
+                        // Default for other providers
+                        altModelSelectContainer.style.display = 'block';
+                        altPrompt.placeholder = 'Generate alt text for this image';
+                        altInfoText.textContent = '';
+                    }
+                }
+                
+                // Handle chat section provider-specific UI updates
+                if (section === 'chat') {
+                    const chatInfoText = document.getElementById('chat-info-text');
+                    
+                    // Reset info text
+                    if (chatInfoText) chatInfoText.textContent = '';
+                    
+                    // You can add provider-specific UI updates here
+                    // For example, showing local model info for Ollama or usage tips for X.AI
+                    if (provider === 'ollama') {
+                        // Add Ollama-specific UI updates
+                        if (chatInfoText) chatInfoText.textContent = 'Ollama models run locally on your device.';
+                    } else if (provider === 'xai') {
+                        // Add X.AI-specific UI updates
+                        if (chatInfoText) chatInfoText.textContent = 'X.AI (Grok) models provide conversational AI with web browsing capabilities.';
+                    } else if (provider === 'mlx') {
+                        // Add MLX-specific UI updates
+                        if (chatInfoText) {
+                            chatInfoText.textContent = 'MLX models run locally on Apple Silicon devices. Available models include Qwen2, Mistral, DeepSeek, and others optimized for Apple hardware.';
+                        } else {
+                            // Create info text element if it doesn't exist
+                            const chatContainer = document.querySelector('.chat-container');
+                            const infoText = document.createElement('div');
+                            infoText.id = 'chat-info-text';
+                            infoText.className = 'info-text';
+                            infoText.textContent = 'MLX models run locally on Apple Silicon devices. Available models include Qwen2, Mistral, DeepSeek, and others optimized for Apple hardware.';
+                            chatContainer.appendChild(infoText);
+                        }
+                    }
+                }
+                
+                // Handle tool section provider-specific UI updates
+                if (section === 'tool') {
+                    const toolInfoText = document.getElementById('tool-info-text');
+                    
+                    // Reset info text
+                    if (toolInfoText) toolInfoText.textContent = '';
+                    
+                    // You can add provider-specific UI updates here
+                    if (provider === 'ollama') {
+                        // Add Ollama-specific UI updates for tools
+                        if (toolInfoText) toolInfoText.textContent = 'Ollama models with function calling capabilities can use tools.';
+                    } else if (provider === 'xai') {
+                        // Add X.AI-specific UI updates for tools
+                        if (toolInfoText) toolInfoText.textContent = 'X.AI (Grok) models support function calling and web browsing.';
+                    } else if (provider === 'mlx') {
+                        // Add MLX-specific UI updates for tools
+                        if (toolInfoText) {
+                            toolInfoText.textContent = 'MLX models run locally on Apple Silicon. Tool calling capabilities may vary depending on the model.';
+                        } else {
+                            // Create info text element if it doesn't exist
+                            const toolContainer = document.querySelector('#tools');
+                            const infoText = document.createElement('div');
+                            infoText.id = 'tool-info-text';
+                            infoText.className = 'info-text';
+                            infoText.textContent = 'MLX models run locally on Apple Silicon. Tool calling capabilities may vary depending on the model.';
+                            toolContainer.appendChild(infoText);
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html> 

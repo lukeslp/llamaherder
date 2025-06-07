@@ -1,0 +1,132 @@
+[
+  {
+    "capabilities": [
+      "text",
+      "vision",
+      "code"
+    ],
+    "capability_count": 3,
+    "created": "2025-02-24T00:00:00Z",
+    "created_at": "February 24, 2025",
+    "description": "Claude 3",
+    "id": "claude-3-7-sonnet-20250219",
+    "name": "Claude 3.7 Sonnet",
+    "owned_by": "anthropic",
+    "provider": "anthropic"
+  },
+  {
+    "capabilities": [
+      "text",
+      "vision",
+      "code"
+    ],
+    "capability_count": 3,
+    "created": "2024-10-22T00:00:00Z",
+    "created_at": "October 22, 2024",
+    "description": "Claude 3",
+    "id": "claude-3-5-sonnet-20241022",
+    "name": "Claude 3.5 Sonnet (New)",
+    "owned_by": "anthropic",
+    "provider": "anthropic"
+  },
+  {
+    "capabilities": [
+      "text",
+      "vision"
+    ],
+    "capability_count": 2,
+    "created": "2024-10-22T00:00:00Z",
+    "created_at": "October 22, 2024",
+    "description": "Claude 3",
+    "id": "claude-3-5-haiku-20241022",
+    "name": "Claude 3.5 Haiku",
+    "owned_by": "anthropic",
+    "provider": "anthropic"
+  },
+  {
+    "capabilities": [
+      "text",
+      "vision",
+      "code"
+    ],
+    "capability_count": 3,
+    "created": "2024-06-20T00:00:00Z",
+    "created_at": "June 20, 2024",
+    "description": "Claude 3",
+    "id": "claude-3-5-sonnet-20240620",
+    "name": "Claude 3.5 Sonnet (Old)",
+    "owned_by": "anthropic",
+    "provider": "anthropic"
+  },
+  {
+    "capabilities": [
+      "text",
+      "vision"
+    ],
+    "capability_count": 2,
+    "created": "2024-03-07T00:00:00Z",
+    "created_at": "March 07, 2024",
+    "description": "Claude 3",
+    "id": "claude-3-haiku-20240307",
+    "name": "Claude 3 Haiku",
+    "owned_by": "anthropic",
+    "provider": "anthropic"
+  },
+  {
+    "capabilities": [
+      "text",
+      "vision",
+      "code",
+      "analysis"
+    ],
+    "capability_count": 4,
+    "created": "2024-02-29T00:00:00Z",
+    "created_at": "February 29, 2024",
+    "description": "Claude 3",
+    "id": "claude-3-opus-20240229",
+    "name": "Claude 3 Opus",
+    "owned_by": "anthropic",
+    "provider": "anthropic"
+  },
+  {
+    "capabilities": [
+      "text",
+      "vision",
+      "code"
+    ],
+    "capability_count": 3,
+    "created": "2024-02-29T00:00:00Z",
+    "created_at": "February 29, 2024",
+    "description": "Claude 3",
+    "id": "claude-3-sonnet-20240229",
+    "name": "Claude 3 Sonnet",
+    "owned_by": "anthropic",
+    "provider": "anthropic"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2023-11-21T00:00:00Z",
+    "created_at": "November 21, 2023",
+    "description": "Claude 2.1",
+    "id": "claude-2.1",
+    "name": "Claude 2.1",
+    "owned_by": "anthropic",
+    "provider": "anthropic"
+  },
+  {
+    "capabilities": [
+      "text"
+    ],
+    "capability_count": 1,
+    "created": "2023-07-11T00:00:00Z",
+    "created_at": "July 11, 2023",
+    "description": "Claude 2.0",
+    "id": "claude-2.0",
+    "name": "Claude 2.0",
+    "owned_by": "anthropic",
+    "provider": "anthropic"
+  }
+]

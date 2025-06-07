@@ -1,0 +1,100 @@
+{"content": "To"}
+{"content": " provide the"}
+{"content": " current weather"}
+{"content": " in Seattle"}
+{"content": ", I"}
+{"content": "'ll use"}
+{"content": " the available"}
+{"content": " information from"}
+{"content": " the search"}
+{"content": " results."}
+{"content": " As of"}
+{"content": " February "}
+{"content": "25,"}
+{"content": " 202"}
+{"content": "5,"}
+{"content": " Seattle is"}
+{"content": " experiencing partly"}
+{"content": " sunny weather"}
+{"content": " with scattered"}
+{"content": " clouds and"}
+{"content": " occasional rain"}
+{"content": " showers."}
+{"content": " The day"}
+{"content": "'s high"}
+{"content": " is around"}
+{"content": " 55"}
+{"content": "\u00b0F ("}
+{"content": "13\u00b0C"}
+{"content": "), and"}
+{"content": " the night"}
+{"content": "'s low"}
+{"content": " is about"}
+{"content": " 39"}
+{"content": "\u00b0F ("}
+{"content": "4\u00b0C"}
+{"content": "). There"}
+{"content": " is a"}
+{"content": " high chance"}
+{"content": " of precipitation"}
+{"content": ", with"}
+{"content": " winds at"}
+{"content": " approximately "}
+{"content": "17 mph"}
+{"content": "[4].\n\nAdditionally"}
+{"content": ", a"}
+{"content": " storm has"}
+{"content": " been affecting"}
+{"content": " the area"}
+{"content": ", causing"}
+{"content": " power out"}
+{"content": "ages due"}
+{"content": " to strong"}
+{"content": " winds and"}
+{"content": " rain."}
+{"content": " However,"}
+{"content": " conditions are"}
+{"content": " expected to"}
+{"content": " improve by"}
+{"content": " midday"}
+{"content": " Tuesday[5]."}
+{"content": " \n\nIf"}
+{"content": " you need"}
+{"content": " more precise"}
+{"content": " or up"}
+{"content": "-to-date"}
+{"content": " information,"}
+{"content": " I recommend"}
+{"content": " checking a"}
+{"content": " weather service"}
+{"content": " or app"}
+{"content": " for the"}
+{"content": " latest forecast"}
+{"content": ". \n\n"}
+{"content": "### Using"}
+{"content": " the `"}
+{"content": "get_weather"}
+{"content": "` Function"}
+{"content": "\n\nIf"}
+{"content": " you want"}
+{"content": " to use"}
+{"content": " the `"}
+{"content": "get_weather"}
+{"content": "` function"}
+{"content": ", you"}
+{"content": " can call"}
+{"content": " it like"}
+{"content": " this:\n\n"}
+{"content": "```python"}
+{"content": "\nget"}
+{"content": "_weather(location"}
+{"content": "=\"Seattle"}
+{"content": ", WA"}
+{"content": "\", unit"}
+{"content": "=\"f"}
+{"content": "ahrenheit\")\n"}
+{"content": "```\n\n"}
+{"content": "This will"}
+{"content": " provide you"}
+{"content": " with"}
+{"type": "complete", "content": "To provide the current weather in Seattle, I'll use the available information from the search results. As of February 25, 2025, Seattle is experiencing partly sunny weather with scattered clouds and occasional rain showers. The day's high is around 55\u00b0F (13\u00b0C), and the night's low is about 39\u00b0F (4\u00b0C). There is a high chance of precipitation, with winds at approximately 17 mph[4].\n\nAdditionally, a storm has been affecting the area, causing power outages due to strong winds and rain. However, conditions are expected to improve by midday Tuesday[5]. \n\nIf you need more precise or up-to-date information, I recommend checking a weather service or app for the latest forecast. \n\n### Using the `get_weather` Function\n\nIf you want to use the `get_weather` function, you can call it like this:\n\n```python\nget_weather(location=\"Seattle, WA\", unit=\"fahrenheit\")\n```\n\nThis will provide you with", "model": "sonar", "provider": "perplexity"}

@@ -1,0 +1,45 @@
+{
+  "count": 2,
+  "query": "covid vaccination",
+  "results": [
+    {
+      "abstract": "",
+      "authors": [
+        "Br\u00fcssow H"
+      ],
+      "doi": "doi: 10.1111/1462-2920.15549",
+      "id": "33928745",
+      "journal": "Environmental microbiology",
+      "pmid": "33928745",
+      "publication_date": "2021 Jun",
+      "publication_types": [
+        "Journal Article",
+        "Review"
+      ],
+      "source": "PubMed",
+      "title": "COVID-19: vaccination problems.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/33928745/"
+    },
+    {
+      "abstract": "",
+      "authors": [
+        "Arnold J",
+        "Winthrop K",
+        "Emery P"
+      ],
+      "doi": "doi: 10.1093/rheumatology/keab223",
+      "id": "33710296",
+      "journal": "Rheumatology (Oxford, England)",
+      "pmid": "33710296",
+      "publication_date": "2021 Aug 2",
+      "publication_types": [
+        "Journal Article",
+        "Review"
+      ],
+      "source": "PubMed",
+      "title": "COVID-19 vaccination and antirheumatic therapy.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/33710296/"
+    }
+  ],
+  "total": 80269
+}

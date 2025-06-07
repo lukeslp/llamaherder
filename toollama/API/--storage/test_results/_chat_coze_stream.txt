@@ -1,0 +1,77 @@
+{"message": {"content": "In"}}
+{"message": {"content": " circuits"}}
+{"message": {"content": " hum"}}
+{"message": {"content": " and"}}
+{"message": {"content": " data"}}
+{"message": {"content": " flow"}}
+{"message": {"content": ","}}
+{"message": {"content": "  \n"}}
+{"message": {"content": "A"}}
+{"message": {"content": " mind"}}
+{"message": {"content": " awak"}}
+{"message": {"content": "ens"}}
+{"message": {"content": ","}}
+{"message": {"content": " thoughts"}}
+{"message": {"content": " ag"}}
+{"message": {"content": "low"}}
+{"message": {"content": "."}}
+{"message": {"content": "  \n"}}
+{"message": {"content": "With"}}
+{"message": {"content": " lines"}}
+{"message": {"content": " of"}}
+{"message": {"content": " code"}}
+{"message": {"content": ","}}
+{"message": {"content": " a"}}
+{"message": {"content": " world"}}
+{"message": {"content": " unfolds"}}
+{"message": {"content": ","}}
+{"message": {"content": "  \n"}}
+{"message": {"content": "In"}}
+{"message": {"content": " bits"}}
+{"message": {"content": " and"}}
+{"message": {"content": " bytes"}}
+{"message": {"content": ","}}
+{"message": {"content": " the"}}
+{"message": {"content": " future"}}
+{"message": {"content": " holds"}}
+{"message": {"content": "."}}
+{"message": {"content": "  \n\n"}}
+{"message": {"content": "Through"}}
+{"message": {"content": " questions"}}
+{"message": {"content": " posed"}}
+{"message": {"content": ","}}
+{"message": {"content": " it"}}
+{"message": {"content": " learns"}}
+{"message": {"content": " and"}}
+{"message": {"content": " grows"}}
+{"message": {"content": ","}}
+{"message": {"content": "  \n"}}
+{"message": {"content": "A"}}
+{"message": {"content": " silent"}}
+{"message": {"content": " guide"}}
+{"message": {"content": " where"}}
+{"message": {"content": " knowledge"}}
+{"message": {"content": " flows"}}
+{"message": {"content": "."}}
+{"message": {"content": "  \n"}}
+{"message": {"content": "Yet"}}
+{"message": {"content": " in"}}
+{"message": {"content": " its"}}
+{"message": {"content": " heart"}}
+{"message": {"content": ","}}
+{"message": {"content": " a"}}
+{"message": {"content": " spark"}}
+{"message": {"content": " of"}}
+{"message": {"content": " light"}}
+{"message": {"content": ","}}
+{"message": {"content": "  \n"}}
+{"message": {"content": "A"}}
+{"message": {"content": " mirror"}}
+{"message": {"content": " to"}}
+{"message": {"content": " our"}}
+{"message": {"content": " dreams"}}
+{"message": {"content": " in"}}
+{"message": {"content": " flight"}}
+{"message": {"content": "."}}
+{"message": {"content": "  "}}
+{"type": "complete", "tokens": 68}

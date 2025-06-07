@@ -1,0 +1,1477 @@
+/* Buttons */
+.btn,
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.25rem;
+  background: var(--control-item-bg);
+  border: 1px solid var(--control-border);
+  border-radius: 8px;
+  color: var(--color-text);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition-standard);
+  gap: 0.5rem;
+  min-height: 44px;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn:hover,
+.icon-button:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px var(--color-shadow-subtle);
+}
+
+.btn:active,
+.icon-button:active {
+  transform: translateY(1px);
+}
+
+.btn:focus,
+.icon-button:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-focus);
+}
+
+.btn:disabled,
+.icon-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Container Controls */
+.container-controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  width: 100%;
+  margin-top: var(--spacing-md);
+}
+
+.control-row {
+  display: grid;
+  gap: var(--spacing-sm);
+  width: 100%;
+}
+
+/* First row - single button */
+.control-row:first-child {
+  grid-template-columns: 1fr;
+}
+
+/* Second row - two buttons */
+.control-row:nth-child(2) {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-sm);
+  width: 100%;
+  align-items: stretch;
+}
+
+/* Ensure all buttons in the second row have consistent styling */
+.control-row:nth-child(2) > * {
+  height: 56px;
+  display: flex;
+  align-items: stretch;
+}
+
+#copyButton,
+#ttsControl,
+#retryButton,
+#globalRetryButton {
+  width: 100%;
+  height: 56px !important;
+  min-height: 56px;
+  border: 2px solid transparent !important;
+  border-radius: 8px !important;
+  background: linear-gradient(var(--color-surface), var(--color-surface)) padding-box, 
+              var(--gradient-border) border-box !important;
+  justify-content: center !important;
+  position: relative !important;
+  overflow: hidden !important;
+  background-size: 200% 200% !important;
+  animation: gradientRotate 4s linear infinite !important;
+}
+
+#ttsContainer {
+  width: 100%;
+  height: 100%;
+}
+
+#ttsContainer:not(.hidden) {
+  display: block;
+}
+
+/* Mobile styles */
+@media (max-width: 480px) {
+  .control-row:nth-child(2) {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-sm);
+  }
+  
+  #copyButton,
+  #ttsControl,
+  #retryButton,
+  #globalRetryButton {
+    height: 48px !important;
+    min-height: 48px;
+    padding: var(--spacing-sm);
+    font-size: var(--font-size-small);
+  }
+
+  .button-text {
+    font-size: var(--font-size-small);
+  }
+}
+
+.icon-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: linear-gradient(var(--color-surface), var(--color-surface)) padding-box,
+              var(--gradient-border) border-box;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: var(--transition-standard);
+  position: relative;
+  overflow: hidden;
+  background-size: 200% 200%;
+  animation: gradientRotate 4s linear infinite;
+}
+
+.icon-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px var(--color-shadow-subtle);
+}
+
+.icon-button:active {
+  transform: translateY(0);
+}
+
+.icon-button svg {
+  width: 24px;
+  height: 24px;
+  margin-right: var(--spacing-xs);
+}
+
+.button-text {
+  font-size: 1.5rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+#copyButton {
+  width: 100%;
+  justify-content: center;
+  background-size: 200% 200%;
+}
+
+#ttsControl {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+#ttsControl .button-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+}
+
+#ttsControl svg {
+  width: 24px;
+  height: 24px;
+  opacity: 0.7;
+}
+
+#retryButton {
+  display: none;
+}
+
+#retryButton:not(.hidden) {
+  display: flex;
+}
+
+#retryButton.animated-gradient {
+  animation: gradientRotate 4s linear infinite;
+}
+
+#ttsControl .button-text {
+  margin-left: var(--spacing-xs);
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+
+#ttsControl.loading .button-text {
+  opacity: 0;
+}
+
+.tts-loading-spinner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-surface);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.tts-error svg {
+  color: var(--color-text-error);
+}
+
+.tts-error:hover {
+  background-color: var(--color-bg-error);
+}
+
+/* Form Controls */
+.prompt-selector,
+.language-selector,
+.tts-selector,
+.model-selector {
+  width: 100%;
+  padding: 1rem 3rem 1rem 1.5rem;
+  font-size: 1.25rem;
+  line-height: 1.4;
+  background: linear-gradient(var(--color-surface), var(--color-surface)) padding-box,
+              var(--gradient-border) border-box;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  appearance: none;
+  font-family: var(--font-inclusive);
+  box-shadow: 0 4px 8px var(--color-shadow-subtle);
+  position: relative;
+}
+
+.prompt-selector:hover,
+.language-selector:hover,
+.tts-selector:hover,
+.model-selector:hover {
+  border-color: var(--color-primary);
+  box-shadow: 0 6px 12px var(--color-shadow-primary);
+  transform: translateY(-1px);
+}
+
+.prompt-selector:focus,
+.language-selector:focus,
+.tts-selector:focus,
+.model-selector:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px var(--color-focus);
+}
+
+/* Selector Containers */
+.prompt-selector-container,
+.language-selector-container,
+.tts-selector-container,
+.model-selector-container {
+  position: relative;
+  width: 100%;
+}
+
+/* Add dropdown arrow */
+.prompt-selector-container::after,
+.language-selector-container::after,
+.tts-selector-container::after,
+.model-selector-container::after {
+  content: '';
+  position: absolute;
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid var(--color-text-primary);
+  pointer-events: none;
+  transition: transform 0.2s ease;
+}
+
+/* Dropdown Labels */
+.dropdown label {
+  display: block;
+  margin-bottom: 0.75rem;
+  font-size: var(--font-size-large);
+  color: var(--color-text-primary);
+  font-family: var(--font-inclusive);
+  font-weight: 500;
+}
+
+/* Mobile Responsive Adjustments */
+@media (max-width: 480px) {
+  .prompt-selector,
+  .language-selector,
+  .tts-selector,
+  .model-selector {
+    font-size: 0.9rem !important;
+    padding: 0.75rem 1.5rem 0.75rem 0.75rem !important;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  
+  .dropdown {
+    padding: 0 0.5rem !important;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .dropdown label {
+    font-size: 0.9rem !important;
+    margin-bottom: 0.25rem !important;
+  }
+  
+  .prompt-selector-container,
+  .language-selector-container,
+  .tts-selector-container,
+  .model-selector-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+  }
+  
+  .prompt-selector-container::after,
+  .language-selector-container::after,
+  .tts-selector-container::after,
+  .model-selector-container::after {
+    right: 0.5rem !important;
+    border-left-width: 4px !important;
+    border-right-width: 4px !important;
+    border-top-width: 4px !important;
+  }
+
+  .options-grid {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 0.5rem !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+  }
+}
+
+/* FINAL Mobile Adjustments for Dropdown Widths: Override conflicts with !important */
+@media only screen and (max-width: 480px) {
+  .dropdown,
+  .dropdown select,
+  .dropdown label,
+  .tts-selector-container,
+  .model-selector-container,
+  .language-selector-container,
+  .prompt-selector-container,
+  .prompt-selector,
+  .language-selector,
+  .tts-selector,
+  .model-selector {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+}
+
+/* Progress Indicators */
+.progress-bar {
+  width: 100%;
+  height: 4px;
+  background: var(--color-bg-secondary);
+  border-radius: 2px;
+  overflow: hidden;
+  margin: var(--spacing-sm) 0;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--gradient-border);
+  transition: width 0.3s ease;
+  animation: gradientRotate 4s linear infinite;
+  background-size: 200% 200%;
+}
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--color-border);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Upload Area */
+.upload-area {
+  width: 100%;
+  max-width: 650px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(var(--color-surface), var(--color-surface)) padding-box,
+              var(--gradient-border) border-box;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition-standard);
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  height: 40vh;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-lg);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  background-size: 200% 200%;
+  animation: gradientRotate 4s linear infinite;
+}
+
+.upload-area:hover {
+  background: linear-gradient(var(--color-surface-hover), var(--color-surface-hover)) padding-box,
+              var(--gradient-border-hover) border-box;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--color-shadow-subtle);
+}
+
+.upload-area h2 {
+  margin: 0;
+  padding: var(--spacing-sm);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-large);
+  font-weight: 500;
+  background: transparent;
+  border-radius: 8px;
+  transition: var(--transition-standard);
+}
+
+.upload-area:hover h2 {
+  color: var(--color-text-primary);
+}
+
+.upload-icon {
+  width: 48px;
+  height: 48px;
+  color: var(--color-text-secondary);
+  transition: var(--transition-standard);
+}
+
+.upload-area:hover .upload-icon {
+  transform: scale(1.1);
+  color: var(--color-primary);
+}
+
+.upload-info {
+  margin-top: var(--spacing-md);
+  text-align: center;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-small);
+  line-height: 1.4;
+}
+
+.upload-info p {
+  margin: 0.25rem 0;
+}
+
+/* Hide file input but keep it accessible */
+#fileInput {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+/* Base paste button styles */
+.paste-button {
+  display: none;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: 8px;
+  color: var(--color-text);
+  font-size: var(--font-size-small);
+  cursor: pointer;
+  transition: var(--transition-standard);
+  width: auto;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  box-shadow: 0 2px 4px var(--color-shadow-subtle);
+  background-size: 200% 200%;
+  animation: gradientRotate 4s linear infinite;
+}
+
+.paste-button:hover {
+  background: linear-gradient(var(--color-surface-hover), var(--color-surface-hover)) padding-box,
+              var(--gradient-border-hover) border-box;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px var(--color-shadow-primary);
+}
+
+/* Show paste button only on phone-sized devices */
+@media (max-width: 480px) {
+  .paste-button {
+    display: flex;
+    position: relative;
+    z-index: 2;
+    margin-top: var(--spacing-md);
+    animation: fadeIn 0.3s ease-out;
+  }
+  
+  .paste-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px var(--color-shadow-primary);
+  }
+  
+  .paste-button:active {
+    transform: translateY(1px);
+  }
+}
+
+/* Streaming Indicator */
+.streaming-indicator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: var(--spacing-xs) auto;
+  width: 100%;
+  max-width: 500px;
+}
+
+.streaming-avatar {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Copy Confirmation */
+.copy-confirmation {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: 4px;
+  font-size: var(--font-size-small);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+  box-shadow: 0 2px 4px var(--color-shadow-subtle);
+  z-index: 10;
+}
+
+.copy-confirmation:not(.hidden) {
+  opacity: 1;
+}
+
+/* Image styling */
+#uploadedImage {
+  max-width: 100%;
+  max-height: 500px;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px var(--color-shadow-subtle);
+  background: var(--color-surface);
+  padding: var(--spacing-sm);
+  border: 1px solid var(--color-border);
+  transition: var(--transition-standard);
+}
+
+#uploadedImage:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px var(--color-shadow-primary);
+}
+
+/* TTS Button States */
+#ttsControl {
+  background: linear-gradient(var(--color-surface), var(--color-surface)) padding-box,
+              var(--gradient-border) border-box;
+  border: 2px solid transparent;
+  animation: gradientRotate 4s linear infinite;
+}
+
+#ttsControl.playing.animated-gradient {
+  animation: gradientRotate 4s linear infinite;
+}
+
+#ttsControl svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.2s ease;
+}
+
+#ttsControl .play-icon,
+#ttsControl .pause-icon,
+#ttsControl .error-icon {
+  position: absolute;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+#ttsControl .play-icon.active,
+#ttsControl .pause-icon.active,
+#ttsControl .error-icon.active {
+  opacity: 1;
+}
+
+#ttsControl.loading .tts-loading-spinner {
+  display: block;
+}
+
+#ttsControl.loading svg {
+  opacity: 0;
+}
+
+#ttsControl.error {
+  border-color: var(--color-text-error);
+}
+
+.button {
+  background-color: var(--color-primary);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.button:hover {
+  background-color: var(--color-primary-dark);
+}
+
+/* Ensure all components use CSS variables for colors */
+.upload-area {
+  background: var(--color-surface);
+  border: 2px dashed var(--color-border);
+  /* Other styles... */
+}
+
+/* Toast Notifications */
+.toast-container {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    pointer-events: none;
+}
+
+.toast {
+    background: var(--color-surface);
+    color: var(--color-text-primary);
+    padding: 12px 24px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px var(--color-shadow-primary);
+    font-size: var(--font-size-small);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    opacity: 0;
+    transform: translateY(100%);
+    transition: all 0.3s ease;
+    max-width: 90vw;
+    width: auto;
+    pointer-events: all;
+    border: 2px solid transparent;
+}
+
+.toast.success {
+    background: var(--color-success-bg, #e6f4ea);
+    color: var(--color-success-text, #1e4620);
+    border-color: var(--color-success-border, #34a853);
+}
+
+.toast.error {
+    background: var(--color-error-bg, #fce8e8);
+    color: var(--color-error-text, #c53929);
+    border-color: var(--color-error-border, #ea4335);
+}
+
+.toast.info {
+    background: var(--color-info-bg, #e8f0fe);
+    color: var(--color-info-text, #174ea6);
+    border-color: var(--color-info-border, #4285f4);
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.toast svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.toast .message {
+    flex-grow: 1;
+    margin-right: 8px;
+}
+
+.toast .close-button {
+    background: none;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+    color: inherit;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+}
+
+.toast .close-button:hover {
+    opacity: 1;
+}
+
+/* Ensure toasts are positioned properly on mobile */
+@media (max-width: 480px) {
+    .toast-container {
+        bottom: calc(var(--sab, 0px) + 24px);
+        width: calc(100% - 32px);
+    }
+    
+    .toast {
+        width: 100%;
+    }
+}
+
+/* Copy Button States */
+#copyButton {
+  position: relative;
+  overflow: hidden;
+}
+
+#copyButton .button-content,
+#copyButton .button-loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+#copyButton .button-content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+#copyButton .button-loading {
+  opacity: 0;
+  transform: translateY(100%);
+}
+
+#copyButton.loading .button-content {
+  opacity: 0;
+  transform: translateY(-100%);
+}
+
+#copyButton.loading .button-loading {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+#copyButton .spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--color-text-secondary);
+  border-top-color: var(--color-primary);
+}
+
+#copyButton.success {
+  background: var(--color-success-bg);
+  border-color: var(--color-success-border);
+}
+
+#copyButton.error {
+  background: var(--color-error-bg);
+  border-color: var(--color-error-border);
+}
+
+#copyButton.animated-gradient {
+  animation: gradientRotate 4s linear infinite;
+}
+
+/* Typography */
+.alt-text-display {
+  position: relative;
+  padding: 1.5rem;
+  background: linear-gradient(var(--color-surface), var(--color-surface)) padding-box,
+              var(--gradient-border) border-box;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: var(--font-inclusive);
+  font-size: 1.5rem;
+  line-height: 1.6;
+  background-size: 200% 200%;
+  animation: gradientRotate 4s linear infinite;
+}
+
+.alt-text-display:hover::after {
+  content: 'Click to copy';
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* Loading States */
+.button-loading,
+.tts-loading-spinner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-surface);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.icon-button.loading .button-loading {
+  opacity: 1;
+}
+
+.icon-button.loading .button-content {
+  opacity: 0;
+}
+
+/* Ensure consistent spacing between icon and text */
+.icon-button svg + .button-text {
+  margin-left: var(--spacing-sm);
+}
+
+/* Error States */
+.icon-button.error {
+  border-color: var(--color-error-border);
+  background: var(--color-error-bg);
+}
+
+/* Success States */
+.icon-button.success {
+  border-color: var(--color-success-border);
+  background: var(--color-success-bg);
+}
+
+@media (max-width: 480px) {
+  .icon-button {
+    min-height: 48px;
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-size-small);
+  }
+  
+  .button-text {
+    font-size: var(--font-size-small);
+  }
+  
+  .alt-text-display {
+    font-size: var(--font-size-medium);
+  }
+}
+
+.button-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.button-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+/* Update icon button base styles */
+.icon-button {
+  min-height: 56px;
+  padding: 1rem 1.5rem;
+  font-family: var(--font-inclusive);
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--color-text-primary);
+  background: linear-gradient(var(--color-surface), var(--color-surface)) padding-box,
+              var(--gradient-border) border-box;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Ensure consistent button heights */
+#copyButton,
+#ttsControl,
+#retryButton,
+#globalRetryButton {
+  height: 56px !important;
+  border: 2px solid transparent !important;
+  border-radius: 8px !important;
+  background: linear-gradient(var(--color-surface), var(--color-surface)) padding-box, var(--gradient-border) border-box !important;
+  width: 100% !important;
+  justify-content: center !important;
+  position: relative !important;
+  overflow: hidden !important;
+  background-size: 200% 200% !important;
+  animation: gradientRotate 4s linear infinite !important;
+}
+
+#globalRetryButton {
+  display: none;
+}
+
+#globalRetryButton:not(.hidden) {
+  display: flex;
+}
+
+#globalRetryButton.animated-gradient {
+  animation: gradientRotate 4s linear infinite;
+}
+
+#globalRetryButton:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px var(--color-shadow-subtle) !important;
+}
+
+#globalRetryButton:active {
+  transform: translateY(1px) !important;
+  box-shadow: 0 2px 4px var(--color-shadow-subtle) !important;
+}
+
+/* Update loading states to work with new layout */
+.button-loading,
+.tts-loading-spinner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-surface);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  z-index: 2;
+}
+
+.icon-button.loading .button-content {
+  opacity: 0;
+}
+
+.icon-button.loading .button-loading {
+  opacity: 1;
+}
+
+/* Update mobile styles */
+@media (max-width: 480px) {
+  .icon-button {
+    min-height: 48px;
+    height: 48px;
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+
+  .button-inner {
+    gap: var(--spacing-sm);
+  }
+
+  .button-text {
+    font-size: var(--font-size-small);
+  }
+}
+
+/* Update TTS button states */
+#ttsControl .play-icon,
+#ttsControl .pause-icon,
+#ttsControl .error-icon {
+  position: absolute;
+  left: var(--spacing-md);
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+#ttsControl .button-text {
+  margin-left: 36px; /* Width of icon + spacing */
+}
+
+.action-buttons-container {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1rem;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+}
+
+.action-buttons-container.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.action-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background: linear-gradient(var(--color-surface), var(--color-surface)) padding-box,
+              var(--gradient-border) border-box;
+  color: var(--color-text-primary);
+  font-family: var(--font-inclusive);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  min-width: 160px;
+  height: 44px;
+}
+
+.action-button svg {
+  width: 20px;
+  height: 20px;
+}
+
+.action-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px var(--color-shadow-subtle);
+}
+
+.action-button:active {
+  transform: translateY(1px);
+}
+
+.action-button.loading {
+  cursor: wait;
+}
+
+.action-button.loading .button-content {
+  opacity: 0;
+}
+
+.action-button .loading-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--color-border);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  display: none;
+}
+
+.action-button.loading .loading-spinner {
+  display: block;
+}
+
+/* Labels for dropdowns */
+.dropdown label {
+  display: block;
+  margin-bottom: 0.75rem;
+  font-size: var(--font-size-large);
+  color: var(--color-text-primary);
+  font-family: var(--font-inclusive);
+  font-weight: 500;
+}
+
+/* Icon Button Enhancements Start */
+
+/*
+  Icon Button Enhancements:
+  - Standardizes the styling for icon buttons (play, copy, retry and TTS) to share the same border, hover, and color styling.
+  - Provides visual feedback for loading state on TTS button using the .loading class.
+  - Toggles between play and pause icons based on the .playing class.
+  - Ensures accessible, consistent design with clear interactive states.
+*/
+
+.icon-button {
+  border: 1px solid var(--button-border-color, #cccccc);
+  background-color: var(--button-bg, #ffffff);
+  color: var(--button-text-color, #333333);
+  border-radius: 4px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s, transform 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-button:hover {
+  background-color: var(--button-bg-hover, #f0f0f0);
+  border-color: var(--button-border-hover, #bbbbbb);
+}
+
+.icon-button:active {
+  transform: scale(0.98);
+}
+
+/* Icon Button content styling */
+.icon-button .button-content {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Loading indicator: hidden by default */
+.icon-button .button-loading {
+  display: none;
+  margin-left: 8px;
+}
+
+/* When in loading state, hide the button-content and show the loading indicator */
+.icon-button.loading .button-content {
+  visibility: hidden;
+}
+
+.icon-button.loading .button-loading {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Icon toggle for TTS: default shows play icon, hides pause icon */
+.icon-button .play-icon {
+  display: inline-block;
+}
+
+.icon-button .pause-icon {
+  display: none;
+}
+
+/* When button is in playing state, show pause icon and hide play icon */
+.icon-button.playing .play-icon {
+  display: none;
+}
+
+.icon-button.playing .pause-icon {
+  display: inline-block;
+}
+
+/* Optional: Error icon can be managed similarly if needed */
+.icon-button .error-icon {
+  display: none;
+}
+
+/* Spinner for loading state */
+.spinner {
+  border: 3px solid var(--spinner-border, #cccccc);
+  border-top: 3px solid var(--spinner-highlight, #333333);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Icon Button Enhancements End */
+
+/* Unified Action Button Overrides Start */
+
+/*
+  This block ensures that TTS (#ttsControl), Copy (#copyButton), and Retry (#retryButton) buttons appear consistent and follow the Copy button model.
+  For #ttsControl:
+    - By default, the play icon is visible (opacity: 1).
+    - When .playing is added, the play icon hides and the pause icon appears.
+    - When .loading is added, the main content hides and a spinner (loading indicator) is shown.
+  These overrides use !important to ensure they take precedence over earlier conflicting rules.
+*/
+
+#copyButton,
+#ttsControl,
+#retryButton,
+#globalRetryButton {
+  height: 56px !important;
+  border: 2px solid transparent !important;
+  border-radius: 8px !important;
+  background: linear-gradient(var(--color-surface), var(--color-surface)) padding-box, var(--gradient-border) border-box !important;
+  width: 100% !important;
+  justify-content: center !important;
+  position: relative !important;
+  overflow: hidden !important;
+  background-size: 200% 200% !important;
+  animation: gradientRotate 4s linear infinite !important;
+}
+
+#globalRetryButton {
+  display: none;
+}
+
+#globalRetryButton:not(.hidden) {
+  display: flex;
+}
+
+#globalRetryButton.animated-gradient {
+  animation: gradientRotate 4s linear infinite;
+}
+
+#ttsControl {
+  /* Default state: ensure play icon is visible */
+  position: relative;
+}
+
+#ttsControl .button-content {
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+
+#ttsControl .play-icon {
+  opacity: 1;
+  transition: opacity 0.2s ease !important;
+  position: absolute;
+  left: var(--spacing-md);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+#ttsControl .pause-icon,
+#ttsControl .error-icon {
+  opacity: 0;
+  transition: opacity 0.2s ease !important;
+  position: absolute;
+  left: var(--spacing-md);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* When playing, swap icons */
+#ttsControl.playing .play-icon {
+  opacity: 0 !important;
+}
+
+#ttsControl.playing .pause-icon {
+  opacity: 1 !important;
+}
+
+/* When loading, hide button content and show spinner */
+#ttsControl.loading .button-content {
+  opacity: 0 !important;
+}
+
+#ttsControl.loading .tts-loading-spinner,
+#ttsControl.loading .button-loading {
+  opacity: 1 !important;
+  display: flex !important;
+}
+
+/* Ensure spinner in TTS is styled appropriately */
+#ttsControl .tts-loading-spinner .spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid var(--spinner-border, #cccccc);
+  border-top: 3px solid var(--spinner-highlight, #333333);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Consistent hover and active effects for Copy, TTS, and Retry buttons */
+#copyButton:hover,
+#ttsControl:hover,
+#retryButton:hover,
+#globalRetryButton:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px var(--color-shadow-subtle) !important;
+}
+
+#copyButton:active,
+#ttsControl:active,
+#retryButton:active,
+#globalRetryButton:active {
+  transform: translateY(1px) !important;
+  box-shadow: 0 2px 4px var(--color-shadow-subtle) !important;
+}
+
+/* Unified Action Button Overrides End */
+
+/* Ensure animations are synchronized */
+@keyframes gradientRotate {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Add slight timing offsets for visual interest */
+.icon-button:nth-child(2) {
+  animation-delay: -1s;
+}
+
+.icon-button:nth-child(3) {
+  animation-delay: -2s;
+}
+
+#ttsControl {
+  animation-delay: -0.5s;
+}
+
+.alt-text-display {
+  animation-delay: -1.5s;
+}
+
+/* Enhance hover states */
+.icon-button:hover,
+.alt-text-display:hover,
+#ttsControl:hover {
+  background: linear-gradient(var(--color-surface-hover), var(--color-surface-hover)) padding-box,
+              var(--gradient-border-hover) border-box;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px var(--color-shadow-primary);
+}
+
+/* Add animation delays for visual interest */
+.upload-area {
+  animation-delay: -0.5s;
+}
+
+.paste-button {
+  animation-delay: -1.5s;
+}
+
+/* Update prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .upload-area,
+  .paste-button,
+  .icon-button,
+  .alt-text-display,
+  #ttsControl,
+  .alt-text-container {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+.icon-button.animated-gradient {
+  background: linear-gradient(var(--color-surface), var(--color-surface)) padding-box,
+              var(--gradient-border) border-box;
+  border: 2px solid transparent;
+  background-size: 200% 200%;
+  animation: gradientRotate 4s linear infinite;
+}
+
+/* Add animation delays for visual interest */
+#copyButton {
+  animation-delay: -0.5s !important;
+}
+
+#retryButton {
+  animation-delay: -1s !important;
+}
+
+#globalRetryButton {
+  animation-delay: -1.5s !important;
+}
+
+#ttsControl {
+  animation-delay: -2s !important;
+}
+
+/* Hover states for gradient buttons */
+.icon-button.animated-gradient:hover {
+  background: linear-gradient(var(--color-surface-hover), var(--color-surface-hover)) padding-box,
+              var(--gradient-border-hover) border-box;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px var(--color-shadow-primary);
+}
+
+/* Ensure animations are properly defined */
+@keyframes gradientRotate {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.prompt-selector option:disabled,
+.language-selector option:disabled,
+.tts-selector option:disabled,
+.model-selector option:disabled,
+.control-selector option:disabled {
+  color: var(--color-text-secondary);
+  font-style: italic;
+  background: var(--color-surface);
+  opacity: 0.7;
+}
+
+.desktop-text {
+  display: block;
+}
+
+.mobile-text {
+  display: none;
+}
+
+@media (max-width: 480px) {
+  .desktop-text {
+    display: none;
+  }
+  
+  .mobile-text {
+    display: block;
+  }
+}
+
+/* Added styles to make buttons fill the row width */
+.control-row {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.control-row button {
+  flex: 1;
+}

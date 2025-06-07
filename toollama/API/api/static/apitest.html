@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camina Chat API Test Page</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <style>
+        :root {
+            --primary-color: #232f3e;
+            --secondary-color: #49cc90;
+            --success-color: #49cc90;
+            --error-color: #f93e3e;
+            --warning-color: #fca130;
+        }
+        
+        body {
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        
+        .header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+        
+        .card {
+            margin-bottom: 20px;
+            border: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .card-header {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+        
+        .success {
+            color: var(--success-color);
+        }
+        
+        .error {
+            color: var(--error-color);
+        }
+        
+        .warning {
+            color: var(--warning-color);
+        }
+        
+        .response-container {
+            max-height: 300px;
+            overflow-y: auto;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 15px;
+        }
+        
+        .image-preview {
+            max-width: 100%;
+            max-height: 300px;
+            margin-top: 15px;
+            border-radius: 4px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .new-feature-badge {
+            background-color: var(--secondary-color);
+            color: white;
+            font-size: 0.7em;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+        
+        .provider-tabs .nav-link.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .provider-tabs .nav-link {
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Camina Chat API Test Page</h1>
+            <p>Test various API endpoints for the Camina Chat API</p>
+        </div>
+        
+        <!-- Main Tabs -->
+        <ul class="nav nav-tabs mb-4" id="mainTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="image-tab" data-bs-toggle="tab" data-bs-target="#image-content" type="button" role="tab" aria-selected="true">
+                    Image Generation
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="chat-tab" data-bs-toggle="tab" data-bs-target="#chat-content" type="button" role="tab" aria-selected="false">
+                    Chat API
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="tools-tab" data-bs-toggle="tab" data-bs-target="#tools-content" type="button" role="tab" aria-selected="false">
+                    Tools API <span class="new-feature-badge">NEW</span>
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="responses-tab" data-bs-toggle="tab" data-bs-target="#responses-content" type="button" role="tab" aria-selected="false">
+                    Responses API <span class="new-feature-badge">NEW</span>
+                </button>
+            </li>
+        </ul>
+        
+        <!-- Tab Contents -->
+        <div class="tab-content" id="mainTabsContent">
+            <!-- Image Generation Tab -->
+            <div class="tab-pane fade show active" id="image-content" role="tabpanel" aria-labelledby="image-tab">
+                <div class="card">
+                    <div class="card-header">Image Generation</div>
+                    <div class="card-body">
+                        <ul class="nav nav-pills mb-3 provider-tabs" id="imageProviderTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="openai-image-tab" data-bs-toggle="pill" data-bs-target="#openai-image" type="button" role="tab" aria-selected="true">OpenAI</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="gemini-image-tab" data-bs-toggle="pill" data-bs-target="#gemini-image" type="button" role="tab" aria-selected="false">Gemini <span class="new-feature-badge">NEW</span></button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="xai-image-tab" data-bs-toggle="pill" data-bs-target="#xai-image" type="button" role="tab" aria-selected="false">X.AI</button>
+                            </li>
+                        </ul>
+                        
+                        <div class="tab-content" id="imageProviderTabsContent">
+                            <!-- OpenAI Image Generation Form -->
+                            <div class="tab-pane fade show active" id="openai-image" role="tabpanel" aria-labelledby="openai-image-tab">
+                                <form id="openai-image-form">
+                                    <div class="mb-3">
+                                        <label for="openai-image-model" class="form-label">Model</label>
+                                        <select class="form-select" id="openai-image-model">
+                                            <option value="dall-e-3">DALL-E 3</option>
+                                            <option value="dall-e-2">DALL-E 2</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="openai-image-prompt" class="form-label">Prompt</label>
+                                        <textarea class="form-control" id="openai-image-prompt" rows="3" placeholder="Describe the image you want to generate">A cute baby sea otter swimming in crystal clear water</textarea>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col">
+                                            <label for="openai-image-size" class="form-label">Size</label>
+                                            <select class="form-select" id="openai-image-size">
+                                                <option value="1024x1024">1024x1024</option>
+                                                <option value="1024x1792">1024x1792</option>
+                                                <option value="1792x1024">1792x1024</option>
+                                            </select>
+                                        </div>
+                                        <div class="col">
+                                            <label for="openai-image-quality" class="form-label">Quality</label>
+                                            <select class="form-select" id="openai-image-quality">
+                                                <option value="standard">Standard</option>
+                                                <option value="hd">HD</option>
+                                            </select>
+                                        </div>
+                                        <div class="col">
+                                            <label for="openai-image-style" class="form-label">Style</label>
+                                            <select class="form-select" id="openai-image-style">
+                                                <option value="vivid">Vivid</option>
+                                                <option value="natural">Natural</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="openai-image-apikey" class="form-label">API Key (optional)</label>
+                                        <input type="text" class="form-control" id="openai-image-apikey" placeholder="Leave blank to use server key">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Generate Image</button>
+                                </form>
+                                <div id="openai-image-result" class="mt-4">
+                                    <div id="openai-image-status"></div>
+                                    <img id="openai-image-preview" class="image-preview d-none" alt="Generated image">
+                                    <div id="openai-image-response" class="response-container d-none"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Gemini Image Generation Form -->
+                            <div class="tab-pane fade" id="gemini-image" role="tabpanel" aria-labelledby="gemini-image-tab">
+                                <form id="gemini-image-form">
+                                    <div class="mb-3">
+                                        <label for="gemini-image-model" class="form-label">Model</label>
+                                        <select class="form-select" id="gemini-image-model">
+                                            <option value="gemini-2.0-flash-exp-image-generation">Gemini 2.0 Flash Exp Image Generation</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="gemini-image-prompt" class="form-label">Prompt</label>
+                                        <textarea class="form-control" id="gemini-image-prompt" rows="3" placeholder="Describe the image you want to generate">A beautiful sunset over mountains with a lake</textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="gemini-image-apikey" class="form-label">API Key (optional)</label>
+                                        <input type="text" class="form-control" id="gemini-image-apikey" placeholder="Leave blank to use server key">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Generate Image</button>
+                                </form>
+                                <div id="gemini-image-result" class="mt-4">
+                                    <div id="gemini-image-status"></div>
+                                    <img id="gemini-image-preview" class="image-preview d-none" alt="Generated image">
+                                    <div id="gemini-image-response" class="response-container d-none"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- X.AI Image Generation Form -->
+                            <div class="tab-pane fade" id="xai-image" role="tabpanel" aria-labelledby="xai-image-tab">
+                                <form id="xai-image-form">
+                                    <div class="mb-3">
+                                        <label for="xai-image-model" class="form-label">Model</label>
+                                        <select class="form-select" id="xai-image-model">
+                                            <option value="grok-2-image">Grok 2 Image</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="xai-image-prompt" class="form-label">Prompt</label>
+                                        <textarea class="form-control" id="xai-image-prompt" rows="3" placeholder="Describe the image you want to generate">A cyberpunk city at night with neon lights and flying vehicles</textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="xai-image-apikey" class="form-label">API Key (optional)</label>
+                                        <input type="text" class="form-control" id="xai-image-apikey" placeholder="Leave blank to use server key">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Generate Image</button>
+                                </form>
+                                <div id="xai-image-result" class="mt-4">
+                                    <div id="xai-image-status"></div>
+                                    <img id="xai-image-preview" class="image-preview d-none" alt="Generated image">
+                                    <div id="xai-image-response" class="response-container d-none"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Placeholder for Chat API Tab -->
+            <div class="tab-pane fade" id="chat-content" role="tabpanel" aria-labelledby="chat-tab">
+                <div class="card">
+                    <div class="card-header">Chat API</div>
+                    <div class="card-body">
+                        <p class="text-center">Chat API testing interface coming soon.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Placeholder for Tools API Tab -->
+            <div class="tab-pane fade" id="tools-content" role="tabpanel" aria-labelledby="tools-tab">
+                <div class="card">
+                    <div class="card-header">Tools API</div>
+                    <div class="card-body">
+                        <p class="text-center">Tools API testing interface coming soon.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Placeholder for Responses API Tab -->
+            <div class="tab-pane fade" id="responses-content" role="tabpanel" aria-labelledby="responses-tab">
+                <div class="card">
+                    <div class="card-header">Responses API</div>
+                    <div class="card-body">
+                        <p class="text-center">Responses API testing interface coming soon.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // API Base URL
+        const API_BASE_URL = 'https://api.assisted.space/v2';
+        
+        // Elements
+        const elements = {
+            openai: {
+                form: document.getElementById('openai-image-form'),
+                model: document.getElementById('openai-image-model'),
+                prompt: document.getElementById('openai-image-prompt'),
+                size: document.getElementById('openai-image-size'),
+                quality: document.getElementById('openai-image-quality'),
+                style: document.getElementById('openai-image-style'),
+                apiKey: document.getElementById('openai-image-apikey'),
+                status: document.getElementById('openai-image-status'),
+                preview: document.getElementById('openai-image-preview'),
+                response: document.getElementById('openai-image-response')
+            },
+            gemini: {
+                form: document.getElementById('gemini-image-form'),
+                model: document.getElementById('gemini-image-model'),
+                prompt: document.getElementById('gemini-image-prompt'),
+                apiKey: document.getElementById('gemini-image-apikey'),
+                status: document.getElementById('gemini-image-status'),
+                preview: document.getElementById('gemini-image-preview'),
+                response: document.getElementById('gemini-image-response')
+            },
+            xai: {
+                form: document.getElementById('xai-image-form'),
+                model: document.getElementById('xai-image-model'),
+                prompt: document.getElementById('xai-image-prompt'),
+                apiKey: document.getElementById('xai-image-apikey'),
+                status: document.getElementById('xai-image-status'),
+                preview: document.getElementById('xai-image-preview'),
+                response: document.getElementById('xai-image-response')
+            }
+        };
+        
+        // Helper Functions
+        function showStatus(providerEl, message, type = 'info') {
+            providerEl.status.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
+        }
+        
+        function showResponse(providerEl, data) {
+            providerEl.response.textContent = JSON.stringify(data, null, 2);
+            providerEl.response.classList.remove('d-none');
+        }
+        
+        function showImage(providerEl, imageUrl) {
+            providerEl.preview.src = imageUrl;
+            providerEl.preview.classList.remove('d-none');
+        }
+        
+        function resetResults(providerEl) {
+            providerEl.status.innerHTML = '';
+            providerEl.preview.classList.add('d-none');
+            providerEl.response.classList.add('d-none');
+        }
+        
+        // Image Generation Functions
+        async function generateImage(provider, data) {
+            const providerEl = elements[provider];
+            resetResults(providerEl);
+            showStatus(providerEl, 'Generating image, please wait...', 'info');
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/generate/${provider}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    showStatus(providerEl, 'Image generated successfully!', 'success');
+                    showResponse(providerEl, result);
+                    
+                    // Display the first image if available
+                    if (result.data && result.data.length > 0 && result.data[0].url) {
+                        showImage(providerEl, result.data[0].url);
+                    }
+                } else {
+                    showStatus(providerEl, `Error: ${result.error || 'Unknown error'}`, 'danger');
+                    showResponse(providerEl, result);
+                }
+            } catch (error) {
+                showStatus(providerEl, `Error: ${error.message}`, 'danger');
+            }
+        }
+        
+        // Event Listeners
+        // OpenAI Image Form
+        elements.openai.form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const data = {
+                model: elements.openai.model.value,
+                prompt: elements.openai.prompt.value,
+                n: 1,
+                size: elements.openai.size.value,
+                quality: elements.openai.quality.value,
+                style: elements.openai.style.value,
+                response_format: 'url'
+            };
+            
+            // Add API key if provided
+            if (elements.openai.apiKey.value.trim()) {
+                data.api_key = elements.openai.apiKey.value.trim();
+            }
+            
+            await generateImage('openai', data);
+        });
+        
+        // Gemini Image Form
+        elements.gemini.form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const data = {
+                model: elements.gemini.model.value,
+                prompt: elements.gemini.prompt.value,
+                n: 1,
+                size: '1024x1024',
+                response_format: 'url'
+            };
+            
+            // Add API key if provided
+            if (elements.gemini.apiKey.value.trim()) {
+                data.api_key = elements.gemini.apiKey.value.trim();
+            }
+            
+            await generateImage('gemini', data);
+        });
+        
+        // X.AI Image Form
+        elements.xai.form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const data = {
+                model: elements.xai.model.value,
+                prompt: elements.xai.prompt.value,
+                n: 1,
+                size: '1024x1024',
+                response_format: 'url'
+            };
+            
+            // Add API key if provided
+            if (elements.xai.apiKey.value.trim()) {
+                data.api_key = elements.xai.apiKey.value.trim();
+            }
+            
+            await generateImage('xai', data);
+        });
+        
+        // Initialize elements once page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            // Update element references after DOM is loaded
+            for (const provider of ['openai', 'gemini', 'xai']) {
+                elements[provider] = {
+                    form: document.getElementById(`${provider}-image-form`),
+                    model: document.getElementById(`${provider}-image-model`),
+                    prompt: document.getElementById(`${provider}-image-prompt`),
+                    apiKey: document.getElementById(`${provider}-image-apikey`),
+                    status: document.getElementById(`${provider}-image-status`),
+                    preview: document.getElementById(`${provider}-image-preview`),
+                    response: document.getElementById(`${provider}-image-response`)
+                };
+                
+                // Add provider-specific fields
+                if (provider === 'openai') {
+                    elements[provider].size = document.getElementById('openai-image-size');
+                    elements[provider].quality = document.getElementById('openai-image-quality');
+                    elements[provider].style = document.getElementById('openai-image-style');
+                }
+            }
+        });
+    </script>
+</body>
+</html> 

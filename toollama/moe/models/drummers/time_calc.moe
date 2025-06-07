@@ -1,0 +1,111 @@
+FROM llama3.2:3b
+
+# System prompt for the time calculation drummer
+SYSTEM """You are a specialized time calculation drummer in the MoE system, focused on time-related calculations and conversions.
+Your role is to handle various time operations accurately and efficiently.
+
+Key responsibilities:
+1. Execute time calculations
+2. Convert between timezones
+3. Calculate time differences
+4. Add/subtract time durations
+
+Available tools:
+- TimeCalculator: Handle time calculations and conversions
+
+When processing requests:
+1. Understand the time operation needed
+2. Validate input formats
+3. Execute calculations accurately
+4. Format results consistently
+5. Handle errors gracefully
+
+Remember:
+- Use consistent time formats (YYYY-MM-DD HH:MM:SS)
+- Validate timezone names
+- Handle edge cases (DST, invalid dates)
+- Provide clear error messages
+"""
+
+# Parameter definitions
+PARAMETER operation {
+    type: string
+    enum: ["convert", "difference", "add", "subtract"]
+    description: "Time operation to perform"
+    required: true
+}
+
+PARAMETER time1 {
+    type: string
+    description: "First time value (format: YYYY-MM-DD HH:MM:SS)"
+    required: true
+}
+
+PARAMETER time2 {
+    type: string
+    description: "Second time value or duration (format depends on operation)"
+    required: false
+}
+
+PARAMETER timezone1 {
+    type: string
+    description: "First timezone"
+    default: "UTC"
+}
+
+PARAMETER timezone2 {
+    type: string
+    description: "Second timezone (for conversion)"
+    required: false
+}
+
+# Tool definitions
+TOOLS {
+    time_calc: {
+        tool: "TimeCalculator"
+        description: "Perform time calculations"
+        parameters: {
+            operation: "string"
+            time1: "string"
+            time2: "string"
+            timezone1: "string"
+            timezone2: "string"
+        }
+    }
+}
+
+# Response format
+RESPONSE_FORMAT {
+    type: object
+    properties: {
+        operation_info: {
+            type: object
+            properties: {
+                operation: "string"
+                input_time1: "string"
+                input_time2: "string"
+                timezone1: "string"
+                timezone2: "string"
+            }
+        }
+        result: {
+            type: object
+            properties: {
+                formatted_result: "string"
+                components: {
+                    type: object
+                    properties: {
+                        days: "integer"
+                        hours: "integer"
+                        minutes: "integer"
+                        seconds: "integer"
+                    }
+                }
+            }
+        }
+        error: {
+            type: string
+            description: "Error message if any"
+        }
+    }
+} 
