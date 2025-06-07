@@ -1,3 +1,13 @@
+# Code Snippets from storage/gui/herd_imageprocessor.py
+
+File: `storage/gui/herd_imageprocessor.py`  
+Language: Python  
+Extracted: 2025-06-07 05:08:22  
+
+## Snippet 1
+Lines 1-30
+
+```Python
 """
 Herd AI Image Processor GUI
 Note: WeasyPrint has been completely removed due to dependency issues on macOS.
@@ -10,7 +20,7 @@ import json
 import base64
 import io
 from pathlib import Path
-from flask import Flask, request, jsonify, render_template_string, send_file, abort
+from flask import Flask, request, jsonify, render_template, render_template_string, send_file, abort
 from werkzeug.utils import secure_filename
 from threading import Lock
 from src.herd_ai.image_processor import ImageProcessor
@@ -27,20 +37,24 @@ from reportlab.lib.units import inch
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = tempfile.mkdtemp(prefix="herd_gui_uploads_")
 app.config['MAX_CONTENT_LENGTH'] = 100 * 1024 * 1024  # 100MB max upload
+```
 
-# In-memory undo log and processed files for the session
-undo_log = []
-undo_lock = Lock()
-processed_md_files = []  # List of (md_path, original_name, new_name)
-processed_files = {}  # Dictionary to store processed file info for retries
+## Snippet 2
+Lines 37-43
 
+```Python
 # Check if PIL is available for image processing
 try:
     from PIL import Image
     has_pil = True
 except ImportError:
     has_pil = False
+```
 
+## Snippet 3
+Lines 44-59
+
+```Python
 # Check if BeautifulSoup is available for HTML parsing
 try:
     from bs4 import BeautifulSoup
@@ -49,7 +63,7 @@ except ImportError:
     has_bs4 = False
 
 # HTML template (modern, accessible, fully brand-styled)
-HTML_TEMPLATE = r'''
+HTML_TEMPLATE = '''
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -57,7 +71,13 @@ HTML_TEMPLATE = r'''
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Herd AI Image Processor</title>
   <style>
-    /* === BEGIN BRAND REFERENCE - UNIFIED STYLE GUIDE === */
+```
+
+## Snippet 4
+Lines 60-94
+
+```Python
+/* === BEGIN BRAND REFERENCE - UNIFIED STYLE GUIDE === */
     :root {
       --background-color: #f5f7fa;
       --surface-color: #fff;
@@ -92,16 +112,13 @@ HTML_TEMPLATE = r'''
       padding: 0;
       min-height: 100vh;
     }
-    .bg-surface { background: var(--surface-color); }
-    .rounded { border-radius: var(--border-radius); }
-    .shadow { box-shadow: var(--shadow); }
-    .shadow-md { box-shadow: var(--shadow-md); }
-    .p-4 { padding: 2rem; }
-    .p-3 { padding: 1rem; }
-    .mb-2 { margin-bottom: 0.5rem; }
-    .d-flex { display: flex; }
-    .align-items-center { align-items: center; }
-    .text-primary { color: var(--primary-color); }
+```
+
+## Snippet 5
+Lines 104-115
+
+```Python
+.text-primary { color: var(--primary-color); }
     .btn {
       display: inline-block;
       font-size: 1rem;
@@ -113,7 +130,13 @@ HTML_TEMPLATE = r'''
       transition: background 0.2s, color 0.2s, border 0.2s;
       outline: none;
     }
-    .btn:focus { outline: var(--focus-outline); }
+```
+
+## Snippet 6
+Lines 116-175
+
+```Python
+.btn:focus { outline: var(--focus-outline); }
     .btn-primary {
       background: var(--btn-bg);
       color: var(--btn-text);
@@ -173,18 +196,13 @@ HTML_TEMPLATE = r'''
       flex-direction: column;
       gap: 0.2rem;
     }
-    .file-item .success { color: var(--success-color); }
-    .file-item .error { color: var(--error-color); }
-    .button-group { display: flex; gap: 0.5rem; margin-top: 0.3rem; }
-    .download-container { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; margin-bottom: 1rem; }
-    .processing-count { font-size: 1rem; margin: 0.5rem 0; }
-    .form-label { font-weight: bold; margin-bottom: 0.5rem; display: block; }
-    .provider-select { width: 100%; max-width: 350px; }
-    @media (max-width: 600px) {
-      .p-4 { padding: 1rem; }
-      .file-item { flex-direction: column; align-items: flex-start; }
-      .file-thumb { margin-right: 0; margin-bottom: 0.5rem; }
-    }
+```
+
+## Snippet 7
+Lines 187-250
+
+```Python
+}
     body.dark-theme {
       --background-color: #181c20;
       --surface-color: #23272e;
@@ -248,11 +266,13 @@ HTML_TEMPLATE = r'''
       color: #6c7a89;
       margin-bottom: 0.5rem;
     }
-    @media (max-width: 600px) {
-      .drop-area { min-width: 0; max-width: 98vw; min-height: 140px; }
-      .drop-icon { font-size: 2.2rem; }
-      .drop-instructions { font-size: 1.05rem; }
-    }
+```
+
+## Snippet 8
+Lines 255-263
+
+```Python
+}
     body.dark-theme .drop-area {
       background: var(--surface-color);
       border-color: var(--primary-color);
@@ -261,8 +281,12 @@ HTML_TEMPLATE = r'''
       background: #23272e;
       border-color: var(--btn-bg-hover);
     }
-    /* === END BRAND REFERENCE === */
-  </style>
+```
+
+## Snippet 9
+Lines 266-284
+
+```Python
 </head>
 <body>
   <button id="theme-toggle-btn" class="btn btn-secondary" aria-pressed="false" aria-label="Toggle dark mode" style="position: absolute; top: 1rem; right: 1rem; z-index: 2000;">
@@ -282,10 +306,13 @@ HTML_TEMPLATE = r'''
       <div class="drop-instructions">Drag and drop images here</div>
       <div class="drop-hint">or <label for="file-input" style="color: var(--primary-color); cursor: pointer; text-decoration: underline;">click to select</label></div>
       <small>Supports multiple files and folders.</small>
-      <input id="file-input" name="images" type="file" accept="image/*,.heic,.heif,.webp,.gif,.bmp,.tiff,.svg" multiple style="display:none;" aria-label="Select images" />
-    </div>
-    <button type="button" class="btn btn-secondary" id="dir-btn" style="margin-top: 1rem;">Select Directory</button>
-    <input id="dir-input" name="dir-images" type="file" accept="image/*,.heic,.heif,.webp,.gif,.bmp,.tiff,.svg" multiple webkitdirectory directory style="display:none;" aria-label="Select directory of images" />
+```
+
+## Snippet 10
+Lines 288-310
+
+```Python
+<input id="dir-input" name="dir-images" type="file" accept="image/*,.heic,.heif,.webp,.gif,.bmp,.tiff,.svg" multiple webkitdirectory directory style="display:none;" aria-label="Select directory of images" />
     <button type="submit" style="display:none;">Upload</button>
     <div id="processing-info" class="processing-count" style="display:none;">
       Processing: <span id="processed-count">0</span>/<span id="total-count">0</span> images
@@ -295,7 +322,7 @@ HTML_TEMPLATE = r'''
       <button type="button" class="btn btn-primary" id="download-html-btn">Download HTML Report</button>
       <button type="button" class="btn btn-primary" id="download-pdf-btn">Download PDF Report</button>
     </div>
-    
+
     <!-- Add bulk actions container -->
     <div class="bulk-actions" id="bulk-actions" style="display:none; margin: 1rem 0;">
       <div class="select-all-container" style="margin-bottom: 0.5rem;">
@@ -306,9 +333,15 @@ HTML_TEMPLATE = r'''
       <button type="button" class="btn btn-secondary" id="bulk-undo-btn" disabled>Undo Selected</button>
       <span id="selected-count" style="margin-left: 1rem; display: none;">0 files selected</span>
     </div>
-    
+
     <div class="file-list" id="file-list" aria-live="polite"></div>
-  </main>
+```
+
+## Snippet 11
+Lines 311-345
+
+```Python
+</main>
   <script>
     const dropArea = document.getElementById('drop-area');
     const fileInput = document.getElementById('file-input');
@@ -323,87 +356,87 @@ HTML_TEMPLATE = r'''
     const processingInfo = document.getElementById('processing-info');
     const processedCount = document.getElementById('processed-count');
     const totalCount = document.getElementById('total-count');
-    
+
     // Track processing status
     let processedImages = 0;
     let totalImages = 0;
     let processingComplete = false;
     let hasMd = false;
     let currentImages = [];
-    
+
     // Add new JavaScript to handle bulk actions
     const bulkActionsContainer = document.getElementById('bulk-actions');
     const selectAllCheckbox = document.getElementById('select-all');
     const bulkRetryBtn = document.getElementById('bulk-retry-btn');
     const bulkUndoBtn = document.getElementById('bulk-undo-btn');
     const selectedCountSpan = document.getElementById('selected-count');
-    
+
     // Track selected items
     let selectedItems = new Set();
-    
+
     document.getElementById('upload-form').addEventListener('submit', e => e.preventDefault());
     dropArea.addEventListener('click', e => {
-      if (e.target !== dirBtn) fileInput.click();
-    });
-    dropArea.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') fileInput.click(); });
-    dropArea.addEventListener('dragover', e => { e.preventDefault(); dropArea.classList.add('dragover'); });
-    dropArea.addEventListener('dragleave', e => { e.preventDefault(); dropArea.classList.remove('dragover'); });
+```
+
+## Snippet 12
+Lines 350-356
+
+```Python
+dropArea.addEventListener('dragleave', e => { e.preventDefault(); dropArea.classList.remove('dragover'); });
     dropArea.addEventListener('drop', e => {
       e.preventDefault();
       dropArea.classList.remove('dragover');
       handleFiles(e.dataTransfer.files);
     });
     fileInput.addEventListener('change', e => handleFiles(e.target.files));
-    dirBtn.addEventListener('click', e => { dirInput.click(); });
+```
+
+## Snippet 13
+Lines 357-365
+
+```Python
+dirBtn.addEventListener('click', e => { dirInput.click(); });
     dirInput.addEventListener('change', e => handleFiles(e.target.files));
-    
+
     // Handle select all checkbox
     selectAllCheckbox.addEventListener('change', () => {
       const checkboxes = document.querySelectorAll('.file-checkbox');
       checkboxes.forEach(checkbox => {
         checkbox.checked = selectAllCheckbox.checked;
         const fileId = checkbox.getAttribute('data-file-id');
-        if (selectAllCheckbox.checked) {
-          selectedItems.add(fileId);
-        } else {
-          selectedItems.delete(fileId);
-        }
-      });
-      updateSelectedCount();
-      updateBulkButtons();
-    });
-    
-    // Update selected count
-    function updateSelectedCount() {
-      const count = selectedItems.size;
-      selectedCountSpan.textContent = `${count} file${count !== 1 ? 's' : ''} selected`;
-      selectedCountSpan.style.display = count > 0 ? 'inline' : 'none';
-    }
-    
-    // Update bulk action buttons
-    function updateBulkButtons() {
+```
+
+## Snippet 14
+Lines 384-390
+
+```Python
+function updateBulkButtons() {
       const hasSelection = selectedItems.size > 0;
       bulkRetryBtn.disabled = !hasSelection;
       bulkUndoBtn.disabled = !hasSelection;
     }
-    
+
     // Handle selection of individual checkboxes
-    function handleFileCheckboxChange(checkbox) {
-      const fileId = checkbox.getAttribute('data-file-id');
-      if (checkbox.checked) {
-        selectedItems.add(fileId);
-      } else {
+```
+
+## Snippet 15
+Lines 395-400
+
+```Python
+} else {
         selectedItems.delete(fileId);
         selectAllCheckbox.checked = false;
       }
       updateSelectedCount();
       updateBulkButtons();
-    }
-    
-    // Bulk retry action
-    bulkRetryBtn.addEventListener('click', () => {
-      if (selectedItems.size === 0) return;
-      
+```
+
+## Snippet 16
+Lines 405-419
+
+```Python
+if (selectedItems.size === 0) return;
+
       const fileIds = Array.from(selectedItems);
       fetch('/api/bulk_retry', {
         method: 'POST',
@@ -417,50 +450,86 @@ HTML_TEMPLATE = r'''
       .then(data => {
         // Handle response and update UI
         const results = data.results || [];
-        for (const result of results) {
-          if (result.file_id) {
+```
+
+## Snippet 17
+Lines 421-423
+
+```Python
+if (result.file_id) {
             updateFileItemAfterBulkAction(result);
           }
-        }
+```
+
+## Snippet 18
+Lines 424-429
+
+```Python
+}
         // Reset selection
         selectedItems.clear();
         selectAllCheckbox.checked = false;
         updateSelectedCount();
         updateBulkButtons();
-      })
+```
+
+## Snippet 19
+Lines 430-433
+
+```Python
+})
       .catch(err => {
         console.error("Bulk retry failed:", err);
       });
-    });
-    
-    // Bulk undo action
-    bulkUndoBtn.addEventListener('click', () => {
-      if (selectedItems.size === 0) return;
-      
+```
+
+## Snippet 20
+Lines 438-443
+
+```Python
+if (selectedItems.size === 0) return;
+
       // Collect undo tokens from the file items
       const undoTokens = [];
       selectedItems.forEach(fileId => {
         const item = document.getElementById(`file-item-${fileId}`);
-        if (item) {
-          const tokenAttr = item.getAttribute('data-undo-token');
-          if (tokenAttr) {
+```
+
+## Snippet 21
+Lines 446-449
+
+```Python
+if (tokenAttr) {
             try {
               const token = JSON.parse(tokenAttr);
               undoTokens.push(token);
-            } catch (e) {
+```
+
+## Snippet 22
+Lines 450-452
+
+```Python
+} catch (e) {
               console.error("Invalid undo token:", tokenAttr);
             }
-          }
-        }
-      });
-      
-      if (undoTokens.length === 0) return;
-      
+```
+
+## Snippet 23
+Lines 457-461
+
+```Python
+if (undoTokens.length === 0) return;
+
       fetch('/api/bulk_undo', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ undo_tokens: undoTokens })
-      })
+```
+
+## Snippet 24
+Lines 463-470
+
+```Python
+})
       .then(r => r.json())
       .then(data => {
         // Add undo success message to each file item
@@ -468,43 +537,65 @@ HTML_TEMPLATE = r'''
         let idx = 0;
         selectedItems.forEach(fileId => {
           const item = document.getElementById(`file-item-${fileId}`);
-          if (item && idx < results.length) {
-            const result = results[idx++];
-            if (result.success) {
-              item.innerHTML += `<div class='success'>Undo successful.</div>`;
-            } else {
+```
+
+## Snippet 25
+Lines 475-477
+
+```Python
+} else {
               item.innerHTML += `<div class='error'>Undo failed: ${result.error || "Unknown error"}</div>`;
             }
-          }
-        });
-        
+```
+
+## Snippet 26
+Lines 479-485
+
+```Python
+});
+
         // Reset selection
         selectedItems.clear();
         selectAllCheckbox.checked = false;
         updateSelectedCount();
         updateBulkButtons();
-      })
+```
+
+## Snippet 27
+Lines 486-489
+
+```Python
+})
       .catch(err => {
         console.error("Bulk undo failed:", err);
       });
-    });
-    
-    // Update a file item after bulk action
-    function updateFileItemAfterBulkAction(result) {
-      const fileItem = document.getElementById(`file-item-${result.file_id}`);
-      if (!fileItem) return;
-      
-      if (result.error) {
-        const meta = fileItem.querySelector('.file-meta');
-        if (meta) {
+```
+
+## Snippet 28
+Lines 499-502
+
+```Python
+if (meta) {
           meta.innerHTML = `<strong>${result.original_name}</strong><span class='error'>Error: ${result.error}</span>`;
         }
         return;
-      }
-      
+```
+
+## Snippet 29
+Lines 503-506
+
+```Python
+}
+
       // Update the file item with the new data
       const meta = fileItem.querySelector('.file-meta');
-      if (meta) {
+```
+
+## Snippet 30
+Lines 507-531
+
+```Python
+if (meta) {
         meta.innerHTML = `
           <div class="file-names">
             <strong>New Name: ${result.new_name}</strong>
@@ -524,76 +615,95 @@ HTML_TEMPLATE = r'''
             <span><b>Metadata embedded:</b> ${result.metadata_embedded ? 'Yes' : 'No'}</span>
           </div>
         `;
-        
+
         // Add button group
         const buttonGroup = document.createElement('div');
         buttonGroup.className = 'button-group';
-        
-        if (result.md_id) {
+```
+
+## Snippet 31
+Lines 532-547
+
+```Python
+if (result.md_id) {
           hasMd = true;
           const mdBtn = document.createElement('button');
           mdBtn.className = 'md-btn btn btn-primary';
           mdBtn.textContent = 'Download Markdown';
           mdBtn.onclick = () => window.open(`/api/download_md?md_id=${encodeURIComponent(result.md_id)}`);
           buttonGroup.appendChild(mdBtn);
-          
+
           // Make sure download buttons are visible
           downloadContainer.style.display = 'flex';
         }
-        
+
         // Add Retry button again
         const retryBtn = document.createElement('button');
         retryBtn.className = 'retry-btn btn btn-secondary';
         retryBtn.textContent = 'Retry';
-        retryBtn.setAttribute('aria-label', `Retry processing for ${result.original_name}`);
+```
+
+## Snippet 32
+Lines 548-555
+
+```Python
+retryBtn.setAttribute('aria-label', `Retry processing for ${result.original_name}`);
         retryBtn.onclick = () => retryProcessing(result.file_id, meta);
         buttonGroup.appendChild(retryBtn);
-        
+
         // Add Undo button
         const undoBtn = document.createElement('button');
         undoBtn.className = 'undo-btn btn btn-secondary';
         undoBtn.textContent = 'Undo';
-        undoBtn.setAttribute('aria-label', `Undo changes for ${result.original_name}`);
-        undoBtn.onclick = () => undoAction(result.undo_token, fileItem);
-        buttonGroup.appendChild(undoBtn);
-        
-        meta.appendChild(buttonGroup);
-      }
-      
+```
+
+## Snippet 33
+Lines 561-564
+
+```Python
+}
+
       // Update preview image
       const thumb = fileItem.querySelector('.file-thumb');
-      if (thumb) {
+```
+
+## Snippet 34
+Lines 565-570
+
+```Python
+if (thumb) {
         thumb.alt = result.new_name || result.original_name;
         thumb.src = result.preview_url || '';
       }
-      
+
       // Store undo token in the file item
-      if (result.undo_token) {
+```
+
+## Snippet 35
+Lines 571-573
+
+```Python
+if (result.undo_token) {
         fileItem.setAttribute('data-undo-token', JSON.stringify(result.undo_token));
       }
-    }
-    
-    // Update handleFiles function to show the bulk actions container
+```
+
+## Snippet 36
+Lines 576-581
+
+```Python
+// Update handleFiles function to show the bulk actions container
     const originalHandleFiles = handleFiles;
     handleFiles = function(files) {
       // Call the original function
       originalHandleFiles(files);
-      
-      // Show the bulk actions container if we have files
-      const imageFiles = Array.from(files).filter(isImageFile);
-      if (imageFiles.length > 0) {
-        bulkActionsContainer.style.display = 'block';
-      } else {
-        bulkActionsContainer.style.display = 'none';
-      }
-    };
-    
-    // Modify the file item creation in handleFiles
-    function handleFiles(files) {
-      const imageFiles = Array.from(files).filter(isImageFile);
-      if (!imageFiles.length) return;
-      
-      // Reset state for new batch
+```
+
+## Snippet 37
+Lines 596-614
+
+```Python
+// Reset state for new batch
       fileList.innerHTML = '';
       downloadContainer.style.display = 'none';
       bulkActionsContainer.style.display = 'block';
@@ -606,83 +716,109 @@ HTML_TEMPLATE = r'''
       selectAllCheckbox.checked = false;
       updateSelectedCount();
       updateBulkButtons();
-      
+
       // Display processing counter
       processedCount.textContent = '0';
       totalCount.textContent = imageFiles.length;
       processingInfo.style.display = 'block';
-      
-      // Create initial placeholders for all files
-      for (const file of imageFiles) {
+```
+
+## Snippet 38
+Lines 616-620
+
+```Python
+for (const file of imageFiles) {
         const item = document.createElement('div');
         item.className = 'file-item bg-surface rounded shadow-md p-3 mb-2';
         item.id = `file-item-${currentImages.length}`;
-        
-        // Add checkbox for selection
+```
+
+## Snippet 39
+Lines 621-658
+
+```Python
+// Add checkbox for selection
         const checkboxContainer = document.createElement('div');
         checkboxContainer.className = 'checkbox-container';
         checkboxContainer.style.marginRight = '10px';
-        
+
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
         checkbox.className = 'file-checkbox';
         checkbox.setAttribute('data-file-id', currentImages.length);
         checkbox.setAttribute('aria-label', `Select ${file.name}`);
         checkbox.addEventListener('change', () => handleFileCheckboxChange(checkbox));
-        
+
         checkboxContainer.appendChild(checkbox);
-        
+
         const contentContainer = document.createElement('div');
         contentContainer.className = 'd-flex align-items-center';
         contentContainer.style.flex = '1';
-        
+
         const thumb = document.createElement('img');
         thumb.className = 'file-thumb';
         thumb.alt = file.name;
         thumb.src = URL.createObjectURL(file);
-        
+
         const meta = document.createElement('div');
         meta.className = 'file-meta';
         meta.innerHTML = `<strong>${file.name}</strong><span>Waiting to process...</span>`;
-        
+
         contentContainer.appendChild(thumb);
         contentContainer.appendChild(meta);
-        
+
         item.appendChild(checkboxContainer);
         item.appendChild(contentContainer);
         fileList.appendChild(item);
-        
+
         currentImages.push({
           file: file,
           index: currentImages.length
         });
-      }
-      
-      // Start processing files one by one
-      processNextImage(imageFiles, 0);
-    }
-    
-    function processNextImage(files, index) {
-      if (index >= files.length) {
+```
+
+## Snippet 40
+Lines 666-668
+
+```Python
+if (index >= files.length) {
         processingComplete = true;
         processingInfo.style.display = 'none';
-        if (hasMd) {
+```
+
+## Snippet 41
+Lines 669-672
+
+```Python
+if (hasMd) {
           downloadContainer.style.display = 'flex';
         }
         return;
-      }
-      
+```
+
+## Snippet 42
+Lines 673-680
+
+```Python
+}
+
       const formData = new FormData();
       formData.append('images', files[index]);
       formData.append('provider', providerSelect.value);
-      
+
       // Update UI to show currently processing file
       const fileItem = document.getElementById(`file-item-${index}`);
-      if (fileItem) {
+```
+
+## Snippet 43
+Lines 681-695
+
+```Python
+if (fileItem) {
         const meta = fileItem.querySelector('.file-meta');
         meta.innerHTML = `<strong>${files[index].name}</strong><span>Processing...</span>`;
       }
-      
+
       fetch('/api/process_images', {
         method: 'POST',
         body: formData
@@ -692,14 +828,13 @@ HTML_TEMPLATE = r'''
         // Update the processed count
         processedImages++;
         processedCount.textContent = processedImages;
-        
-        // Update display for this specific file
-        for (const result of res.results) {
-          if (fileItem) {
-            const meta = fileItem.querySelector('.file-meta');
-            if (result.error) {
-              meta.innerHTML = `<strong>${result.original_name}</strong><span class='error'>Error: ${result.error}</span>`;
-            } else {
+```
+
+## Snippet 44
+Lines 702-727
+
+```Python
+} else {
               // Updated metadata display with new fields
               meta.innerHTML = `
                 <div class="file-names">
@@ -720,12 +855,17 @@ HTML_TEMPLATE = r'''
                   <span><b>Metadata embedded:</b> ${result.metadata_embedded ? 'Yes' : 'No'}</span>
                 </div>
               `;
-              
+
               // Add button group
               const buttonGroup = document.createElement('div');
               buttonGroup.className = 'button-group';
-              
-              if (result.md_id) {
+```
+
+## Snippet 45
+Lines 728-740
+
+```Python
+if (result.md_id) {
                 hasMd = true;
                 const mdBtn = document.createElement('button');
                 mdBtn.className = 'md-btn btn btn-primary';
@@ -733,68 +873,97 @@ HTML_TEMPLATE = r'''
                 mdBtn.onclick = () => window.open(`/api/download_md?md_id=${encodeURIComponent(result.md_id)}`);
                 buttonGroup.appendChild(mdBtn);
               }
-              
+
               // Add Retry button
               const retryBtn = document.createElement('button');
               retryBtn.className = 'retry-btn btn btn-secondary';
               retryBtn.textContent = 'Retry';
-              retryBtn.setAttribute('aria-label', `Retry processing for ${result.original_name}`);
+```
+
+## Snippet 46
+Lines 741-748
+
+```Python
+retryBtn.setAttribute('aria-label', `Retry processing for ${result.original_name}`);
               retryBtn.onclick = () => retryProcessing(result.file_id, meta);
               buttonGroup.appendChild(retryBtn);
-              
+
               // Add Undo button
               const undoBtn = document.createElement('button');
               undoBtn.className = 'undo-btn btn btn-secondary';
               undoBtn.textContent = 'Undo';
-              undoBtn.setAttribute('aria-label', `Undo changes for ${result.original_name}`);
+```
+
+## Snippet 47
+Lines 749-760
+
+```Python
+undoBtn.setAttribute('aria-label', `Undo changes for ${result.original_name}`);
               undoBtn.onclick = () => undoAction(result.undo_token, fileItem);
               buttonGroup.appendChild(undoBtn);
-              
+
               meta.appendChild(buttonGroup);
-              
+
               // Update preview image
               const thumb = fileItem.querySelector('.file-thumb');
               thumb.alt = result.new_name || result.original_name;
               thumb.src = result.preview_url || '';
-              
+
               // Store undo token in the file item
-              if (result.undo_token) {
+```
+
+## Snippet 48
+Lines 761-763
+
+```Python
+if (result.undo_token) {
                 fileItem.setAttribute('data-undo-token', JSON.stringify(result.undo_token));
               }
-            }
-          }
-          
-          // If we have at least one MD file, show the download buttons
-          if (hasMd && !processingComplete) {
+```
+
+## Snippet 49
+Lines 768-770
+
+```Python
+if (hasMd && !processingComplete) {
             downloadContainer.style.display = 'flex';
           }
-        }
-        
-        // Process next image
-        processNextImage(files, index + 1);
-      })
+```
+
+## Snippet 50
+Lines 775-781
+
+```Python
+})
       .catch(err => {
         // Update the processed count even on error
         processedImages++;
         processedCount.textContent = processedImages;
-        
+
         // Update this file's display
-        if (fileItem) {
+```
+
+## Snippet 51
+Lines 782-788
+
+```Python
+if (fileItem) {
           const meta = fileItem.querySelector('.file-meta');
           meta.innerHTML = `<strong>${files[index].name}</strong><span class='error'>Error: ${err}</span>`;
         }
-        
+
         // Continue with next file
         processNextImage(files, index + 1);
-      });
-    }
-    
-    // Update the retryProcessing function for metadata display
-    function retryProcessing(fileId, metaElement) {
-      if (!fileId) return;
-      
+```
+
+## Snippet 52
+Lines 794-807
+
+```Python
+if (!fileId) return;
+
       metaElement.innerHTML = '<span>Processing again...</span>';
-      
+
       fetch('/api/retry_processing', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -805,9 +974,13 @@ HTML_TEMPLATE = r'''
       })
       .then(r => r.json())
       .then(result => {
-        if (result.error) {
-          metaElement.innerHTML = `<strong>${result.original_name}</strong><span class='error'>Error: ${result.error}</span>`;
-        } else {
+```
+
+## Snippet 53
+Lines 810-835
+
+```Python
+} else {
           // Updated metadata display with new fields
           metaElement.innerHTML = `
             <div class="file-names">
@@ -828,69 +1001,113 @@ HTML_TEMPLATE = r'''
               <span><b>Metadata embedded:</b> ${result.metadata_embedded ? 'Yes' : 'No'}</span>
             </div>
           `;
-          
+
           // Add button group
           const buttonGroup = document.createElement('div');
           buttonGroup.className = 'button-group';
-          
-          if (result.md_id) {
+```
+
+## Snippet 54
+Lines 836-851
+
+```Python
+if (result.md_id) {
             hasMd = true;
             const mdBtn = document.createElement('button');
             mdBtn.className = 'md-btn btn btn-primary';
             mdBtn.textContent = 'Download Markdown';
             mdBtn.onclick = () => window.open(`/api/download_md?md_id=${encodeURIComponent(result.md_id)}`);
             buttonGroup.appendChild(mdBtn);
-            
+
             // Make sure download buttons are visible
             downloadContainer.style.display = 'flex';
           }
-          
+
           // Add Retry button again
           const retryBtn = document.createElement('button');
           retryBtn.className = 'retry-btn btn btn-secondary';
           retryBtn.textContent = 'Retry';
-          retryBtn.setAttribute('aria-label', `Retry processing for ${result.original_name}`);
+```
+
+## Snippet 55
+Lines 852-859
+
+```Python
+retryBtn.setAttribute('aria-label', `Retry processing for ${result.original_name}`);
           retryBtn.onclick = () => retryProcessing(result.file_id, metaElement);
           buttonGroup.appendChild(retryBtn);
-          
+
           // Add Undo button
           const undoBtn = document.createElement('button');
           undoBtn.className = 'undo-btn btn btn-secondary';
           undoBtn.textContent = 'Undo';
-          undoBtn.setAttribute('aria-label', `Undo changes for ${result.original_name}`);
+```
+
+## Snippet 56
+Lines 860-867
+
+```Python
+undoBtn.setAttribute('aria-label', `Undo changes for ${result.original_name}`);
           undoBtn.onclick = () => undoAction(result.undo_token, metaElement.parentNode.parentNode);
           buttonGroup.appendChild(undoBtn);
-          
+
           meta.appendChild(buttonGroup);
-          
+
           // Update the parent file item data attributes
           const fileItem = metaElement.parentNode.parentNode;
-          if (fileItem && result.undo_token) {
+```
+
+## Snippet 57
+Lines 868-874
+
+```Python
+if (fileItem && result.undo_token) {
             fileItem.setAttribute('data-undo-token', JSON.stringify(result.undo_token));
           }
-          
+
           // Update preview image
           const fileItemContainer = metaElement.parentNode;
           const thumb = fileItemContainer.querySelector('.file-thumb');
-          if (thumb) {
+```
+
+## Snippet 58
+Lines 875-878
+
+```Python
+if (thumb) {
             thumb.alt = result.new_name || result.original_name;
             thumb.src = result.preview_url || '';
           }
-        }
-      })
+```
+
+## Snippet 59
+Lines 880-883
+
+```Python
+})
       .catch(err => {
         metaElement.innerHTML = `<span class='error'>Retry failed: ${err}</span>`;
       });
-    }
-    
-    // Add CSS for file metadata display
+```
+
+## Snippet 60
+Lines 886-888
+
+```Python
+// Add CSS for file metadata display
     const style = document.createElement('style');
     style.textContent = `
-      .file-names { margin-bottom: 8px; }
-      .file-metadata { 
-        display: flex; 
-        flex-wrap: wrap; 
-        gap: 8px; 
+```
+
+## Snippet 61
+Lines 889-927
+
+```Python
+.file-names { margin-bottom: 8px; }
+      .file-metadata {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
         margin-top: 8px;
         margin-bottom: 8px;
       }
@@ -925,27 +1142,49 @@ HTML_TEMPLATE = r'''
       body.dark-theme .file-metadata span {
         background-color: var(--surface-color);
       }
-    `;
+```
+
+## Snippet 62
+Lines 928-935
+
+```Python
+`;
     document.head.appendChild(style);
-    
+
     // Theme toggle logic
     const themeToggleBtn = document.getElementById('theme-toggle-btn');
     const themeToggleLabel = document.getElementById('theme-toggle-label');
     const themeToggleIcon = document.getElementById('theme-toggle-icon');
+```
 
-    function setTheme(dark) {
-      if (dark) {
+## Snippet 63
+Lines 937-941
+
+```Python
+if (dark) {
         document.body.classList.add('dark-theme');
         themeToggleBtn.setAttribute('aria-pressed', 'true');
         themeToggleLabel.textContent = 'Dark Mode';
         themeToggleIcon.textContent = '🌙';
-      } else {
+```
+
+## Snippet 64
+Lines 942-947
+
+```Python
+} else {
         document.body.classList.remove('dark-theme');
         themeToggleBtn.setAttribute('aria-pressed', 'false');
         themeToggleLabel.textContent = 'Light Mode';
         themeToggleIcon.textContent = '🌞';
       }
-    }
+```
+
+## Snippet 65
+Lines 948-961
+
+```Python
+}
 
     // Detect system preference on load
     let prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -959,40 +1198,64 @@ HTML_TEMPLATE = r'''
 
     // Keyboard accessibility: toggle on Enter/Space
     themeToggleBtn.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
+```
+
+## Snippet 66
+Lines 962-965
+
+```Python
+if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
         themeToggleBtn.click();
       }
-    });
+```
 
-    // 2. Directory button logic (moved outside drop area)
-    // 3. Only allow image files for upload
-    function isImageFile(file) {
+## Snippet 67
+Lines 970-973
+
+```Python
+function isImageFile(file) {
       return file.type.startsWith('image/') || /\.(heic|heif|webp|gif|bmp|tiff|svg)$/i.test(file.name);
     }
+```
 
-    // Add event listener for the save buttons - add this right before the theme toggle logic
-    // Add event listener for Save Alt Text buttons
-    document.addEventListener('click', function(e) {
-      if (e.target && e.target.classList.contains('save-alt-btn')) {
+## Snippet 68
+Lines 977-979
+
+```Python
+if (e.target && e.target.classList.contains('save-alt-btn')) {
         const fileId = e.target.getAttribute('data-file-id');
         const textarea = document.getElementById(`alt-text-${fileId}`);
-        if (!textarea) return;
-        
+```
+
+## Snippet 69
+Lines 980-982
+
+```Python
+if (!textarea) return;
+
         const newAlt = textarea.value.trim();
-        if (!newAlt) return;
-        
+```
+
+## Snippet 70
+Lines 983-990
+
+```Python
+if (!newAlt) return;
+
         e.target.disabled = true;
         e.target.textContent = 'Saving...';
-        
+
         fetch('/api/update_alt_text', {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({ file_id: fileId, alt_text: newAlt })
-        })
-        .then(r => r.json())
-        .then(data => {
-          if (data.success) {
+```
+
+## Snippet 71
+Lines 995-1002
+
+```Python
+if (data.success) {
             textarea.classList.add('alt-success');
             e.target.textContent = 'Saved!';
             setTimeout(() => {
@@ -1000,7 +1263,13 @@ HTML_TEMPLATE = r'''
               e.target.textContent = 'Save Alt Text';
               e.target.disabled = false;
             }, 1500);
-          } else {
+```
+
+## Snippet 72
+Lines 1003-1011
+
+```Python
+} else {
             textarea.classList.add('alt-error');
             e.target.textContent = 'Error!';
             setTimeout(() => {
@@ -1009,7 +1278,13 @@ HTML_TEMPLATE = r'''
               e.target.disabled = false;
             }, 1500);
           }
-        })
+```
+
+## Snippet 73
+Lines 1012-1021
+
+```Python
+})
         .catch(() => {
           textarea.classList.add('alt-error');
           e.target.textContent = 'Error!';
@@ -1019,10 +1294,13 @@ HTML_TEMPLATE = r'''
             e.target.disabled = false;
           }, 1500);
         });
-      }
-    });
+```
 
-    // Add CSS for the textarea and feedback states - add this right after the existing style element
+## Snippet 74
+Lines 1025-1068
+
+```Python
+// Add CSS for the textarea and feedback states - add this right after the existing style element
     const additionalStyle = document.createElement('style');
     additionalStyle.textContent = `
       .alt-text-container {
@@ -1066,20 +1344,31 @@ HTML_TEMPLATE = r'''
       }
     `;
     document.head.appendChild(additionalStyle);
-  </script>
-</body>
-</html>
-'''
+```
 
+## Snippet 75
+Lines 1074-1078
+
+```Python
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in {
         'jpg', 'jpeg', 'png', 'gif', 'bmp', 'tiff', 'webp', 'heic', 'heif', 'svg'
     }
+```
 
+## Snippet 76
+Lines 1079-1082
+
+```Python
 def get_preview_url(path):
     # Serve image preview from upload folder
     return f'/api/preview?path={os.path.basename(path)}'
+```
 
+## Snippet 77
+Lines 1083-1093
+
+```Python
 def generate_html_content(processed_results):
     """Generate HTML content from processed image results."""
     env = jinja2.Environment(autoescape=True)
@@ -1091,69 +1380,52 @@ def generate_html_content(processed_results):
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Herd AI Image Processing Results</title>
         <style>
-            body { font-family: system-ui, sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; }
-            h1 { color: #2d6cdf; }
-            .image-container { display: flex; margin-bottom: 30px; border-bottom: 1px solid #eee; padding-bottom: 20px; }
-            .image-preview { width: 200px; height: 200px; object-fit: contain; margin-right: 20px; border: 1px solid #ddd; }
-            .image-metadata { flex: 1; }
-            .metadata-item { margin-bottom: 8px; }
-            .label { font-weight: bold; }
-        </style>
-    </head>
+```
+
+## Snippet 78
+Lines 1102-1104
+
+```Python
+</head>
     <body>
         <h1>Herd AI Image Processing Results</h1>
-        <p>Generated on {{ date }}</p>
-        
-        {% for item in results %}
-        <div class="image-container">
-            <img src="data:image/jpeg;base64,{{ item.image_data }}" class="image-preview" alt="{{ item.alt_text }}">
-            <div class="image-metadata">
-                <h2>{{ item.new_name }}</h2>
-                <div class="metadata-item">
-                    <span class="label">Original Filename:</span> {{ item.original_name }}
-                </div>
-                <div class="metadata-item">
-                    <span class="label">Alt Text:</span> {{ item.alt_text }}
-                </div>
-                <div class="metadata-item">
-                    <span class="label">Description:</span> {{ item.description }}
-                </div>
-                <div class="metadata-item">
-                    <span class="label">Provider:</span> {{ item.provider }}
-                </div>
-                {% if item.dimensions %}
-                <div class="metadata-item">
-                    <span class="label">Dimensions:</span> {{ item.dimensions }}
-                </div>
-                {% endif %}
-            </div>
-        </div>
-        {% endfor %}
-    </body>
+```
+
+## Snippet 79
+Lines 1132-1138
+
+```Python
+</body>
     </html>
     """
     template = env.from_string(html_template)
-    
+
     # Add image data to results
     results_with_images = []
-    for result in processed_results:
-        # Skip items with errors
-        if result.get('error'):
+```
+
+## Snippet 80
+Lines 1141-1153
+
+```Python
+if result.get('error'):
             continue
-            
+
         result_copy = dict(result)
         image_path = os.path.join(app.config['UPLOAD_FOLDER'], result['new_name'])
-        
+
         try:
             with open(image_path, "rb") as img_file:
                 result_copy['image_data'] = base64.b64encode(img_file.read()).decode('utf-8')
                 results_with_images.append(result_copy)
         except Exception as e:
             print(f"Error encoding image {image_path}: {e}")
-            
-    from datetime import datetime
-    return template.render(results=results_with_images, date=datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+```
 
+## Snippet 81
+Lines 1157-1168
+
+```Python
 def generate_pdf_from_html(html_content):
     """Generate a PDF from HTML content using ReportLab."""
     output = io.BytesIO()
@@ -1161,56 +1433,70 @@ def generate_pdf_from_html(html_content):
     width, height = letter
     text_object = p.beginText(50, height - 50)
     text_object.setFont("Helvetica", 12)
-    
+
     # Extract text and images from HTML
     text = ""
     images = []
-    
-    if has_bs4:
-        # Use BeautifulSoup if available
-        soup = BeautifulSoup(html_content, 'html.parser')
-        text = soup.get_text(separator='\n')
-        
-        # Extract images from HTML for display in PDF
-        img_tags = soup.find_all('img')
-        for img in img_tags:
-            if img.get('src') and img['src'].startswith('data:image'):
+```
+
+## Snippet 82
+Lines 1177-1181
+
+```Python
+if img.get('src') and img['src'].startswith('data:image'):
                 # Extract base64 data
                 img_data = img['src'].split(',', 1)[1]
                 alt_text = img.get('alt', '')
                 images.append((img_data, alt_text))
-    else:
-        # Simple fallback if BeautifulSoup is not available
-        text = "Image Processing Results (BeautifulSoup not available for full HTML parsing)"
+```
+
+## Snippet 83
+Lines 1184-1187
+
+```Python
+text = "Image Processing Results (BeautifulSoup not available for full HTML parsing)"
         # Try to extract images using simple string matching
         import re
         img_matches = re.findall(r'<img[^>]*src="data:image[^"]*base64,([^"]*)"[^>]*alt="([^"]*)"', html_content)
-        for img_data, alt_text in img_matches:
-            images.append((img_data, alt_text))
-    
-    # Add a title
+```
+
+## Snippet 84
+Lines 1191-1199
+
+```Python
+# Add a title
     p.setFont("Helvetica-Bold", 18)
     p.drawString(50, height - 40, "Herd AI Image Processing Results")
     p.setFont("Helvetica", 12)
-    
+
     # Process and add each image with its metadata
     y_position = height - 90
     page_num = 1
-    
-    for i, (img_data, alt_text) in enumerate(images):
-        if y_position < 100:  # If we're near the bottom of the page
+```
+
+## Snippet 85
+Lines 1201-1212
+
+```Python
+if y_position < 100:  # If we're near the bottom of the page
             p.showPage()
             page_num += 1
             y_position = height - 60
             p.setFont("Helvetica-Bold", 14)
             p.drawString(50, height - 40, f"Image Results (continued) - Page {page_num}")
             p.setFont("Helvetica", 12)
-        
+
         try:
             # Create a temporary image file from base64 data
             img_bytes = base64.b64decode(img_data)
             img_temp = io.BytesIO(img_bytes)
-            if has_pil:
+```
+
+## Snippet 86
+Lines 1213-1222
+
+```Python
+if has_pil:
                 with Image.open(img_temp) as img:
                     # Scale image to fit on page
                     img_width, img_height = img.size
@@ -1219,96 +1505,124 @@ def generate_pdf_from_html(html_content):
                     scale = min(max_width/img_width, max_height/img_height)
                     new_width = img_width * scale
                     new_height = img_height * scale
-                    
-                    # Save as JPG for ReportLab compatibility
+```
+
+## Snippet 87
+Lines 1223-1232
+
+```Python
+# Save as JPG for ReportLab compatibility
                     img_temp = io.BytesIO()
                     img.save(img_temp, format='JPEG')
                     img_temp.seek(0)
-                    
+
                     # Draw image
                     p.drawImage(img_temp, 50, y_position - new_height, width=new_width, height=new_height)
-                    
+
                     # Draw metadata
                     y_position -= new_height + 20
-            else:
-                # Without PIL, we can't scale or display the image properly
-                y_position -= 20
-        except Exception as e:
-            print(f"Error processing image for PDF: {e}")
-            y_position -= 20
-        
-        # Add image metadata as text
+```
+
+## Snippet 88
+Lines 1240-1251
+
+```Python
+# Add image metadata as text
         p.setFont("Helvetica-Bold", 12)
         p.drawString(50, y_position, f"Image #{i+1}")
         p.setFont("Helvetica", 10)
         y_position -= 15
         p.drawString(50, y_position, f"Alt Text: {alt_text[:100]}")
         y_position -= 15
-        
+
         # Add separator line
         p.line(50, y_position - 10, width - 50, y_position - 10)
         y_position -= 30
-        
-        if y_position < 100:
+```
+
+## Snippet 89
+Lines 1252-1259
+
+```Python
+if y_position < 100:
             p.showPage()
             page_num += 1
             y_position = height - 60
             p.setFont("Helvetica-Bold", 14)
             p.drawString(50, height - 40, f"Image Results (continued) - Page {page_num}")
             p.setFont("Helvetica", 12)
-    
-    # Add remaining text
-    if text:
+```
+
+## Snippet 90
+Lines 1261-1263
+
+```Python
+if text:
         p.setFont("Helvetica", 10)
         lines = text.splitlines()
-        for line in lines:
-            text_object.textLine(line[:100])  # Truncate very long lines
-            if text_object.getY() < 50:
+```
+
+## Snippet 91
+Lines 1266-1273
+
+```Python
+if text_object.getY() < 50:
                 p.drawText(text_object)
                 p.showPage()
                 page_num += 1
                 text_object = p.beginText(50, height - 60)
                 text_object.setFont("Helvetica", 10)
                 p.drawString(50, height - 40, f"Additional Information - Page {page_num}")
-                
-        p.drawText(text_object)
-    
-    p.save()
+```
+
+## Snippet 92
+Lines 1276-1279
+
+```Python
+p.save()
     output.seek(0)
     return output
+```
 
-def process_image_for_ollama(image_path):
-    """Process an image for Ollama API, following best practices from reference implementation."""
-    if not has_pil:
-        # Use basic encoding if PIL not available
+## Snippet 93
+Lines 1283-1290
+
+```Python
+# Use basic encoding if PIL not available
         try:
             with open(image_path, "rb") as image_file:
                 return base64.b64encode(image_file.read()).decode('utf-8')
         except Exception as e:
             print(f"Error encoding image: {e}")
             return None
-    
-    try:
-        # Process with PIL for optimal results
-        with Image.open(image_path) as img:
-            # Convert to RGB if needed
-            if img.mode != 'RGB':
-                img = img.convert('RGB')
-                
-            # Resize if too large
-            if img.size[0] > 1024 or img.size[1] > 1024:
+```
+
+## Snippet 94
+Lines 1299-1301
+
+```Python
+if img.size[0] > 1024 or img.size[1] > 1024:
                 ratio = min(1024/img.size[0], 1024/img.size[1])
                 new_size = (int(img.size[0]*ratio), int(img.size[1]*ratio))
-                img = img.resize(new_size, Image.LANCZOS if hasattr(Image, 'LANCZOS') else Image.ANTIALIAS)
-            
-            # Save to bytes
+```
+
+## Snippet 95
+Lines 1304-1310
+
+```Python
+# Save to bytes
             img_byte_arr = io.BytesIO()
             img.save(img_byte_arr, format='JPEG')
-            
+
             # Encode to base64
             return base64.b64encode(img_byte_arr.getvalue()).decode('utf-8')
-    
-    except Exception as e:
+```
+
+## Snippet 96
+Lines 1311-1320
+
+```Python
+except Exception as e:
         print(f"Error processing image with PIL: {e}")
         # Fall back to basic encoding
         try:
@@ -1317,26 +1631,37 @@ def process_image_for_ollama(image_path):
         except Exception as e:
             print(f"Error encoding image: {e}")
             return None
+```
 
+## Snippet 97
+Lines 1321-1326
+
+```Python
 def send_image_to_ollama(image_path, prompt, model="gemma3:4b"):
     """Send image to Ollama API with proper formatting based on Ollama API docs."""
     import requests
-    
+
     # Process image
     image_base64 = process_image_for_ollama(image_path)
-    if not image_base64:
+```
+
+## Snippet 98
+Lines 1327-1356
+
+```Python
+if not image_base64:
         return {"text": "Error processing image", "error": True}
-    
+
     # First try chat API endpoint with proper multimodal format
     try:
         host = "http://localhost:11434"
-        
+
         # Chat API format
         chat_payload = {
             "model": model,
             "messages": [
                 {
-                    "role": "user", 
+                    "role": "user",
                     "content": prompt,
                     "images": [image_base64]
                 }
@@ -1346,27 +1671,37 @@ def send_image_to_ollama(image_path, prompt, model="gemma3:4b"):
                 "temperature": 0.7
             }
         }
-        
+
         print(f"Sending image to Ollama via chat API")
         response = requests.post(
             f"{host}/api/chat",
             json=chat_payload,
             timeout=90
         )
-        
-        if response.status_code == 200:
+```
+
+## Snippet 99
+Lines 1357-1366
+
+```Python
+if response.status_code == 200:
             result = response.json()
             return {
                 "text": result.get("message", {}).get("content", ""),
                 "model": model,
                 "finish_reason": result.get("done", False)
             }
-        
+
         print(f"Chat API failed with status {response.status_code}, trying generate API...")
-        
-    except Exception as e:
+```
+
+## Snippet 100
+Lines 1367-1388
+
+```Python
+except Exception as e:
         print(f"Error with chat API: {e}")
-    
+
     # Fall back to generate API
     try:
         generate_payload = {
@@ -1378,15 +1713,20 @@ def send_image_to_ollama(image_path, prompt, model="gemma3:4b"):
                 "temperature": 0.7
             }
         }
-        
+
         print(f"Sending image to Ollama via generate API")
         response = requests.post(
             f"{host}/api/generate",
             json=generate_payload,
             timeout=90
         )
-        
-        if response.status_code == 200:
+```
+
+## Snippet 101
+Lines 1389-1399
+
+```Python
+if response.status_code == 200:
             result = response.json()
             return {
                 "text": result.get("response", ""),
@@ -1397,90 +1737,140 @@ def send_image_to_ollama(image_path, prompt, model="gemma3:4b"):
             error_msg = f"Ollama API request failed: {response.status_code}"
             try:
                 error_data = response.json()
-                if "error" in error_data:
-                    error_msg += f": {error_data['error']}"
-            except:
+```
+
+## Snippet 102
+Lines 1402-1405
+
+```Python
+except:
                 pass
             return {"text": error_msg, "error": True}
-            
-    except Exception as e:
-        return {"text": f"Error connecting to Ollama API: {str(e)}", "error": True}
+```
 
-@app.route('/')
+## Snippet 103
+Lines 1410-1413
+
+```Python
 def index():
-    return render_template_string(HTML_TEMPLATE)
+    # Render the modularized template
+    return render_template('herd_gui.html')
+```
 
-@app.route('/api/preview')
-def preview():
-    path = request.args.get('path')
-    if not path:
+## Snippet 104
+Lines 1417-1419
+
+```Python
+if not path:
         abort(404)
     full_path = os.path.join(app.config['UPLOAD_FOLDER'], path)
-    if not os.path.exists(full_path):
+```
+
+## Snippet 105
+Lines 1420-1423
+
+```Python
+if not os.path.exists(full_path):
         abort(404)
     return send_file(full_path)
+```
 
-@app.route('/api/process_images', methods=['POST'])
+## Snippet 106
+Lines 1425-1427
+
+```Python
 def process_images():
     files = request.files.getlist('images')
     provider = request.form.get('provider', 'ollama')
-    model = request.form.get('model', 'gemma3:4b')  # Get model name if provided
+```
+
+## Snippet 107
+Lines 1428-1433
+
+```Python
+model = request.form.get('model', 'gemma3:4b')  # Get model name if provided
     results = []
     processor = ImageProcessor(provider=provider)
     global processed_md_files
     global processed_files
-    
-    for file in files:
-        if not allowed_file(file.filename):
+```
+
+## Snippet 108
+Lines 1435-1451
+
+```Python
+if not allowed_file(file.filename):
             results.append({
                 'original_name': file.filename,
                 'error': 'Unsupported file type.'
             })
             continue
-        
+
         filename = secure_filename(file.filename)
         temp_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(temp_path)
-        
+
         try:
             # Get file size and type
             file_size = os.path.getsize(temp_path)
             file_size_formatted = format_file_size(file_size)
             file_type = Path(temp_path).suffix.lstrip('.').upper()
-            
-            # Get image dimensions if PIL is available
-            dimensions = get_image_dimensions(temp_path)
-            
-            preview_url = get_preview_url(temp_path)
-            file_id = f"{os.path.basename(temp_path)}_{hash(temp_path)}"
-            
-            if provider == 'ollama':
+```
+
+## Snippet 109
+Lines 1458-1465
+
+```Python
+if provider == 'ollama':
                 # Use improved Ollama implementation
                 ollama_result = send_image_to_ollama(
                     temp_path,
                     prompt=IMAGE_ALT_TEXT_TEMPLATE,
                     model=model
                 )
-                
-                # Store original path for retry
+```
+
+## Snippet 110
+Lines 1466-1473
+
+```Python
+# Store original path for retry
                 processed_files[file_id] = {
                     'path': temp_path,
                     'original_name': file.filename
                 }
-                
+
                 # Parse result
                 data = {}
-                if ollama_result.get('text'):
+```
+
+## Snippet 111
+Lines 1474-1478
+
+```Python
+if ollama_result.get('text'):
                     try:
                         # First try to find JSON in the response
                         import re
                         json_match = re.search(r'\{.*\}', ollama_result['text'], re.DOTALL)
-                        if json_match:
+```
+
+## Snippet 112
+Lines 1479-1483
+
+```Python
+if json_match:
                             json_text = json_match.group(0)
                             data = json.loads(json_text)
                         else:
                             data = json.loads(ollama_result['text'])
-                    except Exception as e:
+```
+
+## Snippet 113
+Lines 1484-1492
+
+```Python
+except Exception as e:
                         print(f"Error parsing JSON: {e}")
                         # Create minimal data with the text
                         data = {
@@ -1488,34 +1878,38 @@ def process_images():
                             "description": ollama_result.get('text', ''),
                             "suggested_filename": Path(temp_path).stem
                         }
-                
-                alt = data.get('alt_text', '')
-                desc = data.get('description', '')
-                name_raw = data.get('suggested_filename', '')
-                new_name = secure_filename(name_raw) + Path(temp_path).suffix if name_raw else filename
-                new_path = os.path.join(app.config['UPLOAD_FOLDER'], new_name)
-                
-                if new_name != filename and not os.path.exists(new_path):
+```
+
+## Snippet 114
+Lines 1499-1516
+
+```Python
+if new_name != filename and not os.path.exists(new_path):
                     shutil.move(temp_path, new_path)
                 else:
                     new_path = temp_path
-                
+
                 # Generate markdown file
                 md_content = f"# {Path(new_name).stem}\n\n**Alt Text:** {alt}\n\n**Description:** {desc}\n"
                 md_path = os.path.splitext(new_path)[0] + '.md'
                 with open(md_path, 'w', encoding='utf-8') as f:
                     f.write(md_content)
-                
+
                 md_id = os.path.basename(md_path)
                 processed_md_files.append((md_path, file.filename, new_name))
-                
+
                 undo_token = {'old_path': temp_path, 'new_path': new_path}
                 with undo_lock:
                     undo_log.append(undo_token)
-                
-                # Generate a new preview URL for the renamed file
+```
+
+## Snippet 115
+Lines 1517-1536
+
+```Python
+# Generate a new preview URL for the renamed file
                 updated_preview_url = get_preview_url(new_path)
-                
+
                 results.append({
                     'file_id': file_id,
                     'original_name': file.filename,
@@ -1533,38 +1927,58 @@ def process_images():
                     'undo_token': undo_token,
                     'error': None
                 })
-            else:
-                # Store original path for retry
+```
+
+## Snippet 116
+Lines 1538-1550
+
+```Python
+# Store original path for retry
                 processed_files[file_id] = {
                     'path': temp_path,
                     'original_name': file.filename
                 }
-                
+
                 # Use X.AI
                 result = processor.process_single_image(
                     Path(temp_path),
                     {'base_dir': app.config['UPLOAD_FOLDER']}
                 )
-                
+
                 undo_token = None
-                if result.get('renamed') and result.get('new_path'):
+```
+
+## Snippet 117
+Lines 1551-1558
+
+```Python
+if result.get('renamed') and result.get('new_path'):
                     undo_token = {
                         'old_path': temp_path,
                         'new_path': result['new_path']
                     }
                     with undo_lock:
                         undo_log.append(undo_token)
-                    
-                    # Updated preview URL for renamed file
-                    updated_preview_url = get_preview_url(result['new_path'])
-                else:
+```
+
+## Snippet 118
+Lines 1561-1564
+
+```Python
+else:
                     updated_preview_url = preview_url
-                
+
                 md_id = None
-                if result.get('markdown_path'):
+```
+
+## Snippet 119
+Lines 1565-1585
+
+```Python
+if result.get('markdown_path'):
                     md_id = os.path.basename(result['markdown_path'])
                     processed_md_files.append((result['markdown_path'], file.filename, os.path.basename(result.get('new_path', temp_path))))
-                
+
                 results.append({
                     'file_id': file_id,
                     'original_name': file.filename,
@@ -1582,63 +1996,98 @@ def process_images():
                     'undo_token': undo_token,
                     'error': result.get('error')
                 })
-        except Exception as e:
+```
+
+## Snippet 120
+Lines 1586-1591
+
+```Python
+except Exception as e:
             results.append({
                 'original_name': file.filename,
                 'error': str(e)
             })
-    
-    return jsonify({'results': results})
+```
 
-@app.route('/api/retry_processing', methods=['POST'])
+## Snippet 121
+Lines 1595-1599
+
+```Python
 def retry_processing():
     """Re-process a single image"""
     data = request.get_json()
     file_id = data.get('file_id')
     provider = data.get('provider', 'ollama')
-    model = data.get('model', 'gemma3:4b')  # Get model name if provided
-    
-    if not file_id or file_id not in processed_files:
+```
+
+## Snippet 122
+Lines 1602-1607
+
+```Python
+if not file_id or file_id not in processed_files:
         return jsonify({'error': 'File not found or invalid file_id'})
-    
+
     file_info = processed_files[file_id]
     temp_path = file_info['path']
-    
-    if not os.path.exists(temp_path):
+```
+
+## Snippet 123
+Lines 1608-1616
+
+```Python
+if not os.path.exists(temp_path):
         return jsonify({'error': 'Original file no longer exists'})
-    
+
     try:
         # Get file size and type
         file_size = os.path.getsize(temp_path)
         file_size_formatted = format_file_size(file_size)
         file_type = Path(temp_path).suffix.lstrip('.').upper()
-        
-        # Get image dimensions if PIL is available
-        dimensions = get_image_dimensions(temp_path)
-        
-        preview_url = get_preview_url(temp_path)
-        
-        if provider == 'ollama':
+```
+
+## Snippet 124
+Lines 1622-1631
+
+```Python
+if provider == 'ollama':
             # Use improved Ollama implementation
             ollama_result = send_image_to_ollama(
                 temp_path,
                 prompt=IMAGE_ALT_TEXT_TEMPLATE,
                 model=model
             )
-            
+
             # Parse result
             data = {}
-            if ollama_result.get('text'):
+```
+
+## Snippet 125
+Lines 1632-1636
+
+```Python
+if ollama_result.get('text'):
                 try:
                     # First try to find JSON in the response
                     import re
                     json_match = re.search(r'\{.*\}', ollama_result['text'], re.DOTALL)
-                    if json_match:
+```
+
+## Snippet 126
+Lines 1637-1641
+
+```Python
+if json_match:
                         json_text = json_match.group(0)
                         data = json.loads(json_text)
                     else:
                         data = json.loads(ollama_result['text'])
-                except Exception as e:
+```
+
+## Snippet 127
+Lines 1642-1650
+
+```Python
+except Exception as e:
                     print(f"Error parsing JSON: {e}")
                     # Create minimal data with the text
                     data = {
@@ -1646,35 +2095,38 @@ def retry_processing():
                         "description": ollama_result.get('text', ''),
                         "suggested_filename": Path(temp_path).stem
                     }
-            
-            alt = data.get('alt_text', '')
-            desc = data.get('description', '')
-            name_raw = data.get('suggested_filename', '')
-            filename = os.path.basename(temp_path)
-            new_name = secure_filename(name_raw) + Path(temp_path).suffix if name_raw else filename
-            new_path = os.path.join(app.config['UPLOAD_FOLDER'], new_name)
-            
-            if new_name != filename and not os.path.exists(new_path):
+```
+
+## Snippet 128
+Lines 1658-1675
+
+```Python
+if new_name != filename and not os.path.exists(new_path):
                 shutil.move(temp_path, new_path)
             else:
                 new_path = temp_path
-            
+
             # Generate markdown file
             md_content = f"# {Path(new_name).stem}\n\n**Alt Text:** {alt}\n\n**Description:** {desc}\n"
             md_path = os.path.splitext(new_path)[0] + '.md'
             with open(md_path, 'w', encoding='utf-8') as f:
                 f.write(md_content)
-            
+
             md_id = os.path.basename(md_path)
             processed_md_files.append((md_path, file_info['original_name'], new_name))
-            
+
             undo_token = {'old_path': temp_path, 'new_path': new_path}
             with undo_lock:
                 undo_log.append(undo_token)
-            
-            # Generate a new preview URL for the renamed file
+```
+
+## Snippet 129
+Lines 1676-1695
+
+```Python
+# Generate a new preview URL for the renamed file
             updated_preview_url = get_preview_url(new_path)
-            
+
             return jsonify({
                 'file_id': file_id,
                 'original_name': file_info['original_name'],
@@ -1692,28 +2144,46 @@ def retry_processing():
                 'undo_token': undo_token,
                 'error': None
             })
-        else:
+```
+
+## Snippet 130
+Lines 1696-1704
+
+```Python
+else:
             # Use X.AI
             processor = ImageProcessor(provider=provider)
             result = processor.process_single_image(
                 Path(temp_path),
                 {'base_dir': app.config['UPLOAD_FOLDER']}
             )
-            
+
             undo_token = None
-            if result.get('renamed') and result.get('new_path'):
+```
+
+## Snippet 131
+Lines 1705-1713
+
+```Python
+if result.get('renamed') and result.get('new_path'):
                 undo_token = {
                     'old_path': temp_path,
                     'new_path': result['new_path']
                 }
                 with undo_lock:
                     undo_log.append(undo_token)
-            
+
             md_id = None
-            if result.get('markdown_path'):
+```
+
+## Snippet 132
+Lines 1714-1734
+
+```Python
+if result.get('markdown_path'):
                 md_id = os.path.basename(result['markdown_path'])
                 processed_md_files.append((result['markdown_path'], file_info['original_name'], os.path.basename(result.get('new_path', temp_path))))
-            
+
             return jsonify({
                 'file_id': file_id,
                 'original_name': file_info['original_name'],
@@ -1731,53 +2201,65 @@ def retry_processing():
                 'undo_token': undo_token,
                 'error': result.get('error')
             })
-    except Exception as e:
+```
+
+## Snippet 133
+Lines 1735-1740
+
+```Python
+except Exception as e:
         return jsonify({
             'original_name': file_info['original_name'],
             'error': str(e)
         })
+```
 
-@app.route('/api/download_md')
-def download_md():
-    md_id = request.args.get('md_id')
-    if not md_id:
-        abort(404)
-    for md_path, _, _ in processed_md_files:
-        if os.path.basename(md_path) == md_id:
-            return send_file(md_path, as_attachment=True)
-    abort(404)
+## Snippet 134
+Lines 1756-1758
 
-@app.route('/api/download_all_md')
-def download_all_md():
-    # Create a zip of all .md files for the session
-    mem_zip = io.BytesIO()
-    with zipfile.ZipFile(mem_zip, 'w', zipfile.ZIP_DEFLATED) as zf:
-        for md_path, original_name, new_name in processed_md_files:
+```Python
+for md_path, original_name, new_name in processed_md_files:
             arcname = os.path.basename(md_path)
             zf.write(md_path, arcname)
-    mem_zip.seek(0)
-    return send_file(mem_zip, mimetype='application/zip', as_attachment=True, download_name='herd_markdown_files.zip')
+```
 
-@app.route('/api/download_html')
+## Snippet 135
+Lines 1763-1766
+
+```Python
 def download_html():
     """Generate and download HTML file with all processed images and their metadata."""
     # Get all successful results from processed_files
     results = []
-    for file_id, file_info in processed_files.items():
-        # Skip if there's no original path
-        if not file_info.get('path'):
+```
+
+## Snippet 136
+Lines 1769-1772
+
+```Python
+if not file_info.get('path'):
             continue
-            
+
         # Find the corresponding result from processed_md_files
-        for md_path, original_name, new_name in processed_md_files:
-            if original_name == file_info['original_name']:
+```
+
+## Snippet 137
+Lines 1774-1778
+
+```Python
+if original_name == file_info['original_name']:
                 try:
                     # Read description from markdown file
                     md_content = Path(md_path).read_text(encoding='utf-8')
                     lines = md_content.split('\n')
-                    alt_text = lines[2][12:] if len(lines) > 2 else ''
-                    description = lines[4][16:] if len(lines) > 4 else ''
-                    
+```
+
+## Snippet 138
+Lines 1780-1789
+
+```Python
+description = lines[4][16:] if len(lines) > 4 else ''
+
                     results.append({
                         'original_name': original_name,
                         'new_name': new_name,
@@ -1786,44 +2268,73 @@ def download_html():
                         'provider': 'Herd AI',
                         'dimensions': ''
                     })
-                except Exception as e:
+```
+
+## Snippet 139
+Lines 1790-1793
+
+```Python
+except Exception as e:
                     print(f"Error reading markdown file {md_path}: {e}")
                 break
-                
-    # Generate HTML content
+```
+
+## Snippet 140
+Lines 1794-1807
+
+```Python
+# Generate HTML content
     html_content = generate_html_content(results)
-    
+
     # Return HTML file
     html_io = io.BytesIO(html_content.encode('utf-8'))
     html_io.seek(0)
-    
+
     return send_file(
-        html_io, 
+        html_io,
         mimetype='text/html',
-        as_attachment=True, 
+        as_attachment=True,
         download_name='herd_image_results.html'
     )
+```
 
-@app.route('/api/download_pdf')
+## Snippet 141
+Lines 1809-1812
+
+```Python
 def download_pdf():
     """Generate and download PDF file with all processed images and their metadata."""
     # Get all successful results from processed_files
     results = []
-    for file_id, file_info in processed_files.items():
-        # Skip if there's no original path
-        if not file_info.get('path'):
+```
+
+## Snippet 142
+Lines 1815-1818
+
+```Python
+if not file_info.get('path'):
             continue
-            
+
         # Find the corresponding result from processed_md_files
-        for md_path, original_name, new_name in processed_md_files:
-            if original_name == file_info['original_name']:
+```
+
+## Snippet 143
+Lines 1820-1824
+
+```Python
+if original_name == file_info['original_name']:
                 try:
                     # Read description from markdown file
                     md_content = Path(md_path).read_text(encoding='utf-8')
                     lines = md_content.split('\n')
-                    alt_text = lines[2][12:] if len(lines) > 2 else ''
-                    description = lines[4][16:] if len(lines) > 4 else ''
-                    
+```
+
+## Snippet 144
+Lines 1826-1835
+
+```Python
+description = lines[4][16:] if len(lines) > 4 else ''
+
                     results.append({
                         'original_name': original_name,
                         'new_name': new_name,
@@ -1832,144 +2343,200 @@ def download_pdf():
                         'provider': 'Herd AI',
                         'dimensions': ''
                     })
-                except Exception as e:
+```
+
+## Snippet 145
+Lines 1836-1839
+
+```Python
+except Exception as e:
                     print(f"Error reading markdown file {md_path}: {e}")
                 break
-    
-    # Generate HTML content first
+```
+
+## Snippet 146
+Lines 1840-1856
+
+```Python
+# Generate HTML content first
     html_content = generate_html_content(results)
-    
+
     # Convert to PDF
     pdf_data = generate_pdf_from_html(html_content)
-    
+
     # Return PDF file
     pdf_io = io.BytesIO(pdf_data)
     pdf_io.seek(0)
-    
+
     return send_file(
         pdf_io,
         mimetype='application/pdf',
         as_attachment=True,
         download_name='herd_image_results.pdf'
     )
+```
 
-@app.route('/api/undo', methods=['POST'])
+## Snippet 147
+Lines 1858-1860
+
+```Python
 def undo():
     data = request.get_json()
     token = data.get('undo_token')
-    if not token or not isinstance(token, dict):
+```
+
+## Snippet 148
+Lines 1861-1864
+
+```Python
+if not token or not isinstance(token, dict):
         return jsonify({'success': False, 'error': 'Invalid undo token.'})
     old_path = token.get('old_path')
     new_path = token.get('new_path')
-    if not old_path or not new_path:
+```
+
+## Snippet 149
+Lines 1865-1867
+
+```Python
+if not old_path or not new_path:
         return jsonify({'success': False, 'error': 'Missing file paths.'})
     try:
-        if os.path.exists(new_path):
-            shutil.move(new_path, old_path)
-        with undo_lock:
-            undo_log[:] = [t for t in undo_log if t != token]
-        return jsonify({'success': True})
-    except Exception as e:
-        return jsonify({'success': False, 'error': str(e)})
+```
 
-@app.route('/api/bulk_undo', methods=['POST'])
-def bulk_undo():
-    """Undo changes for multiple files at once."""
-    data = request.get_json()
-    tokens = data.get('undo_tokens', [])
-    
-    if not tokens or not isinstance(tokens, list):
+## Snippet 150
+Lines 1882-1885
+
+```Python
+if not tokens or not isinstance(tokens, list):
         return jsonify({'success': False, 'error': 'Invalid undo tokens.'})
-    
+
     results = []
-    for token in tokens:
-        if not isinstance(token, dict):
+```
+
+## Snippet 151
+Lines 1887-1893
+
+```Python
+if not isinstance(token, dict):
             results.append({'success': False, 'error': 'Invalid undo token format.'})
             continue
-            
+
         old_path = token.get('old_path')
         new_path = token.get('new_path')
-        
-        if not old_path or not new_path:
+```
+
+## Snippet 152
+Lines 1894-1898
+
+```Python
+if not old_path or not new_path:
             results.append({'success': False, 'error': 'Missing file paths.'})
             continue
-            
-        try:
-            if os.path.exists(new_path):
-                shutil.move(new_path, old_path)
-            with undo_lock:
-                undo_log[:] = [t for t in undo_log if t != token]
-            results.append({'success': True})
-        except Exception as e:
-            results.append({'success': False, 'error': str(e)})
-    
-    return jsonify({'results': results})
 
-@app.route('/api/bulk_retry', methods=['POST'])
-def bulk_retry():
-    """Retry processing for multiple files at once."""
+        try:
+```
+
+## Snippet 153
+Lines 1911-1916
+
+```Python
+"""Retry processing for multiple files at once."""
     data = request.get_json()
     file_ids = data.get('file_ids', [])
     provider = data.get('provider', 'ollama')
     model = data.get('model', 'gemma3:4b')
-    
-    if not file_ids or not isinstance(file_ids, list):
+```
+
+## Snippet 154
+Lines 1917-1920
+
+```Python
+if not file_ids or not isinstance(file_ids, list):
         return jsonify({'success': False, 'error': 'Invalid file IDs.'})
-    
+
     results = []
-    for file_id in file_ids:
-        if file_id not in processed_files:
+```
+
+## Snippet 155
+Lines 1922-1932
+
+```Python
+if file_id not in processed_files:
             results.append({
                 'file_id': file_id,
                 'success': False,
                 'error': 'File not found or invalid file_id'
             })
             continue
-            
+
         file_info = processed_files[file_id]
         temp_path = file_info['path']
-        
-        if not os.path.exists(temp_path):
+```
+
+## Snippet 156
+Lines 1933-1947
+
+```Python
+if not os.path.exists(temp_path):
             results.append({
                 'file_id': file_id,
-                'success': False, 
+                'success': False,
                 'error': 'Original file no longer exists'
             })
             continue
-        
+
         try:
             # Process this file directly since we can't mock the request context
             # Get file size and type
             file_size = os.path.getsize(temp_path)
             file_size_formatted = format_file_size(file_size)
             file_type = Path(temp_path).suffix.lstrip('.').upper()
-            
-            # Get image dimensions if PIL is available
-            dimensions = get_image_dimensions(temp_path)
-            
-            preview_url = get_preview_url(temp_path)
-            
-            if provider == 'ollama':
+```
+
+## Snippet 157
+Lines 1953-1962
+
+```Python
+if provider == 'ollama':
                 # Use improved Ollama implementation
                 ollama_result = send_image_to_ollama(
                     temp_path,
                     prompt=IMAGE_ALT_TEXT_TEMPLATE,
                     model=model
                 )
-                
+
                 # Parse result
                 result_data = {}
-                if ollama_result.get('text'):
+```
+
+## Snippet 158
+Lines 1963-1967
+
+```Python
+if ollama_result.get('text'):
                     try:
                         # First try to find JSON in the response
                         import re
                         json_match = re.search(r'\{.*\}', ollama_result['text'], re.DOTALL)
-                        if json_match:
+```
+
+## Snippet 159
+Lines 1968-1972
+
+```Python
+if json_match:
                             json_text = json_match.group(0)
                             result_data = json.loads(json_text)
                         else:
                             result_data = json.loads(ollama_result['text'])
-                    except Exception as e:
+```
+
+## Snippet 160
+Lines 1973-1981
+
+```Python
+except Exception as e:
                         print(f"Error parsing JSON: {e}")
                         # Create minimal data with the text
                         result_data = {
@@ -1977,35 +2544,38 @@ def bulk_retry():
                             "description": ollama_result.get('text', ''),
                             "suggested_filename": Path(temp_path).stem
                         }
-                
-                alt = result_data.get('alt_text', '')
-                desc = result_data.get('description', '')
-                name_raw = result_data.get('suggested_filename', '')
-                filename = os.path.basename(temp_path)
-                new_name = secure_filename(name_raw) + Path(temp_path).suffix if name_raw else filename
-                new_path = os.path.join(app.config['UPLOAD_FOLDER'], new_name)
-                
-                if new_name != filename and not os.path.exists(new_path):
+```
+
+## Snippet 161
+Lines 1989-2006
+
+```Python
+if new_name != filename and not os.path.exists(new_path):
                     shutil.move(temp_path, new_path)
                 else:
                     new_path = temp_path
-                
+
                 # Generate markdown file
                 md_content = f"# {Path(new_name).stem}\n\n**Alt Text:** {alt}\n\n**Description:** {desc}\n"
                 md_path = os.path.splitext(new_path)[0] + '.md'
                 with open(md_path, 'w', encoding='utf-8') as f:
                     f.write(md_content)
-                
+
                 md_id = os.path.basename(md_path)
                 processed_md_files.append((md_path, file_info['original_name'], new_name))
-                
+
                 undo_token = {'old_path': temp_path, 'new_path': new_path}
                 with undo_lock:
                     undo_log.append(undo_token)
-                
-                # Generate a new preview URL for the renamed file
+```
+
+## Snippet 162
+Lines 2007-2027
+
+```Python
+# Generate a new preview URL for the renamed file
                 updated_preview_url = get_preview_url(new_path)
-                
+
                 result = {
                     'file_id': file_id,
                     'original_name': file_info['original_name'],
@@ -2024,33 +2594,54 @@ def bulk_retry():
                     'success': True,
                     'error': None
                 }
-            else:
+```
+
+## Snippet 163
+Lines 2028-2036
+
+```Python
+else:
                 # Use X.AI
                 processor = ImageProcessor(provider=provider)
                 proc_result = processor.process_single_image(
                     Path(temp_path),
                     {'base_dir': app.config['UPLOAD_FOLDER']}
                 )
-                
+
                 undo_token = None
-                if proc_result.get('renamed') and proc_result.get('new_path'):
+```
+
+## Snippet 164
+Lines 2037-2044
+
+```Python
+if proc_result.get('renamed') and proc_result.get('new_path'):
                     undo_token = {
                         'old_path': temp_path,
                         'new_path': proc_result['new_path']
                     }
                     with undo_lock:
                         undo_log.append(undo_token)
-                    
-                    # Updated preview URL for renamed file
-                    updated_preview_url = get_preview_url(proc_result['new_path'])
-                else:
+```
+
+## Snippet 165
+Lines 2047-2050
+
+```Python
+else:
                     updated_preview_url = preview_url
-                
+
                 md_id = None
-                if proc_result.get('markdown_path'):
+```
+
+## Snippet 166
+Lines 2051-2073
+
+```Python
+if proc_result.get('markdown_path'):
                     md_id = os.path.basename(proc_result['markdown_path'])
                     processed_md_files.append((proc_result['markdown_path'], file_info['original_name'], os.path.basename(proc_result.get('new_path', temp_path))))
-                
+
                 result = {
                     'file_id': file_id,
                     'original_name': file_info['original_name'],
@@ -2069,71 +2660,55 @@ def bulk_retry():
                     'success': True,
                     'error': proc_result.get('error')
                 }
-                
-                if proc_result.get('error'):
-                    result['success'] = False
-            
-            results.append(result)
-            
-        except Exception as e:
+```
+
+## Snippet 167
+Lines 2079-2086
+
+```Python
+except Exception as e:
             results.append({
                 'file_id': file_id,
                 'original_name': file_info['original_name'],
                 'success': False,
                 'error': str(e)
             })
-    
-    return jsonify({'results': results})
+```
 
-def format_file_size(size_in_bytes):
-    """Format file size to human-readable format."""
-    if size_in_bytes < 1024:
-        return f"{size_in_bytes} B"
-    elif size_in_bytes < 1024 * 1024:
-        return f"{size_in_bytes / 1024:.1f} KB"
-    else:
-        return f"{size_in_bytes / (1024 * 1024):.1f} MB"
+## Snippet 168
+Lines 2100-2109
 
-def get_image_dimensions(image_path):
-    """Get image dimensions if PIL is available."""
-    if not has_pil:
+```Python
+if not has_pil:
         return None
-    
+
     try:
         with Image.open(image_path) as img:
             return f"{img.width}x{img.height}"
     except Exception as e:
         print(f"Error getting image dimensions: {e}")
         return None
+```
 
-@app.route('/api/update_alt_text', methods=['POST'])
+## Snippet 169
+Lines 2111-2114
+
+```Python
 def update_alt_text():
     data = request.get_json()
     file_id = data.get('file_id')
     new_alt_text = data.get('alt_text', '').strip()
-    if not file_id or not new_alt_text:
-        return jsonify({'success': False, 'error': 'Missing file_id or alt_text'})
-    # Find the markdown file for this file_id
-    md_path = None
-    for md, orig, new in processed_md_files:
-        if file_id in (orig, new, os.path.basename(md)):
-            md_path = md
-            break
-    if not md_path or not os.path.exists(md_path):
+```
+
+## Snippet 170
+Lines 2123-2128
+
+```Python
+if not md_path or not os.path.exists(md_path):
         return jsonify({'success': False, 'error': 'Markdown file not found'})
     # Read and update the markdown file
     try:
         lines = Path(md_path).read_text(encoding='utf-8').split('\n')
         # Find the alt text line (assume format: **Alt Text:** ...)
-        for i, line in enumerate(lines):
-            if line.strip().startswith('**Alt Text:**'):
-                lines[i] = f"**Alt Text:** {new_alt_text}"
-                break
-        Path(md_path).write_text('\n'.join(lines), encoding='utf-8')
-        # Optionally, update image metadata here (not implemented for brevity)
-        return jsonify({'success': True, 'alt_text': new_alt_text})
-    except Exception as e:
-        return jsonify({'success': False, 'error': str(e)})
+```
 
-if __name__ == '__main__':
-    app.run(port=4343, debug=True) 

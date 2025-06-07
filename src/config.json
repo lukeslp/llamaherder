@@ -2,5 +2,5 @@
   "api_keys": {
     "xai": "xai-8zAk5VIaL3Vxpu3fO3r2aiWqqeVAZ173X04VK2R1m425uYpWOIOQJM3puq1Q38xJ2sHfbq3mX4PBxJXC"
   },
-  "provider": "cohere"
+  "provider": "xai"
 }

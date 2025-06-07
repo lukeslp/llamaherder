@@ -15,6 +15,53 @@
 **API Integration**: All workflows maintain compatibility with `api.assisted.space/v2` base URL
 **UX Impact**: Developers now have automated code quality checks and CI/CD pipeline for reliable releases
 
+### Dependency Compatibility Fix
+**Date**: Current
+**Changes**: 
+- ✅ **Python 3.13 Compatibility**: Resolved dependency issues with Python 3.13
+  - Made `bibtexparser` an optional dependency due to Python 3.13 incompatibility
+  - Added fallback BibTeX generation functionality when bibtexparser is not available
+  - Restructured dependencies in `pyproject.toml` with optional extras for different features
+  - Created installation scripts (`install.sh`, `install.bat`) for easy setup
+- ✅ **Modular Dependencies**: Organized dependencies into logical groups
+  - `dev`: Development and testing tools
+  - `gui`: GUI and web interface dependencies  
+  - `ai`: AI provider dependencies (anthropic, openai, google-generativeai)
+  - `image`: Image processing dependencies
+  - `system`: System utilities (psutil, pyperclip)
+  - `citations`: Citation processing dependencies
+  - `all`: Complete installation with all features
+- ✅ **Graceful Degradation**: Package works with core functionality even when optional dependencies are missing
+- ✅ **Installation Success**: Package now installs and runs successfully with `pip install -e .`
+
+**API Integration**: All workflows maintain compatibility with `api.assisted.space/v2` base URL
+**UX Impact**: Users can now install and use the package immediately, with optional features available through extras
+
+### Complete Package Stability Fix
+**Date**: Current
+**Changes**: 
+- ✅ **Import System Overhaul**: Fixed cascade import failures
+  - Made citations import conditional in `__init__.py` with graceful fallback
+  - Added fallback function when bibtexparser is not available
+  - Eliminated hard dependency failures that prevented package loading
+- ✅ **Configuration Modernization**: Updated pyproject.toml for Python 3.13 compatibility
+  - Fixed license configuration (changed from file reference to text)
+  - Removed deprecated license classifier
+  - Added missing GUI dependencies (markdown, reportlab) to optional extras
+  - Enhanced dependency organization with proper extras
+- ✅ **GUI Stability**: Fixed syntax warnings and dependency issues
+  - Fixed invalid escape sequence in HTML template using raw string
+  - Added markdown and reportlab to GUI dependencies
+  - Resolved all Python 3.13 compatibility warnings
+- ✅ **Installation Scripts**: Enhanced cross-platform installation
+  - Updated install.sh and install.bat with proper dependency handling
+  - Added clear instructions for different installation scenarios
+  - Provided fallback options for dependency conflicts
+
+**Technical Impact**: Package now installs and runs successfully on Python 3.13 with graceful degradation
+**User Experience**: Both CLI (`herd`) and GUI (`python herd_gui.py`) work immediately after installation
+**Accessibility**: All functionality remains accessible with clear error messages for missing optional dependencies
+
 ### Git Repository Cleanup
 
 - Resolved issues with git repository management:

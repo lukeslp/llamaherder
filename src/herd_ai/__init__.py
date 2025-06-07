@@ -23,8 +23,16 @@ from .rename import process_renames
 from .snippets import process_snippets
 from .idealize import process_ideal
 from .docs import generate_docs, export_document_summary
-from .citations import process_directory
 from .image_processor import process_images_cli
+
+# Optional citations functionality (requires bibtexparser)
+try:
+    from .citations import process_directory
+except ImportError:
+    # Provide a fallback function when bibtexparser is not available
+    def process_directory(*args, **kwargs):
+        print("Citations functionality requires bibtexparser. Install with: pip install bibtexparser")
+        return {"success": False, "error": "bibtexparser not available"}
 
 # Utilities
 from .utils.analysis import analyze_documents, generate_document_summary

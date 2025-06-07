@@ -1,88 +1,61 @@
-# Code Snippets from /Volumes/Galactus/_DEV/herd/setup.py
+# Code Snippets from toollama/setup.py
 
-File: `/Volumes/Galactus/_DEV/herd/setup.py`  
+File: `toollama/setup.py`  
 Language: Python  
-Extracted: 2025-05-01 13:07:19  
+Extracted: 2025-06-07 05:08:15  
 
 ## Snippet 1
-Lines 4-13
+Lines 1-8
 
 ```Python
-Setup script for PyPI package
-"""
+"""Setup file for the MoE system."""
 
 from setuptools import setup, find_packages
-import os
-import re
 
-# Read version from src/herd_ai/__init__.py
-with open(os.path.join("src", "herd_ai", "__init__.py"), "r", encoding="utf-8") as f:
-    version_match = re.search(r"^__version__\s*=\s*['\"]([^'\"]*)['\"]", f.read(), re.MULTILINE)
+with open("README.md", "r", encoding="utf-8") as fh:
+    long_description = fh.read()
+
+with open("requirements.txt", "r", encoding="utf-8") as fh:
 ```
 
 ## Snippet 2
-Lines 16-29
+Lines 16-50
 
 ```Python
-# Read long description from README.md
-try:
-    with open("README.md", "r", encoding="utf-8") as f:
-        long_description = f.read()
-except FileNotFoundError:
-    long_description = "Herd AI - Document Analysis & Code Management Tools"
-
-setup(
-    name="herd-ai",
-    version=version,
-    description="AI-powered document analysis and code management tools",
+description="A Mixture of Experts system for AI model coordination",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    author="Luke Steuber",
-```
-
-## Snippet 3
-Lines 30-69
-
-```Python
-author_email="lsteuber@gmail.com",
-    url="https://github.com/yourusername/herd-ai",
-    package_dir={"": "src"},
-    packages=find_packages(where="src"),
+    url="https://github.com/luketools/toollama",
+    packages=find_packages(),
     classifiers=[
-        "Development Status :: 4 - Beta",
+        "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",
-        "Intended Audience :: Science/Research",
         "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
         "Topic :: Scientific/Engineering :: Artificial Intelligence",
-        "Topic :: Software Development :: Documentation",
-        "Topic :: Text Processing :: Markup",
     ],
     python_requires=">=3.8",
-    install_requires=[
-        "rich>=10.0.0",
-        "requests>=2.25.0",
-        "Pillow>=8.0.0",
-        "pyyaml>=5.4.0",
-        "pyperclip>=1.8.0",
-    ],
-    entry_points={
-        "console_scripts": [
-            "herd=herd_ai.__main__:run_as_module",
-            "llamacleaner=herd_ai.__main__:run_as_module",  # For backward compatibility
+    install_requires=requirements,
+    extras_require={
+        "dev": [
+            "pytest>=7.4.4",
+            "pytest-asyncio>=0.23.3",
+            "pytest-cov>=4.1.0",
+            "mypy>=1.8.0",
+            "black>=23.12.1",
+            "isort>=5.13.2",
+            "flake8>=7.0.0",
+        ],
+        "docs": [
+            "mkdocs>=1.5.3",
+            "mkdocs-material>=9.5.3",
+            "mkdocstrings>=0.24.0",
         ],
     },
-    keywords="ai, document analysis, code management, documentation, llm",
-    project_urls={
-        "Bug Reports": "https://github.com/yourusername/herd-ai/issues",
-        "Source": "https://github.com/yourusername/herd-ai",
-        "Documentation": "https://github.com/yourusername/herd-ai/blob/main/README.md",
-    },
-    include_package_data=True,
-    package_data={
 ```
 
