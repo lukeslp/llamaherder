@@ -177,7 +177,7 @@ grpcio-reflection==1.59.0
 grpcio-status==1.63.0rc1
 grpcio-tools==1.59.0
 grpclib==0.4.3
-gruut==2.2.3
+gruut==2.4.0
 gruut-ipa==0.13.0
 gruut_lang_de==2.0.1
 gruut_lang_en==2.0.1
