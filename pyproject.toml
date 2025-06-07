@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "herd-ai"
-version = "0.1.0"
+version = "0.1.0.dev20250607062222"
 description = "AI-powered tool management and orchestration system"
 readme = "README.md"
 license = {text = "MIT"}
@@ -163,7 +163,7 @@ markers = [
 
 # mypy configuration
 [tool.mypy]
-python_version = "3.8"
+python_version = "0.1.0.dev20250607062222"
 warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = true
