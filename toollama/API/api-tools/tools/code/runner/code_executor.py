@@ -52,7 +52,7 @@ class Tools:
         """Run a bash command with restricted permissions"""
         try:
             # Basic command validation
-            if any(unsafe in command.lower() for unsafe in ['sudo', 'rm -rf', '>', '>>', '|', '&', ';']):
+            if any(unsafe in command.lower() for unsafe in [ 'rm -rf', '>', '>>', '|', '&', ';']):
                 return "Error: Command contains unsafe operations"
             
             # Run with restricted shell

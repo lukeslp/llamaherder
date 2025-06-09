@@ -21,7 +21,7 @@ A comprehensive document and code management toolkit powered by AI. Herd AI leve
 Install from PyPI:
 
 ```bash
-sudo pip install herd-ai
+pip install herd-ai
 ```
 
 ## Quick Start

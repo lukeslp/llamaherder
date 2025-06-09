@@ -70,7 +70,7 @@ A Cohere API key is required to use this provider. The API key should be set in 
 The X.AI provider enables access to X.AI's Grok models through their API. This allows for:
 
 - **Hosted Inference**: Models run on X.AI's infrastructure, with requests processed through their API
-- **Vision Capabilities**: Image analysis through Grok Vision models (grok-2-vision-1212, grok-vision-beta)
+- **Vision Capabilities**: Image analysis through Grok Vision models (grok-2-vision-1212, grok-2-vision-1212)
 - **Tool Calling**: Support for function calling through the OpenAI-compatible interface
 - **Conversational History**: Maintained context across multiple exchanges
 

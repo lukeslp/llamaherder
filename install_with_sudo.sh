@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# LlamaHerder Installation Script
-# This script installs the LlamaHerder package with all dependencies
+# LlamaHerder Installation Script - Sudo Enabled Version
+# This script installs the LlamaHerder package with all dependencies using sudo
 
 set -e  # Exit on any error
 
-echo "🦙 LlamaHerder Installation Script"
-echo "=================================="
+echo "🦙 LlamaHerder Installation Script (Sudo Enabled)"
+echo "================================================="
 
 # Check if Python is available
 if ! command -v python3 &> /dev/null; then
@@ -26,9 +26,9 @@ if ! command -v pip3 &> /dev/null; then
     exit 1
 fi
 
-echo "📦 Installing LlamaHerder package..."
+echo "📦 Installing LlamaHerder package with sudo..."
 
-# Install in development mode with all dependencies
+# Install in development mode with all dependencies using sudo
 sudo pip3 install -e ".[all]"
 
 echo "✅ Installation complete!"
@@ -42,4 +42,4 @@ echo "🔧 For development:"
 echo "   pre-commit install   # Install git hooks"
 echo "   pytest               # Run tests"
 echo ""
-echo "📚 Documentation: https://github.com/lukeslp/llamaherder#readme" 
+echo "📚 Documentation: https://github.com/lukeslp/llamaherder#readme"

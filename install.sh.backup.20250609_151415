@@ -29,7 +29,7 @@ fi
 echo "📦 Installing LlamaHerder package..."
 
 # Install in development mode with all dependencies
-sudo pip3 install -e ".[all]"
+pip3 install -e ".[all]"
 
 echo "✅ Installation complete!"
 echo ""

@@ -27,7 +27,7 @@ ollama pull llama:3.2-3b  # Task Executors
 ollama pull deepseek-r1:14b # System Observer
 
 # 3. Install Python Dependencies
-sudo pip install -r requirements.txt
+pip install -r requirements.txt
 
 # 4. Configure Environment
 cp .env.example .env
