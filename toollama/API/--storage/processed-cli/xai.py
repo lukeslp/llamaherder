@@ -168,7 +168,7 @@ def get_user_input(prompt: str, default: str = None) -> str:
 def main():
     """Main CLI interface."""
     # Initialize with API key
-    api_key = os.getenv("XAI_API_KEY") or "xai-8zAk5VIaL3Vxpu3fO3r2aiWqqeVAZ173X04VK2R1m425uYpWOIOQJM3puq1Q38xJ2sHfbq3mX4PBxJXC"
+    api_key = os.getenv("XAI_API_KEY") or "xai-IxAzklP9jWAhmKaE3pz9PBfcTAowVgNAd9fx1iWwYHNL7kowydC3MAmrMweXROg1q19dq5lye3NG6nmK"
     
     if not api_key:
         print("Error: XAI_API_KEY environment variable not set")

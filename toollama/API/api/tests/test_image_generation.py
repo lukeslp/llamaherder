@@ -22,7 +22,7 @@ OUTPUT_DIR = "test_results"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # API Keys (replace with your actual keys or use environment variables)
-XAI_API_KEY = os.environ.get("XAI_API_KEY", "xai-8zAk5VIaL3Vxpu3fO3r2aiWqqeVAZ173X04VK2R1m425uYpWOIOQJM3puq1Q38xJ2sHfbq3mX4PBxJXC")
+XAI_API_KEY = os.environ.get("XAI_API_KEY", "xai-IxAzklP9jWAhmKaE3pz9PBfcTAowVgNAd9fx1iWwYHNL7kowydC3MAmrMweXROg1q19dq5lye3NG6nmK")
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "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")
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "AIzaSyAXLsdBC6qYhW9djaep-gCWQasszLHfi8U")
 

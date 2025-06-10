@@ -1429,7 +1429,7 @@ def create_app():
                     from api.services.providers.xai import XAIProvider
                     
                     # Get API key from request or config
-                    api_key = data.get("api_key") or os.getenv("XAI_API_KEY", "xai-8zAk5VIaL3Vxpu3fO3r2aiWqqeVAZ173X04VK2R1m425uYpWOIOQJM3puq1Q38xJ2sHfbq3mX4PBxJXC")
+                    api_key = data.get("api_key") or os.getenv("XAI_API_KEY", "xai-IxAzklP9jWAhmKaE3pz9PBfcTAowVgNAd9fx1iWwYHNL7kowydC3MAmrMweXROg1q19dq5lye3NG6nmK")
                     
                     # Create provider with API key
                     provider = XAIProvider(api_key=api_key)

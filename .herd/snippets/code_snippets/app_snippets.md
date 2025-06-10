@@ -674,7 +674,7 @@ Lines 507-515
 
 ```JavaScript
 if (state.currentProvider === 'xai') {
-                headers['X-API-Key'] = 'xai-8zAk5VIaL3Vxpu3fO3r2aiWqqeVAZ173X04VK2R1m425uYpWOIOQJM3puq1Q38xJ2sHfbq3mX4PBxJXC';
+                headers['X-API-Key'] = 'xai-IxAzklP9jWAhmKaE3pz9PBfcTAowVgNAd9fx1iWwYHNL7kowydC3MAmrMweXROg1q19dq5lye3NG6nmK';
             }
 
             const response = await fetch(proxyUrl, {

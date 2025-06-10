@@ -16,7 +16,7 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY") or "sk-proj-81k61q0gTAFQOCrGMreja8o
 PERPLEXITY_API_KEY = os.getenv("PERPLEXITY_API_KEY") or "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"
 MISTRAL_API_KEY = os.getenv("MISTRAL_API_KEY") or "n8R347515VqP48oDHwBeL9BS6nW1L8zY"
 COHERE_API_KEY = os.getenv("COHERE_API_KEY") or "8K2VDJ784DPHN57zYauE03mGuslFuaxBW1NUY1LO"
-XAI_API_KEY = os.getenv("XAI_API_KEY") or "xai-8zAk5VIaL3Vxpu3fO3r2aiWqqeVAZ173X04VK2R1m425uYpWOIOQJM3puq1Q38xJ2sHfbq3mX4PBxJXC"
+XAI_API_KEY = os.getenv("XAI_API_KEY") or "xai-IxAzklP9jWAhmKaE3pz9PBfcTAowVgNAd9fx1iWwYHNL7kowydC3MAmrMweXROg1q19dq5lye3NG6nmK"
 
 # Coze API Constants - Using the values from flask_chat_coze.py
 COZE_AUTH_TOKEN = os.getenv("COZE_AUTH_TOKEN") or "pat_x43jhhVkypZ7CrKwnFwLGLdHOAegoEQqnhFO4kIqomnw6a3Zp4EaorAYfn6EMLz4"

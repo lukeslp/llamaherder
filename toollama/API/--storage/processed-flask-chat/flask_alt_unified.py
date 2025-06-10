@@ -44,7 +44,7 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY") or "sk-proj-81k61q0gTAFQOCrGMreja8o
 PERPLEXITY_API_KEY = os.getenv("PERPLEXITY_API_KEY") or "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"
 MISTRAL_API_KEY = os.getenv("MISTRAL_API_KEY") or "n8R347515VqP48oDHwBeL9BS6nW1L8zY"
 COHERE_API_KEY = os.getenv("COHERE_API_KEY") or "8K2VDJ784DPHN57zYauE03mGuslFuaxBW1NUY1LO"
-XAI_API_KEY = os.getenv("XAI_API_KEY") or "xai-8zAk5VIaL3Vxpu3fO3r2aiWqqeVAZ173X04VK2R1m425uYpWOIOQJM3puq1Q38xJ2sHfbq3mX4PBxJXC"
+XAI_API_KEY = os.getenv("XAI_API_KEY") or "xai-IxAzklP9jWAhmKaE3pz9PBfcTAowVgNAd9fx1iWwYHNL7kowydC3MAmrMweXROg1q19dq5lye3NG6nmK"
 
 # Initialize Coze client
 coze_raw_client = None
